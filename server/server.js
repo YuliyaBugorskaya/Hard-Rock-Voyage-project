@@ -26,5 +26,5 @@ app.use(session({
     httpOnly: true,
   },
 }));
-app.use('/user', userRouter);
+app.use('/api/user', userRouter);
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));
