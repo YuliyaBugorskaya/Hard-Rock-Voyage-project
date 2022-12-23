@@ -1,9 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import eventCardSlice from './YanaSlices/eventCardSlice';
+import allEventsSlice from './YanaSlices/allEventsSlice';
+import oneEventSlice from './YanaSlices/oneEventSlice';
+import userPageSlice from './YanaSlices/userPageSlice';
 
 export default configureStore({
   reducer: {
-    eventCard: eventCardSlice,
+    allEvents: allEventsSlice,
+    oneEvent: oneEventSlice,
+    userPage: userPageSlice,
 
   },
 
