@@ -5,6 +5,7 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const userRouter = require('./routes/userRouter');
 const apiRouter = require('./routes/apiRouter');
+const apiRouter = require('./routes/apiRouter');
 require('dotenv').config();
 
 const app = express();
@@ -13,9 +14,11 @@ app.use(cors({
   credentials: true,
   origin: true,
 }));
+
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(session({
   name: 'sid',
   secret: process.env.SESSION_SECRET ?? 'test',
@@ -27,6 +30,7 @@ app.use(session({
     httpOnly: true,
   },
 }));
+
 app.use('/user', userRouter);
 app.use('/api', apiRouter);
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));

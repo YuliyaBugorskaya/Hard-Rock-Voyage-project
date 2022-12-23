@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Action, {
         foreignKey: 'userId',
       });
+
       // define association here
     }
   }
