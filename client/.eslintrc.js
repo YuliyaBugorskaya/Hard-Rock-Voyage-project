@@ -26,6 +26,7 @@ module.exports = {
     'default-param-last': 0,
     'import/prefer-default-export': 0,
     'react/jsx-props-no-spreading': 0,
+    'max-len': 0,
 
   },
 };

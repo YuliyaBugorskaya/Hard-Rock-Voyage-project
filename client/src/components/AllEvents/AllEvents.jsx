@@ -1,88 +1,110 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Pagination from '@mui/material/Pagination';
-import PaginationItem from '@mui/material/PaginationItem';
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
 import {
-  List, CssBaseline, Typography, Container, Button,
+  List, CssBaseline, MenuItem, InputLabel, Stack, Box,
+  Container, Button, Pagination, PaginationItem,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useNavigate } from 'react-router-dom';
-import { getAllEvents } from '../../redux/YuliyaSlices/allEventsSlice';
+import { getAllEvents, setFilterData } from '../../redux/YuliyaSlices/allEventsSlice';
+import EventCard from '../EventCard/EventCard';
 
 export default function AllEvents() {
   const dispatch = useDispatch();
   const allEvents = useSelector((state) => state.allEvents);
-  console.log(allEvents, 'allEvents---');
+  const [input, setInput] = useState('');
+  const [isFilter, setIsFilter] = useState(true);
+  // console.log(input, 'input---');
+  // console.log(allEvents, 'allEvents========>');
 
   useEffect(() => {
     dispatch(getAllEvents());
   }, []);
-  const arr = ['may', 'june', 'august'];
-  const startDate = 'Date';
 
   const navigate = useNavigate();
   const changeHandler = () => {
     navigate('/newEvent');
   };
   const handleChange = (event) => {
-    setStartDate(event.target.value);
+    // console.log(event, 'event---->');
+    setInput(event.target.value);
+    dispatch(setFilterData(event));
+    // setIsFilter(false);
   };
-
+  const itemHandler = () => {
+    setIsFilter(false);
+  };
+  const allHandler = () => {
+    setIsFilter(true);
+  };
+  console.log('isFilter', isFilter);
   return (
-    <div>
-      <CssBaseline />
-      <Container maxWidth={false} fullWith>
+    <Box
+      className="allEvents"
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 0.4, width: '55ch' },
+        backgroundImage: `url(${'../css/images/_7Fr1kwBRRM.jpeg'})`,
+      }}
+      display="flex"
+      noValidate
+      autoComplete="off"
+      alignItems="center"
+      justifyContent="center"
+      minHeight="80vh"
+    >
+      <div>
+        <CssBaseline />
+        <Container maxWidth={false} disableGutters>
 
-        {/* <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} /> */}
-        <div>
-          <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Дата</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={startDate}
-                label="дата"
-                onChange={handleChange}
-              >
-                {allEvents?.map((el) => (<MenuItem value={el.startDate}>{el.startDate}</MenuItem>
+          {/* <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '100vh' }} /> */}
+          <div>
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth sx={{ marginTop: '10px' }}>
+                <InputLabel id="demo-simple-select-label">Дата</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  onChange={handleChange}
+                  value={input}
+                  label="дата"
+                >
+                  {allEvents?.map((el) => (<MenuItem onClick={itemHandler} value={el.startDate}>{el.startDate}</MenuItem>
 
-                ))}
+                  ))}
+                  <MenuItem onClick={allHandler} value="All">All</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            <Button sx={{ width: '100%', maxWidth: 360, marginTop: '10px' }} onClick={changeHandler} variant="contained" color="secondary">
+              Создать событие
+            </Button>
+            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
 
-              </Select>
-            </FormControl>
-          </Box>
-          <Button onClick={changeHandler} variant="contained" color="secondary">
-            Создать событие
-          </Button>
-          <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-            {/* {allEvents?.map((el) => (
-              <EventCard key={el.id} oneEventCard={el} />
-            ))} */}
-          </List>
-        </div>
-        <div>
-          <Stack spacing={2}>
-            <Pagination
-              count={3}
-              renderItem={(item) => (
-                <PaginationItem
-                  slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                  {...item}
-                />
-              )}
-            />
-          </Stack>
-        </div>
-      </Container>
-    </div>
-
+              {allEvents?.filter((el) => isFilter || el.startDate === input).map((el) => (
+              // .
+                <EventCard key={el.id} oneEventCard={el} />
+              ))}
+            </List>
+          </div>
+          <div>
+            <Stack spacing={2}>
+              <Pagination
+                count={3}
+                renderItem={(item) => (
+                  <PaginationItem
+                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                    {...item}
+                  />
+                )}
+              />
+            </Stack>
+          </div>
+        </Container>
+      </div>
+    </Box>
   );
 }

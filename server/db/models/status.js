@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Notification, {
         foreignKey: 'statusId',
       });
+      this.hasMany(models.Action, {
+        foreignKey: 'statusId',
+      });
       // define association here
     }
   }

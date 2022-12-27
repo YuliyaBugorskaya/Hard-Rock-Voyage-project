@@ -5,7 +5,7 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const userRouter = require('./routes/userRouter');
 const apiRouter = require('./routes/apiRouter');
-const apiRouter = require('./routes/apiRouter');
+
 require('dotenv').config();
 
 const app = express();

@@ -31,7 +31,7 @@ export const checkUser = () => (dispatch) => {
     .then((res) => setTimeout(() => {
       dispatch(setUser(res.data));
     }, 500))
-    .catch((err) => setTimeout(() => {
+    .catch(() => setTimeout(() => {
       dispatch(setUser({}));
     }, 500));
 };

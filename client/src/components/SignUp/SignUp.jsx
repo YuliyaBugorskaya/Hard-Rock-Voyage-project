@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   Box, Button, FormControl, TextField, Typography,
@@ -6,7 +6,7 @@ import {
 import { signupUser } from '../../redux/EugeneSlices/userSlice';
 
 export default function Registration() {
-  const [input, setInput] = useEffect('');
+  const [input, setInput] = useState('');
   const inputHandler = (e) => {
     setInput(e.target.value);
   };
