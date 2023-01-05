@@ -3,7 +3,7 @@ const { User } = require('../db/models');
 
 const router = express.Router();
 router.post('/signup', async (req, res) => {
-  const { name, email, password } = req.body.inputs;
+  const { name, email, password } = req.body;
   console.log({ name, email, password });
   if (name && email && password) {
     try {
@@ -25,8 +25,8 @@ router.post('/signup', async (req, res) => {
   }
   return res.sendStatus(500);
 });
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body.inputs;
+router.post('/signin', async (req, res) => {
+  const { email, password } = req.body;
   if (email && password) {
     try {
       const user = await User.findOne({
