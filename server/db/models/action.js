@@ -28,6 +28,9 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Rating, {
         foreignKey: 'actionId',
       });
+      this.belongsTo(models.User, {
+        foreignKey: 'userId',
+      });
 
       // define association here
     }
