@@ -3,6 +3,7 @@ import allEventsSlice from './YanaSlices/allEventsSlice';
 import oneEventSlice from './YanaSlices/oneEventSlice';
 import userPageSlice from './YanaSlices/userPageSlice';
 import userSlice from './EugeneSlices/userSlice';
+import archiveEventsSlice from './YuliyaSlices/archiveEventsSlice';
 
 export default configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export default configureStore({
     userPage: userPageSlice,
     user: userSlice,
     oneEvent: oneEventSlice,
+    archiveEvents: archiveEventsSlice,
   },
 
 });

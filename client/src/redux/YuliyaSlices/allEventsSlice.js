@@ -19,10 +19,9 @@ export const {
   setAllEvents, setFilterData, addEvent, deleteEvent,
 } = allEventsSlice.actions;
 
-export const getAllEvents = () => (dispatch) => {
-  axios.get('/api/allEvents')
+export const getAllEvents = (page) => (dispatch) => {
+  axios.post('/api/allEvents', page)
     .then((res) => dispatch(setAllEvents(res.data)));
-  // .then((res) => console.log(dispatch(setAllEvents(res.data))));
 };
 
 export const submitEvent = (event) => (dispatch) => {

@@ -6,7 +6,7 @@ import NavBar from './components/NavBar';
 import SignIn from './components/SignIn/SignIn';
 import SignUp from './components/SignUp/SignUp';
 import AllEvents from './components/AllEvents/AllEvents';
-// import ArchivePage from './components/ArchivePage/ArchivePage';
+import ArchivePage from './components/ArchivePage/ArchivePage';
 import LKabinet from './components/LKabinet/LKabinet';
 import UserPage from './components/UserPage/UserPage';
 import CreateEvent from './components/CreateEvent/CreateEvent';
@@ -27,7 +27,7 @@ function App() {
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/allEvents" element={<AllEvents />} />
-        {/* <Route path="/archiveEvents" element={<ArchivePage />} /> */}
+        <Route path="/archiveEvents" element={<ArchivePage />} />
         <Route path="/lk" element={<LKabinet />} />
         <Route path="/user/:id" element={<UserPage />} />
         <Route path="/newEvent" element={<CreateEvent />} />

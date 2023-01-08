@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   Row, Col, Form, Container,
 } from 'reactstrap';
@@ -7,9 +7,14 @@ import {
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { submitEvent } from '../../redux/YuliyaSlices/allEventsSlice';
+// import eventFoto from '`url(${'../css/images/_7Fr1kwBRRM.jpeg'})`';
 
 export default function CreateEvent() {
+  // стейт для текущего события и тейт для картинки, которую загружаем из инпута
+  const [img, setImg] = useState(null);
+  const [fotoFromVoyage, setFotoFromVoyage] = useState(null);
   const [input, setInput] = useState({
     title: '',
     description: '',
@@ -34,6 +39,22 @@ export default function CreateEvent() {
     setInput({});
     navigate('/lk');
   };
+
+  const sendFile = useCallback(async () => {
+    try {
+      const data = new FormData();
+      data.append('fotoFromVoyage', img);
+      await axios.post('/upload/foto', data, {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      })
+        // .then((res) => console.log(res.data.path));
+        .then((res) => setFotoFromVoyage(res.data.path));
+      // console.log(res.data.path, '=========>>>');
+    } catch (error) {}
+  }, [img]);
+
   return (
     <div>
       <Container style={{
@@ -119,7 +140,7 @@ export default function CreateEvent() {
                   value={input.finishPoint || ''}
                   onChange={inputHandler}
                 />
-                <TextField
+                {/* <TextField
                   required
                   name="image"
                   id="outlined-input"
@@ -127,16 +148,28 @@ export default function CreateEvent() {
                   type="text"
                   value={input.image || ''}
                   onChange={inputHandler}
-                />
-                <Button style={{ marginBottom: '20px' }} variant="contained">Загрузить фото</Button>
-
+                /> */}
+                {/* <Button style={{ marginBottom: '20px' }} variant="contained">Загрузить фото</Button> */}
+                <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
+                  Добавь фото к событию
+                </Typography>
+                <input type="file" onChange={(e) => setImg(e.target.files[0])} />
                 <Button type="submit" variant="contained">Создать событие</Button>
               </FormControl>
-
             </Form>
           </Col>
         </Row>
       </Container>
+      <div className="fotoFromVoyage">
+        {
+          fotoFromVoyage
+            ? <img className="logo" src={`${fotoFromVoyage}`} alt="fotoFromVoyage" />
+            : <img className="logo" src="/css/images/_7Fr1kwBRRM.jpeg" alt="fotoFromVoyage" />
+        }
+
+      </div>
+      <input type="file" onChange={(e) => setImg(e.target.files[0])} />
+      <button type="submit" className="btn" onClick={sendFile}>Добавить фото</button>
     </div>
   );
 }
