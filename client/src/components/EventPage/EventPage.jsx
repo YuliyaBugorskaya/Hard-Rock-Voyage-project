@@ -57,6 +57,18 @@ export default function EventPage() {
         <Typography component="div">
           Тут будут участники
         </Typography>
+        {/* // если событие завершено */}
+        {OneEvent.statusId === 6
+              && (
+                <>
+                  <Button variant="text">
+                    Оставить комментарий
+                  </Button>
+                  <Button variant="text">
+                    Добавить фотографии в альбом
+                  </Button>
+                </>
+              )}
       </Container>
     </>
   );

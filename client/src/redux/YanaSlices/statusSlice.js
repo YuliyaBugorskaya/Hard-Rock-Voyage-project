@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
 
 const statusSlice = createSlice({
   name: 'status',
@@ -11,9 +11,14 @@ const statusSlice = createSlice({
 
 export const { setStatus } = statusSlice.actions;
 
-export const getAllStatuses = () => (dispatch) => {
-  axios.get('/api/statuses')
-    .then((res) => dispatch(setStatus(res.data)));
-};
+// export const getAllStatuses = () => (dispatch) => {
+//   axios.get('/api/statuses')
+//     .then((res) => dispatch(setStatus(res.data)));
+// };
+
+// export const changeStatus5 = (id) => (dispatch) => {
+//   axios.patch(`/api/status/${id}`)
+//     .then((res) => dispatch(setStatus(res.data)));
+// };
 
 export default statusSlice.reducer;

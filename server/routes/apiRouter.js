@@ -26,6 +26,17 @@ router.delete('/event/:id', async (req, res) => {
   }
 });
 
+router.patch('/status/', async (req, res) => {
+  const { statusId } = req.body;
+  const { id } = req.body;
+  await Action.update({ statusId: statusId + 1 }, { where: { id } });
+  const updatedEvent = await Action.findOne({ where: { id } });
+  // const updatedEvent = await Action.findOne({ where: { id } });
+  // const { statusId } = eventStatus;
+  // updatedEvent.map((el) => console.log(el.statusId));
+  res.json(updatedEvent);
+});
+
 router.get('/userpage/:id', async (req, res) => {
   const oneUser = await User.findOne({ where: { id: req.params.id } });
   res.json(oneUser);
@@ -41,9 +52,9 @@ router.get('/lk', async (req, res) => {
 
   res.json(userLK);
 });
-router.get('/statuses', async (req, res) => {
-  const allStatuses = await Statuses.findAll();
-  res.json(allStatuses);
-});
+// router.get('/statuses', async (req, res) => {
+//   const allStatuses = await Statuses.findAll();
+//   res.json(allStatuses);
+// });
 
 module.exports = router;

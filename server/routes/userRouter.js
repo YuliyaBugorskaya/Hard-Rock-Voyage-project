@@ -36,7 +36,6 @@ router.post('/signin', async (req, res) => {
         const sessionUser = JSON.parse(JSON.stringify(user));
         delete sessionUser.password;
         req.session.user = sessionUser;
-        console.log(sessionUser);
         return res.json(sessionUser);
       }
       return res.sendStatus(401);

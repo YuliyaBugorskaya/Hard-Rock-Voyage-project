@@ -9,7 +9,8 @@ import CardMedia from '@mui/material/CardMedia';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Container from '@mui/material/Container';
-import { deleteEvent, getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
+import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
+import { deleteEvent, changeStatus5 } from '../../redux/YanaSlices/allEventsSlice';
 
 export default function EventCard({ oneEventCard }) {
   const dispatch = useDispatch();
@@ -23,6 +24,14 @@ export default function EventCard({ oneEventCard }) {
 
   const deleteOneEvent = (id) => {
     dispatch(deleteEvent(id));
+  };
+
+  // тут обработчки сос меной статуса
+  // завершить рагистрацию --  меняет статус и кнопку на завершить событие
+  // завершить событие -- меняет статус (в компоненте полной карточки появляются модалки)
+
+  const changeStatus = (event) => {
+    dispatch(changeStatus5(event));
   };
 
   return (
@@ -54,15 +63,14 @@ export default function EventCard({ oneEventCard }) {
               {oneEventCard?.User?.name}
             </Typography>
             <Container>
-
               {oneEventCard.statusId === 4 && (
-                <Button variant="text">
+                <Button variant="text" onClick={() => changeStatus(oneEventCard)}>
                   Завершить регистрацию
                 </Button>
               )}
               {oneEventCard.statusId === 5
               && (
-              <Button variant="text">
+              <Button variant="text" onClick={() => changeStatus(oneEventCard)}>
                 Завершить событие
               </Button>
               )}
