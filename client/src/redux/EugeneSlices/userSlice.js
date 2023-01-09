@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const userSlice = createSlice({
-  name: 'input',
+  name: 'user',
   initialState: { isFetching: true },
   reducers: {
     setUser: (state, action) => action.payload,
