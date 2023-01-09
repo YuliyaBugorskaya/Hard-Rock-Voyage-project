@@ -13,19 +13,13 @@ import UserPage from './components/UserPage/UserPage';
 import CreateEvent from './components/CreateEvent/CreateEvent';
 import EventPage from './components/EventPage/EventPage';
 import Ankets from './components/Ankets/Ankets';
+import './index.css'; // для удаления margin в body добавляю этот файл стилей, в котором устанавливаю margin: 0 для body
 
 function App() {
-  // const user = useSelector((state) => state.user);
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(checkAuth);
-  // }, []);
   return (
-
     <>
       <NavBar />
       <Routes>
-
         <Route path="/" element={<MainPage />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/signIn" element={<SignIn />} />
@@ -36,7 +30,6 @@ function App() {
         <Route path="/newEvent" element={<CreateEvent />} />
         <Route path="/event/:id" element={<EventPage />} />
         <Route path="/adminAnkets" element={<Ankets />} />
-
       </Routes>
       <Footer />
     </>

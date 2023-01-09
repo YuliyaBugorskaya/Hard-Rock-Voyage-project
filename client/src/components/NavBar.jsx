@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  AppBar, Box, Toolbar, Link, Button,
+  AppBar, Box, Toolbar, Link, Button, IconButton, Menu, MenuItem,
 } from '@mui/material';
-import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logoutUser } from '../redux/EugeneSlices/userSlice';
+import { logoutUser, checkUser } from '../redux/EugeneSlices/userSlice';
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -12,62 +11,114 @@ export default function NavBar() {
   const logoutHandler = () => {
     dispatch(logoutUser());
   };
+
+  useEffect(() => {
+    dispatch(checkUser());
+  }, []);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ flexGrow: 1 }}>
+    <Box>
+      <AppBar position="static">
         <Toolbar style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <NavLink to="/">
-              <Link href="/" underline="none">
-                <Button variant="text" sx={{ color: 'white' }}>Главная страница</Button>
-              </Link>
-            </NavLink>
-            <NavLink to="/allEvents">
-              <Link href="/allEvents" underline="none">
-                <Button onClick={logoutHandler} variant="text" sx={{ color: 'white' }}>События</Button>
-              </Link>
-            </NavLink>
+            <Link href="/" underline="none">
+              <Button variant="text" sx={{ color: 'white' }}>Главная страница</Button>
+            </Link>
+            <Link href="/allEvents" underline="none">
+              <Button variant="text" sx={{ color: 'white' }}>События</Button>
+            </Link>
           </div>
           <div>
-            <NavLink to="/">
-              <Link href="/" underline="none">
-                <img src="https://img.freepik.com/premium-vector/bikers-emblem-mascot-logo-inspiration_10051-855.jpg" alt="biker" style={{ width: '100px', height: '100px' }} />
-              </Link>
-            </NavLink>
+            <Link href="/" underline="none">
+              <img src="https://img.freepik.com/premium-vector/bikers-emblem-mascot-logo-inspiration_10051-855.jpg" alt="biker" style={{ width: '100px', height: '100px' }} />
+            </Link>
           </div>
-          <div>
 
-            <NavLink to="/archiveEvents">
-              <Link href="/archiveEvents" underline="none">
-                <Button onClick={logoutHandler} variant="text" sx={{ color: 'white' }}>Завершенные события</Button>
-              </Link>
-            </NavLink>
-            {
-              user.id
-                ? (
-                  <NavLink to="/logout">
-                    <Link href="/logout" underline="none">
-                      <Button onClick={logoutHandler} variant="text" sx={{ color: 'white' }}>Выйти</Button>
-                    </Link>
-                  </NavLink>
-                )
-                : (
-                  <>
-                    <NavLink to="/signin">
-                      <Link href="/signin" underline="none">
-                        <Button variant="text" sx={{ color: 'white' }}>Вход</Button>
-                      </Link>
-                    </NavLink>
-                    <NavLink to="/signup">
-                      <Link href="/signup" underline="none">
-                        <Button variant="text" sx={{ color: 'white' }}>Регистрация</Button>
-                      </Link>
-                    </NavLink>
-                  </>
-                )
-            }
-            <img src="https://uploads.scratch.mit.edu/get_image/user/35278713_60x60.png" alt="kaka" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
-          </div>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <Link href="/archiveEvents" underline="none">
+              <Button variant="text" sx={{ color: 'white' }}>Завершенные события</Button>
+            </Link>
+
+            <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <img src="https://uploads.scratch.mit.edu/get_image/user/35278713_60x60.png" alt="avatar" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                {
+                  user.id
+                    ? (
+                      <>
+                        <Link href="/lk" underline="none">
+                          <MenuItem onClick={handleClose}>
+                            <Button variant="text" sx={{ color: 'blue' }}>Личный кабинет</Button>
+                          </MenuItem>
+                        </Link>
+                        <Link href="/newEvent" underline="none">
+                          <MenuItem onClick={handleClose}>
+                            <Button variant="text" sx={{ color: 'blue' }}>Создать событие</Button>
+                          </MenuItem>
+                        </Link>
+                        <Link href="/" underline="none">
+                          <MenuItem onClick={handleClose}>
+                            <Button onClick={logoutHandler} variant="text" sx={{ color: 'blue' }}>Выйти</Button>
+                          </MenuItem>
+                        </Link>
+                      </>
+                    )
+                    : (
+                      <>
+                        <Link href="/signin" underline="none">
+                          <MenuItem onClick={handleClose}>
+                            <Button variant="text" sx={{ color: 'blue' }}>Вход</Button>
+                          </MenuItem>
+                        </Link>
+                        <Link href="/signup" underline="none">
+                          <MenuItem onClick={handleClose}>
+                            <Button variant="text" sx={{ color: 'blue' }}>Регистрация</Button>
+                          </MenuItem>
+                        </Link>
+                      </>
+                    )
+                }
+              </Menu>
+            </div>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>
