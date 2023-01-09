@@ -5,7 +5,7 @@ import {
 import { useDispatch } from 'react-redux';
 import { signinUser } from '../../redux/EugeneSlices/userSlice';
 
-export default function Login() {
+export default function SignIn() {
   const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();

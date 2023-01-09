@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import { signupUser } from '../../redux/EugeneSlices/userSlice';
 
-export default function Registration() {
+export default function SignUp() {
   const [input, setInput] = useState('');
   const inputHandler = (e) => {
     setInput(e.target.value);
