@@ -16,4 +16,9 @@ export const getUserLK = () => (dispatch) => {
     .then((res) => dispatch(setLK(res.data)));
 };
 
+export const getUserLKPage = () => (dispatch) => {
+  axios.get('/api/userpage')
+    .then((res) => dispatch(setLK(res.data)));
+};
+
 export default LKSlice.reducer;

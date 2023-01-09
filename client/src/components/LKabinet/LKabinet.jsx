@@ -12,7 +12,7 @@ import { getUserLK } from '../../redux/YanaSlices/LKSlice';
 
 export default function LKabinet() {
   const dispatch = useDispatch();
-  const UserInfo = useSelector((state) => state.userPage);
+  const UserInfo = useSelector((state) => state.user);
   const userLK = useSelector((state) => state.LK);
 
   useEffect(() => {
@@ -26,6 +26,10 @@ export default function LKabinet() {
     navigate('/adminAnkets');
   };
 
+  const changeProfile = () => {
+    // поменЯем инфо
+  };
+
   return (
     <>
       <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
@@ -37,12 +41,15 @@ export default function LKabinet() {
         />
 
         <Typography>
-          {UserInfo.name}
+          {UserInfo?.name}
         </Typography>
       </Stack>
       <Container sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-        {UserInfo.about}
+        {UserInfo?.about}
       </Container>
+      <Button variant="text" onClick={() => changeProfile()}>
+        Настроить профиль
+      </Button>
 
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
         {userLK?.map((el) => (

@@ -6,18 +6,23 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Container from '@mui/material/Container';
-import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
+import { deleteEvent, getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
 
 export default function EventCard({ oneEventCard }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
   const seeMore = () => {
     dispatch(getOneEvent(oneEventCard.id));
     navigate(`/event/${oneEventCard.id}`);
+  };
+
+  const deleteOneEvent = (id) => {
+    dispatch(deleteEvent(id));
   };
 
   return (
@@ -61,10 +66,15 @@ export default function EventCard({ oneEventCard }) {
                 Завершить событие
               </Button>
               )}
+              {oneEventCard.userId === user.id ? (
+                <Button variant="text" onClick={() => deleteOneEvent(oneEventCard.id)}>
+                  Удалить событие
+                </Button>
+              ) : (
+                <>
+                </>
+              )}
 
-              <Button variant="text">
-                Удалить событие
-              </Button>
             </Container>
           </CardContent>
         </Card>

@@ -36,6 +36,7 @@ router.post('/signin', async (req, res) => {
         const sessionUser = JSON.parse(JSON.stringify(user));
         delete sessionUser.password;
         req.session.user = sessionUser;
+        console.log(sessionUser);
         return res.json(sessionUser);
       }
       return res.sendStatus(401);
@@ -46,7 +47,9 @@ router.post('/signin', async (req, res) => {
   }
   return res.sendStatus(500);
 });
+
 router.post('/check', (req, res) => {
+  console.log(req.session.user);
   if (req.session.user) {
     return res.json(req.session.user);
   }
