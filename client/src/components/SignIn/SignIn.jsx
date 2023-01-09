@@ -18,36 +18,39 @@ export default function Login() {
       sx={{
         '& .MuiTextField-root': { m: 1, width: '25ch' },
       }}
-      noValidate
       autoComplete="off"
       display="flex"
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
       minHeight="80vh"
+      onSubmit={submitHandler}
     >
-      <form onSubmit={submitHandler}>
-        <FormControl>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Login
-          </Typography>
-          <TextField
-            name="email"
-            required
-            id="outlined-required"
-            label="Email"
-            type="email"
-          />
-          <TextField
-            name="password"
-            id="outlined-password-input"
-            label="Password"
-            type="password"
-          />
-          <Button variant="contained">Sign In</Button>
-        </FormControl>
-      </form>
+      <FormControl>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Login
+        </Typography>
+        <TextField
+          name="email"
+          required
+          id="outlined-required"
+          label="Email"
+          type="email"
+        />
+        <TextField
+          name="password"
+          id="outlined-password-input"
+          label="Password"
+          type="password"
+        />
+        <Button
+          variant="contained"
+          type="submit"
+        >
+          Sign In
 
+        </Button>
+      </FormControl>
     </Box>
   );
 }
