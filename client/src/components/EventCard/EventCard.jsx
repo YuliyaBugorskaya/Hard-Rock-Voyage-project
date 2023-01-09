@@ -63,12 +63,12 @@ export default function EventCard({ oneEventCard }) {
               {oneEventCard?.User?.name}
             </Typography>
             <Container>
-              {oneEventCard.statusId === 4 && (
+              {oneEventCard.statusId === 4 && oneEventCard.userId === user.id && (
                 <Button variant="text" onClick={() => changeStatus(oneEventCard)}>
                   Завершить регистрацию
                 </Button>
               )}
-              {oneEventCard.statusId === 5
+              {oneEventCard.statusId === 5 && oneEventCard.userId === user.id
               && (
               <Button variant="text" onClick={() => changeStatus(oneEventCard)}>
                 Завершить событие
