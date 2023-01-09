@@ -56,4 +56,5 @@ router.get('/logout', (req, res) => {
   req.session.destroy();
   res.clearCookie('sid').sendStatus(200);
 });
+
 module.exports = router;

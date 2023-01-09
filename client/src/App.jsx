@@ -13,6 +13,7 @@ import UserPage from './components/UserPage/UserPage';
 import CreateEvent from './components/CreateEvent/CreateEvent';
 import EventPage from './components/EventPage/EventPage';
 import Ankets from './components/Ankets/Ankets';
+import Page404 from './components/404/Page404';
 
 function App() {
   // const user = useSelector((state) => state.user);
@@ -25,7 +26,6 @@ function App() {
     <>
       <NavBar />
       <Routes>
-
         <Route path="/" element={<MainPage />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/signIn" element={<SignIn />} />
@@ -36,7 +36,7 @@ function App() {
         <Route path="/newEvent" element={<CreateEvent />} />
         <Route path="/event/:id" element={<EventPage />} />
         <Route path="/adminAnkets" element={<Ankets />} />
-
+        <Route path="*" element={<Page404 />} />
       </Routes>
       <Footer />
     </>

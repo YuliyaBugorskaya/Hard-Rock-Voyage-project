@@ -30,10 +30,10 @@ export const checkUser = () => (dispatch) => {
   axios.post('api/user/check')
     .then((res) => setTimeout(() => {
       dispatch(setUser(res.data));
-    }, 500))
-    .catch((err) => setTimeout(() => {
-      dispatch(setUser({}));
     }, 500));
+  // .catch((err) => setTimeout(() => {
+  //   dispatch(setUser({}));
+  // }, 500));
 };
 
 export default userSlice.reducer;

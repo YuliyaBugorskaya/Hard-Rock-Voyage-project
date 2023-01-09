@@ -19,9 +19,9 @@ export default function EventPage() {
     navigate(`/user/${OneEvent.userId}`);
   };
 
-  // useEffect(() => {
-  //   dispatch(getOneEvent());
-  // }, []);
+  const regOnJourney = () => {
+    // тут модалка на регистрацию на событие
+  };
 
   return (
     <>
@@ -51,8 +51,11 @@ export default function EventPage() {
         <Typography component="div">
           {OneEvent.fulldescription}
         </Typography>
+        <Button variant="text" onClick={() => regOnJourney()}>
+          Подать заявку на поездку
+        </Button>
         <Typography component="div">
-          тут будет список участников
+          Тут будут участники
         </Typography>
       </Container>
     </>

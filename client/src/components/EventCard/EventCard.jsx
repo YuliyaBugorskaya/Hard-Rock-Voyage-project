@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Container from '@mui/material/Container';
 import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
 
 export default function EventCard({ oneEventCard }) {
@@ -47,6 +48,24 @@ export default function EventCard({ oneEventCard }) {
             <Typography variant="body2" sx={{ color: 'silver' }}>
               {oneEventCard?.User?.name}
             </Typography>
+            <Container>
+
+              {oneEventCard.statusId === 4 && (
+                <Button variant="text">
+                  Завершить регистрацию
+                </Button>
+              )}
+              {oneEventCard.statusId === 5
+              && (
+              <Button variant="text">
+                Завершить событие
+              </Button>
+              )}
+
+              <Button variant="text">
+                Удалить событие
+              </Button>
+            </Container>
           </CardContent>
         </Card>
       </ListItem>
