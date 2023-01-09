@@ -20,9 +20,8 @@ router.post('/allEvents', async (req, res) => {
   for (let i = 0; i < allEventsLength; i += 1) {
     allEventsArr.push(allEvents.splice(0, 5));
   }
-
+  console.log((allEventsArr[page - 1]), '++++++');
   res.json(allEventsArr[page - 1]);
-  // console.log(res.json(allEventsArr[page - 1]), '++++++');
 });
 
 router.get('/oneEvent/:id', async (req, res) => {
@@ -32,30 +31,9 @@ router.get('/oneEvent/:id', async (req, res) => {
   res.json(oneEvent);
 });
 
-router.post('/addEvent', async (req, res) => {
-  const {
-    title, description, fullDescription, startDate, finishDate, startPoint, finishPoint, image,
-  } = req.body;
-  const newEvent = await Action.create({
-    title,
-    description,
-    fullDescription,
-    startDate,
-    finishDate,
-    startPoint,
-    finishPoint,
-    image,
-    statusId: 1,
-    userId: req.session.user?.id || 1,
-    // userId: req.session.user.id,
-  });
-  console.log(newEvent, 'newEvent======>');
-  res.json(newEvent);
-});
-
-// router.post('/addEvent', fileMiddleware.single('fotoFromVoyage'), async (req, res) => {
+// router.post('/addEvent', async (req, res) => {
 //   const {
-//     title, description, fullDescription, startDate, finishDate, startPoint, finishPoint,
+//     title, description, fullDescription, startDate, finishDate, startPoint, finishPoint, image,
 //   } = req.body;
 //   const newEvent = await Action.create({
 //     title,
@@ -65,7 +43,7 @@ router.post('/addEvent', async (req, res) => {
 //     finishDate,
 //     startPoint,
 //     finishPoint,
-//     image: req.file.path,
+//     image,
 //     statusId: 1,
 //     userId: req.session.user?.id || 1,
 //     // userId: req.session.user.id,
@@ -73,6 +51,29 @@ router.post('/addEvent', async (req, res) => {
 //   console.log(newEvent, 'newEvent======>');
 //   res.json(newEvent);
 // });
+
+router.post('/addEvent', fileMiddleware.single('fotoFromVoyage'), async (req, res) => {
+  const {
+    title, description, fullDescription, startDate, finishDate, startPoint, finishPoint,
+  } = req.body;
+  console.log(req, '00000000');
+  console.log(req.body, 'req.body--');
+  const newEvent = await Action.create({
+    title,
+    description,
+    fullDescription,
+    startDate,
+    finishDate,
+    startPoint,
+    finishPoint,
+    image: req.file?.path,
+    statusId: 1,
+    userId: req.session.user?.id || 1,
+    // userId: req.session.user.id,
+  });
+  console.log(JSON.parse(JSON.stringify(newEvent)), 'newEvent======>');
+  res.json(newEvent);
+});
 
 router.delete('/deleteEvent/:id', async (req, res) => {
   const deleteEvent = await Action.destroy({ where: { id: req.params.id }, include: User });

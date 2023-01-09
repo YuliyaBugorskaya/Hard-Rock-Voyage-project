@@ -21,6 +21,7 @@ export const {
 
 export const getAllEvents = (page) => (dispatch) => {
   axios.post('/api/allEvents', page)
+    // .then((res) => console.log('res.dsta', res.data));
     .then((res) => dispatch(setAllEvents(res.data)));
 };
 

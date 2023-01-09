@@ -73,7 +73,7 @@ export default function AllEvents() {
                   value={input}
                   label="дата"
                 >
-                  {allEvents?.map((el) => (<MenuItem onClick={itemHandler} value={el.startDate}>{el.startDate}</MenuItem>
+                  {allEvents?.map((el) => (<MenuItem onClick={itemHandler} key={el.id} value={el.startDate}>{el.startDate}</MenuItem>
 
                   ))}
                   <MenuItem onClick={allHandler} value="All">All</MenuItem>
