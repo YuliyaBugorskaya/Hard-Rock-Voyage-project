@@ -61,6 +61,7 @@ export default function EventPage() {
   useEffect(() => {
     dispatch(getOneEvent(id));
   }, [id]);
+  console.log(OneEvent);
 
   return (
     <>
@@ -70,7 +71,7 @@ export default function EventPage() {
           component="img"
           alt="green iguana"
           height="140"
-          image={OneEvent.image}
+          image={`http://localhost:3001/${OneEvent?.image}`}
         />
         <Typography component="div">
           {OneEvent.description}
@@ -106,7 +107,7 @@ export default function EventPage() {
         <Typography component="div">
           {OneEvent.fulldescription}
         </Typography>
-        {OneEvent.userId !== user.id && OneEvent.statusId === 1 ? (
+        {OneEvent.userId !== user.id && OneEvent.statusId === 4 ? (
           <>
             <Button variant="text" onClick={handleClickOpen}>
               Подать заявку на поездку
@@ -151,7 +152,7 @@ export default function EventPage() {
               <AddPointMap />
             </Box>
           )}
-        {OneEvent.statusId === 2
+        {OneEvent.statusId === 6
           && (
             <>
               <Button variant="text">

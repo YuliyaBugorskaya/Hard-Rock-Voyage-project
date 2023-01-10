@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer';
 import MainPage from './components/MainPage/MainPage';
@@ -22,7 +21,6 @@ function App() {
     <>
       <NavBar />
       <Routes>
-
         <Route path="/" element={<MainPage />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/signIn" element={<SignIn />} />
