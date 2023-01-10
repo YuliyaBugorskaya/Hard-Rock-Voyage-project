@@ -1,7 +1,7 @@
 const express = require('express');
 
 const {
-  Action, User, Members, Statuses,
+  Action, User, Members,
 } = require('../db/models');
 
 const router = express.Router();
@@ -11,9 +11,14 @@ router.get('/allevents', async (req, res) => {
 });
 
 router.get('/oneEvent/:id', async (req, res) => {
-  const oneEvent = await Action.findOne({ where: { id: req.params.id }, include: User });
+  try {
+    const oneEvent = await Action.findOne({ where: { id: req.params.id }, include: User });
 
-  res.json(oneEvent);
+    return res.json(oneEvent);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
 });
 
 router.delete('/event/:id', async (req, res) => {
@@ -29,32 +34,48 @@ router.delete('/event/:id', async (req, res) => {
 router.patch('/status/', async (req, res) => {
   const { statusId } = req.body;
   const { id } = req.body;
-  await Action.update({ statusId: statusId + 1 }, { where: { id } });
-  const updatedEvent = await Action.findOne({ where: { id } });
-  // const updatedEvent = await Action.findOne({ where: { id } });
-  // const { statusId } = eventStatus;
-  // updatedEvent.map((el) => console.log(el.statusId));
-  res.json(updatedEvent);
+  try {
+    await Action.update({ statusId: statusId + 1 }, { where: { id } });
+    const updatedEvent = await Action.findOne({ where: { id } });
+    // const updatedEvent = await Action.findOne({ where: { id } });
+    // const { statusId } = eventStatus;
+    // updatedEvent.map((el) => console.log(el.statusId));
+    return res.json(updatedEvent);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
 });
 
 router.get('/userpage/:id', async (req, res) => {
-  const oneUser = await User.findOne({ where: { id: req.params.id } });
-  res.json(oneUser);
+  try {
+    const oneUser = await User.findOne({ where: { id: req.params.id } });
+    return res.json(oneUser);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
 });
 
 router.get('/userpage', async (req, res) => {
-  const oneLKUser = await User.findOne({ where: { id: req.session.user.id } });
-  res.json(oneLKUser);
+  try {
+    const oneLKUser = await User.findOne({ where: { id: req.session.user.id } });
+    return res.json(oneLKUser);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
 });
 
 router.get('/lk', async (req, res) => {
-  const userLK = await Action.findAll({ where: { userId: req.session.user.id }, include: User });
+  try {
+    const userLK = await Action.findAll({ where: { userId: req.session.user.id }, include: User });
 
-  res.json(userLK);
+    return res.json(userLK);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
 });
-// router.get('/statuses', async (req, res) => {
-//   const allStatuses = await Statuses.findAll();
-//   res.json(allStatuses);
-// });
 
 module.exports = router;

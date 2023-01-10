@@ -45,6 +45,11 @@ export default function CardForMainPage({ oneEventCard }) {
             <Typography variant="body2" color="text.secondary" sx={{ cursor: 'pointer' }}>
               {oneEventCard.description}
             </Typography>
+            {oneEventCard.statusId === 4 && (
+              <Typography variant="body2" sx={{ color: 'silver' }}>
+                Идет регистрация
+              </Typography>
+            )}
           </Grid>
         </Grid>
         <Grid item>

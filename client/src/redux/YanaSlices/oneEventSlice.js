@@ -15,7 +15,7 @@ const oneEventSlice = createSlice({
   },
 });
 
-export const { setOneEvent, deleteOneEvent, changeoneEvent } = oneEventSlice.actions;
+export const { setOneEvent } = oneEventSlice.actions;
 
 export const getOneEvent = (id) => (dispatch) => {
   axios.get(`/api/oneEvent/${id}`, id)

@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import { useParams } from 'react-router-dom';
+import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
 // import { getUserPage } from '../../redux/YanaSlices/userPageSlice';
 
 export default function EventPage() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const navigate = useNavigate();
 
   // const UserInfo = useSelector((state) => state.userPage);
 
   const OneEvent = useSelector((state) => state.oneEvent);
-
+  const { id } = useParams();
   // const seeUser = () => {
   //   dispatch(getUserPage(OneEvent.userId));
   //   navigate(`/user/${OneEvent.userId}`);
@@ -26,6 +28,10 @@ export default function EventPage() {
   const regOnJourney = () => {
     // тут модалка на регистрацию на событие
   };
+
+  useEffect(() => {
+    dispatch(getOneEvent(id));
+  }, [id]);
 
   return (
     <>
@@ -71,7 +77,7 @@ export default function EventPage() {
         <Typography component="div">
           {OneEvent.fulldescription}
         </Typography>
-        { OneEvent.userId !== user.id ? (
+        { OneEvent.userId !== user.id && OneEvent.statusId === 4 ? (
           <Button variant="text" onClick={() => regOnJourney()}>
             Подать заявку на поездку
           </Button>
@@ -80,7 +86,7 @@ export default function EventPage() {
           </>
         )}
         <Typography component="div">
-          Тут будут участники, позже скрыть от не мемберов
+          Тут будут участники
         </Typography>
         {OneEvent.statusId === 6
               && (
