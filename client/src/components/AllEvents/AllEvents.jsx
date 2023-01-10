@@ -15,38 +15,42 @@ export default function AllEvents() {
   const dispatch = useDispatch();
   const allEvents = useSelector((state) => state.allEvents);
   const [input, setInput] = useState('');
-  const [isFilter, setIsFilter] = useState(true);
+  // const [isFilter, setIsFilter] = useState(true);
 
   const [page, setPage] = useState(1);
+  // console.log(allEvents, 'allEvents--->>>>>');
 
   useEffect(() => {
-    dispatch(getAllEvents({ page }));
-  }, [page]);
+    if (input === 'All') {
+      dispatch(getAllEvents({ page, input: false }));
+    } else {
+      dispatch(getAllEvents({ page, input }));
+    }
+  }, [page, input]);
 
   const navigate = useNavigate();
   const changeHandler = () => {
     navigate('/newEvent');
   };
-  const handleChange = (event) => {
-    // console.log(event, 'event---->');
+
+  const dateChange = (event) => {
+    // console.log(event.target.value, '');
     setInput(event.target.value);
-    dispatch(setFilterData(event));
+    // if (input === 'All') {
+    //   setInput(false);
+    //   // dispatch(setFilterData(event.target.value));
+    // }
+    dispatch(setFilterData(event.target.value));
     // setIsFilter(false);
   };
-  const itemHandler = () => {
-    setIsFilter(false);
-  };
-  const allHandler = () => {
-    setIsFilter(true);
-  };
-  console.log('isFilter', isFilter);
+  // console.log(input, '--->');
   return (
     <Box
       className="allEvents"
       component="form"
       sx={{
         '& .MuiTextField-root': { m: 0.4, width: '55ch' },
-        backgroundImage: `url(${'../css/images/_7Fr1kwBRRM.jpeg'})`,
+        // backgroundImage: `url(${'../css/images/_7Fr1kwBRRM.jpeg'})`,
         backgroundRepeat: 'no-repeat',
         // background-repeat: 'no-repeat',
       }}
@@ -69,14 +73,14 @@ export default function AllEvents() {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  onChange={handleChange}
+                  onChange={dateChange}
                   value={input}
                   label="дата"
                 >
-                  {allEvents?.map((el) => (<MenuItem onClick={itemHandler} key={el.id} value={el.startDate}>{el.startDate}</MenuItem>
-
+                  {allEvents.dates?.map((el) => (<MenuItem key={el.id} value={el.startDate}>{el.startDate}</MenuItem>
                   ))}
-                  <MenuItem onClick={allHandler} value="All">All</MenuItem>
+                  {/* allEvents.events[i].id */}
+                  <MenuItem value="All">All</MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -84,22 +88,21 @@ export default function AllEvents() {
               Создать событие
             </Button>
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-
-              {allEvents?.filter((el) => isFilter || el.startDate === input).map((el) => (
-              // .
-                <EventCard key={el.id} oneEventCard={el} />
-              ))}
+              {allEvents.events
+                // ?.filter((el) => isFilter || el.startDate === input)
+                .map((el) => (
+                  <EventCard key={el.id} oneEventCard={el} />
+                ))}
             </List>
           </div>
           <div>
             <Stack spacing={2}>
               <Pagination
                 page={Number(page)}
-                count={3}
+                count={allEvents.countPage}
                 onChange={(_, num) => setPage(num)}
                 renderItem={(item) => (
                   <PaginationItem
-                    // slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
                     component={NavLink}
                     to={`/allEvents/?page=${item.page}`}
                     {...item}

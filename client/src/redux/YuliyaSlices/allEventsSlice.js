@@ -3,12 +3,13 @@ import axios from 'axios';
 
 const allEventsSlice = createSlice({
   name: 'allEvents',
-  initialState: [],
+  initialState: { events: [], dates: [], countPage: 1 },
   reducers: {
     setAllEvents: (state, action) => action.payload,
-    setFilterData: (state, action) => {
-      state.filter((el) => el.startDate === action.payload);
-    },
+    setFilterData: (state, action) => action.startDate,
+    // setFilterData: (state, action) => {
+    //   state.filter((el) => el.startDate === action.payload);
+    // },
     addEvent: (state, action) => [...state, action.payload],
     deleteEvent: (state, action) => state.filter((el) => el.id !== action.payload),
   },
@@ -19,10 +20,10 @@ export const {
   setAllEvents, setFilterData, addEvent, deleteEvent,
 } = allEventsSlice.actions;
 
-export const getAllEvents = (page) => (dispatch) => {
-  axios.post('/api/allEvents', page)
-    // .then((res) => console.log('res.dsta', res.data));
-    .then((res) => dispatch(setAllEvents(res.data)));
+export const getAllEvents = (body) => (dispatch) => {
+  axios.post('/api/allEvents', body)
+    // .then((res) => console.log('res.dsta.content', res.data));
+    .then((res) => dispatch(setAllEvents({ events: res.data.content, dates: res.data.allDates, countPage: res.data.totalPages })));
 };
 
 export const submitEvent = (event) => (dispatch) => {

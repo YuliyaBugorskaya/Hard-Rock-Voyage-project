@@ -8,17 +8,17 @@ import {
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { submitEvent } from '../../redux/YuliyaSlices/allEventsSlice';
+// import { submitEvent } from '../../redux/YuliyaSlices/allEventsSlice';
 // import eventFoto from '`url(${'../css/images/_7Fr1kwBRRM.jpeg'})`';
 
 export default function CreateEvent() {
   // стейт для текущего события и стейт для картинки, которую загружаем из инпута
   const [img, setImg] = useState(null);
-  const [fotoFromVoyage, setFotoFromVoyage] = useState(null);
+  // const [fotoFromVoyage, setFotoFromVoyage] = useState(null);
   const [input, setInput] = useState({
     title: '',
     description: '',
-    fullDescription: '',
+    fulldescription: '',
     startDate: '',
     finishDate: '',
     startPoint: '',
@@ -31,7 +31,7 @@ export default function CreateEvent() {
   const inputHandler = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -39,7 +39,7 @@ export default function CreateEvent() {
     data.append('fotoFromVoyage', img);
     data.append('title', input.title);
     data.append('description', input.description);
-    data.append('fullDescription', input.fullDescription);
+    data.append('fulldescription', input.fulldescription);
     data.append('startDate', input.startDate);
     data.append('finishDate', input.finishDate);
     data.append('startPoint', input.startPoint);
@@ -51,31 +51,12 @@ export default function CreateEvent() {
     })
       // .then((res) => console.log('******res.data**********', res.data, res.data.path))
       // .then((res) => setFotoFromVoyage(res.data.path))
-      .then((res) => dispatch(submitEvent(res.data)));
+      .then((res) => (res.data));
+    // .then((res) => dispatch(submitEvent(res.data)));
     // .then((res) => console.log(submitEvent(res.data.input, 'res.data.input----->')));
     setInput({});
     navigate('/lk');
   };
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   dispatch(submitEvent(input));
-  //   setInput({});
-  //   navigate('/lk');
-  // };
-
-  // const sendFile = useCallback(async () => {
-  //   try {
-  //     const data = new FormData();
-  //     data.append('fotoFromVoyage', img);
-  //     await axios.post('api/addEvent', data, {
-  //       headers: {
-  //         'content-type': 'multipart/form-data',
-  //       },
-  //     })
-  //       .then((res) => setFotoFromVoyage(res.data.path));
-  //   } catch (error) {}
-  // }, [img]);
-
   return (
     <div>
       <Container style={{
@@ -114,11 +95,11 @@ export default function CreateEvent() {
                 />
                 <TextField
                   required
-                  name="fullDescription"
+                  name="fulldescription"
                   id="outlined-input"
                   label="Full Description"
                   type="text"
-                  value={input.fullDescription || ''}
+                  value={input.fulldescription || ''}
                   onChange={inputHandler}
                 />
                 <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
@@ -182,23 +163,12 @@ export default function CreateEvent() {
                     console.log(e.target.files[0], 'e.target.files[0]--------->');
                   }}
                 />
-                {/* {console.log(e.target.files[0], 'e.target.files[0]--------->')} */}
                 <Button type="submit" variant="contained">Создать событие</Button>
               </FormControl>
             </Form>
           </Col>
         </Row>
       </Container>
-      {/* <div className="fotoFromVoyage">
-        {
-          fotoFromVoyage
-            ? <img className="logo" src={`${fotoFromVoyage}`} alt="fotoFromVoyage" />
-            : <img className="logo" src="/css/images/_7Fr1kwBRRM.jpeg" alt="fotoFromVoyage" />
-        }
-
-      </div>
-      <input type="file" onChange={(e) => setImg(e.target.files[0])} />
-      <button type="submit" className="btn" onClick={sendFile}>Добавить фото</button> */}
     </div>
   );
 }

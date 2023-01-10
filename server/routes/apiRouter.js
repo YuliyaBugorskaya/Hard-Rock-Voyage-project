@@ -4,25 +4,65 @@ const fileMiddleware = require('../middleware/file');
 const { Action, User } = require('../db/models');
 
 const router = express.Router();
-// router.get('/allEvents', async (req, res) => {
-//   // console.log('allEvents---->');
-//   const allEvents = await Action.findAll({ include: User });
-
-//   res.json(allEvents);
-// });
 
 router.post('/allEvents', async (req, res) => {
-  const { page } = req.body;
-  console.log(req.body, 'req.body-----');
-  const allEventsArr = [];
-  const allEvents = await Action.findAll({ include: User });
-  const allEventsLength = allEvents.length;
-  for (let i = 0; i < allEventsLength; i += 1) {
-    allEventsArr.push(allEvents.splice(0, 5));
+  // const pageAsNumber = Number.parseInt(req.query.page);
+  // const sizeAsNumber = Number.parseInt(req.query.size);
+  const size = 2;
+  const { page, input } = req.body;
+  let allEvents;
+  const allDates = await Action.findAll({
+    attributes: ['startDate'],
+  });
+  console.log(req.body, 'req.body++++++1111');
+  // console.log(await Action.findAll({ where: { startDate: input } }), 'blabla');
+  if (input) {
+    console.log('input - ', input);
+    allEvents = await Action.findAndCountAll({
+      where: { startDate: input },
+      limit: size,
+      offset: null,
+      // offset: page ? Number(page) : 1,
+
+    });
+    console.log('res-', JSON.parse(JSON.stringify(allEvents)));
+  } else {
+    console.log('ya tut', page);
+    allEvents = await Action.findAndCountAll({
+      include: User,
+      limit: size,
+      offset: Number(page) - 1,
+      order: [['id', 'DESC']],
+    });
   }
-  console.log((allEventsArr[page - 1]), '++++++');
-  res.json(allEventsArr[page - 1]);
+  // console.log(page, Number(page) * size, 'page0000000');
+  // console.log(allEvents, 'allEvents+++++++>>>');
+  // console.log(JSON.parse(JSON.stringify(allEvents)), '<---------->');
+  console.log(JSON.parse(JSON.stringify(allEvents)));
+  res.json({
+    content: allEvents.rows,
+    allDates,
+    totalPages: Math.round(allEvents.count / size),
+  });
+
+  // console.log(JSON.parse(JSON.stringify(allDates)), '<----------888>');
 });
+
+// пагинация v1
+// router.post('/allEvents', async (req, res) => {
+//   const { page } = req.body;
+//   // console.log(req.body, 'req.body-----');
+//   const allEventsArr = [];
+//   const allEvents = await Action.findAll({ order: [['startDate', 'DESC']], include: User });
+//   // { order: [['id', 'DESC']] }
+//   // console.log(allEvents, '----allEvents-----');
+//   const allEventsLength = allEvents.length;
+//   for (let i = 0; i < allEventsLength; i += 1) {
+//     allEventsArr.push(allEvents.splice(0, 5));
+//   }
+//   // console.log((allEventsArr[page - 1]), '++++++');
+//   res.json(allEventsArr[page - 1]);
+// });
 
 router.get('/oneEvent/:id', async (req, res) => {
   const oneEvent = await Action.findOne({ where: { id: req.params.id }, include: User });
@@ -54,14 +94,14 @@ router.get('/oneEvent/:id', async (req, res) => {
 
 router.post('/addEvent', fileMiddleware.single('fotoFromVoyage'), async (req, res) => {
   const {
-    title, description, fullDescription, startDate, finishDate, startPoint, finishPoint,
+    title, description, fulldescription, startDate, finishDate, startPoint, finishPoint,
   } = req.body;
-  console.log(req, '00000000');
+  // console.log(req, '00000000');
   console.log(req.body, 'req.body--');
   const newEvent = await Action.create({
     title,
     description,
-    fullDescription,
+    fulldescription,
     startDate,
     finishDate,
     startPoint,
