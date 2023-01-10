@@ -1,69 +1,127 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  AppBar, Box, Toolbar, Typography, Link, Button, Avatar,
+  AppBar, Box, Toolbar, Link, Button, IconButton, Menu, MenuItem,
 } from '@mui/material';
-import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logoutUser } from '../redux/EugeneSlices/userSlice';
+import { useNavigate } from 'react-router-dom';
+import { logoutUser, checkUser } from '../redux/EugeneSlices/userSlice';
 
 export default function NavBar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const logoutHandler = () => {
     dispatch(logoutUser());
+    navigate('/');
   };
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ flexGrow: 1 }}>
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <NavLink to="/">
-              <Link href="/" underline="none">
-                <Button variant="text" sx={{ color: 'white' }}>Главная страница</Button>
-              </Link>
-            </NavLink>
-            <NavLink to="/allEvents">
-              <Link href="/allEvents" underline="none">
-                <Button onClick={logoutHandler} variant="text" sx={{ color: 'white' }}>События</Button>
-              </Link>
-            </NavLink>
 
-          </Typography>
-          <NavLink to="/">
+  useEffect(() => {
+    dispatch(checkUser());
+  }, []);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <Box>
+      <AppBar position="static">
+        <Toolbar style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
             <Link href="/" underline="none">
-              <Button onClick={logoutHandler} variant="text" sx={{ color: 'white' }}>События</Button>
+              <Button variant="text" sx={{ color: 'white' }}>Главная страница</Button>
             </Link>
-          </NavLink>
-          <NavLink to="/archiveEvents">
+            <Link href="/allEvents" underline="none">
+              <Button variant="text" sx={{ color: 'white' }}>События</Button>
+            </Link>
+          </div>
+          <div>
+            <Link href="/" underline="none">
+              <img src="https://img.freepik.com/premium-vector/bikers-emblem-mascot-logo-inspiration_10051-855.jpg" alt="biker" style={{ width: '100px', height: '100px' }} />
+            </Link>
+          </div>
+
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
             <Link href="/archiveEvents" underline="none">
-              <Button onClick={logoutHandler} variant="text" sx={{ color: 'white' }}>Завершенные события</Button>
+              <Button variant="text" sx={{ color: 'white' }}>Завершенные события</Button>
             </Link>
-          </NavLink>
-          {
-            user.id
-              ? (
-                <NavLink to="/logout">
-                  <Link href="/logout" underline="none">
-                    <Button onClick={logoutHandler} variant="text" sx={{ color: 'white' }}>Выйти</Button>
-                  </Link>
-                </NavLink>
-              )
-              : (
-                <>
-                  <NavLink to="/signin">
-                    <Link href="/signin" underline="none">
-                      <Button variant="text" sx={{ color: 'white' }}>Вход</Button>
-                    </Link>
-                  </NavLink>
-                  <NavLink to="/signup">
-                    <Link href="/signup" underline="none">
-                      <Button variant="text" sx={{ color: 'white' }}>Регистрация</Button>
-                    </Link>
-                  </NavLink>
-                </>
-              )
-          }
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+
+            <div>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <img src="https://uploads.scratch.mit.edu/get_image/user/35278713_60x60.png" alt="avatar" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                {
+                  user.id
+                    ? (
+                      <>
+                        <Link href="/lk" underline="none">
+                          <MenuItem onClick={handleClose}>
+                            <Button variant="text" sx={{ color: 'blue' }}>Личный кабинет</Button>
+                          </MenuItem>
+                        </Link>
+                        <Link href="/newEvent" underline="none">
+                          <MenuItem onClick={handleClose}>
+                            <Button variant="text" sx={{ color: 'blue' }}>Создать событие</Button>
+                          </MenuItem>
+                        </Link>
+                        <Link href="/" underline="none">
+                          <MenuItem onClick={handleClose}>
+                            <Button onClick={logoutHandler} variant="text" sx={{ color: 'blue' }}>Выйти</Button>
+                          </MenuItem>
+                        </Link>
+                      </>
+                    )
+                    : (
+                      <>
+                        <Link href="/signin" underline="none">
+                          <MenuItem onClick={handleClose}>
+                            <Button variant="text" sx={{ color: 'blue' }}>Вход</Button>
+                          </MenuItem>
+                        </Link>
+                        <Link href="/signup" underline="none">
+                          <MenuItem onClick={handleClose}>
+                            <Button variant="text" sx={{ color: 'blue' }}>Регистрация</Button>
+                          </MenuItem>
+                        </Link>
+                      </>
+                    )
+                }
+              </Menu>
+            </div>
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>

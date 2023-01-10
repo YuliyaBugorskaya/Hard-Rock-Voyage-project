@@ -2,9 +2,10 @@ const express = require('express');
 const { User } = require('../db/models');
 
 const router = express.Router();
+
 router.post('/signup', async (req, res) => {
-  const { name, email, password } = req.body.inputs;
-  console.log({ name, email, password });
+  const { name, email, password } = req.body;
+  console.log(req.body);
   if (name && email && password) {
     try {
       const [user, created] = await User.findOrCreate({
@@ -25,8 +26,9 @@ router.post('/signup', async (req, res) => {
   }
   return res.sendStatus(500);
 });
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body.inputs;
+
+router.post('/signin', async (req, res) => {
+  const { email, password } = req.body;
   if (email && password) {
     try {
       const user = await User.findOne({
@@ -46,14 +48,18 @@ router.post('/login', async (req, res) => {
   }
   return res.sendStatus(500);
 });
+
 router.post('/check', (req, res) => {
+  console.log(req.session.user);
   if (req.session.user) {
     return res.json(req.session.user);
   }
   return res.sendStatus(401);
 });
+
 router.get('/logout', (req, res) => {
   req.session.destroy();
   res.clearCookie('sid').sendStatus(200);
 });
+
 module.exports = router;
