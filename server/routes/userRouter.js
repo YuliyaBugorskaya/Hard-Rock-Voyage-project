@@ -2,9 +2,10 @@ const express = require('express');
 const { User } = require('../db/models');
 
 const router = express.Router();
+
 router.post('/signup', async (req, res) => {
   const { name, email, password } = req.body;
-  console.log({ name, email, password });
+  console.log(req.body);
   if (name && email && password) {
     try {
       const [user, created] = await User.findOrCreate({
@@ -25,6 +26,7 @@ router.post('/signup', async (req, res) => {
   }
   return res.sendStatus(500);
 });
+
 router.post('/signin', async (req, res) => {
   const { email, password } = req.body;
   if (email && password) {
@@ -54,6 +56,7 @@ router.post('/check', (req, res) => {
   }
   return res.sendStatus(401);
 });
+
 router.get('/logout', (req, res) => {
   req.session.destroy();
   res.clearCookie('sid').sendStatus(200);

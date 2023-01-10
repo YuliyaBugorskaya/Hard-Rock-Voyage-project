@@ -3,13 +3,16 @@ import {
   AppBar, Box, Toolbar, Link, Button, IconButton, Menu, MenuItem,
 } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { logoutUser, checkUser } from '../redux/EugeneSlices/userSlice';
 
 export default function NavBar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const logoutHandler = () => {
     dispatch(logoutUser());
+    navigate('/');
   };
 
   useEffect(() => {

@@ -17,11 +17,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
-      {
-        value: 'Событие завершено',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
+
     ], {});
   },
 
