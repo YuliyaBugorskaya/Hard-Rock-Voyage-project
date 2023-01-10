@@ -1,12 +1,17 @@
 const express = require('express');
-const { Comment } = require('../db/models');
+const { Anket } = require('../db/models');
 
 const router = express.Router();
 
-router.post('/addComment', async (req, res) => {
-  const { text } = req.body;
+router.post('/addComment/:id', async (req, res) => {
+  const { message } = req.body;
   console.log('req.body', req.body);
-  const comment = await Comment.create({ text, userId: 1, actionId: 4 });
+  console.log('req.session.user', req.session.user);
+  console.log('req.params', req.params);
+  console.log(message);
+  const comment = await Anket.create({
+    message, actionId: req.params.id, userId: req.session.user.id, statusId: 1,
+  });
   res.json(comment);
 });
 

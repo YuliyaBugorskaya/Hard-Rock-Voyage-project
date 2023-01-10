@@ -10,14 +10,14 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    await queryInterface.bulkInsert('Users', [
+    await queryInterface.bulkInsert('Statuses', [
       {
-        name: 'Yana',
-        email: 'yana@email.com',
-        password: 123,
-        about: 'Люблю путешествия)',
-        image: 'https://cdn.shazoo.ru/c576x256/308676_lBgur9s5CP_cherry.jpg',
-        isadmin: false,
+        value: 'Событие происходит',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        value: 'Событие завершено',
         createdAt: new Date(),
         updatedAt: new Date(),
       },

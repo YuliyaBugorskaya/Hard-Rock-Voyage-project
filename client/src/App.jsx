@@ -9,10 +9,11 @@ import SignUp from './components/SignUp/SignUp';
 import AllEvents from './components/AllEvents/AllEvents';
 import ArchivePage from './components/ArchivePage/ArchivePage';
 import LKabinet from './components/LKabinet/LKabinet';
-import UserPage from './components/UserPage/UserPage';
+// import UserPage from './components/UserPage/UserPage';
 import CreateEvent from './components/CreateEvent/CreateEvent';
 import EventPage from './components/EventPage/EventPage';
 import Ankets from './components/Ankets/Ankets';
+import Page404 from './components/404/Page404';
 import AboutUs from './components/AboutUs/AboutUs';
 import './index.css';
 
@@ -21,6 +22,7 @@ function App() {
     <>
       <NavBar />
       <Routes>
+
         <Route path="/" element={<MainPage />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/signIn" element={<SignIn />} />
@@ -28,10 +30,12 @@ function App() {
         <Route path="/allEvents" element={<AllEvents />} />
         <Route path="/archiveEvents" element={<ArchivePage />} />
         <Route path="/lk" element={<LKabinet />} />
-        <Route path="/user/:id" element={<UserPage />} />
+        {/* <Route path="/user/:id" element={<UserPage />} /> */}
         <Route path="/newEvent" element={<CreateEvent />} />
         <Route path="/event/:id" element={<EventPage />} />
         <Route path="/adminAnkets" element={<Ankets />} />
+        <Route path="*" element={<Page404 />} />
+
       </Routes>
       <Footer />
     </>

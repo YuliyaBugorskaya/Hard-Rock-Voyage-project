@@ -31,6 +31,9 @@ export const checkUser = () => (dispatch) => {
     .then((res) => setTimeout(() => {
       dispatch(setUser(res.data));
     }, 500));
+  // .catch((err) => setTimeout(() => {
+  //   dispatch(setUser({}));
+  // }, 500));
 };
 
 export default userSlice.reducer;

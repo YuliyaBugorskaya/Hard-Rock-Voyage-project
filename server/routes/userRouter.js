@@ -50,6 +50,7 @@ router.post('/signin', async (req, res) => {
 });
 
 router.post('/check', (req, res) => {
+  console.log(req.session.user);
   if (req.session.user) {
     return res.json(req.session.user);
   }
