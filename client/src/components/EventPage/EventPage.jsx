@@ -10,9 +10,11 @@ import {
   Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
 } from '@mui/material';
 // import { useNavigate } from 'react-router-dom';
+import Box from '@mui/material/Box';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
+import AddPointMap from '../Map/AddPointMap';
 // import { getUserPage } from '../../redux/YanaSlices/userPageSlice';
 
 export default function EventPage() {
@@ -104,7 +106,7 @@ export default function EventPage() {
         <Typography component="div">
           {OneEvent.fulldescription}
         </Typography>
-        {OneEvent.userId !== user.id && OneEvent.statusId === 4 ? (
+        {OneEvent.userId !== user.id && OneEvent.statusId === 1 ? (
           <>
             <Button variant="text" onClick={handleClickOpen}>
               Подать заявку на поездку
@@ -143,7 +145,13 @@ export default function EventPage() {
         <Typography component="div">
           Тут будут участники
         </Typography>
-        {OneEvent.statusId === 6
+        {OneEvent.userId === user.id
+          && (
+            <Box>
+              <AddPointMap />
+            </Box>
+          )}
+        {OneEvent.statusId === 2
           && (
             <>
               <Button variant="text">
