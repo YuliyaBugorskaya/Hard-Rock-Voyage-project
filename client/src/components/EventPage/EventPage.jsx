@@ -7,8 +7,10 @@ import Stack from '@mui/material/Stack';
 import { useSelector, useDispatch } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import { useParams } from 'react-router-dom';
 import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
+import AddPointMap from '../Map/AddPointMap';
 // import { getUserPage } from '../../redux/YanaSlices/userPageSlice';
 
 export default function EventPage() {
@@ -77,7 +79,7 @@ export default function EventPage() {
         <Typography component="div">
           {OneEvent.fulldescription}
         </Typography>
-        { OneEvent.userId !== user.id && OneEvent.statusId === 4 ? (
+        {OneEvent.userId !== user.id && OneEvent.statusId === 1 ? (
           <Button variant="text" onClick={() => regOnJourney()}>
             Подать заявку на поездку
           </Button>
@@ -88,17 +90,23 @@ export default function EventPage() {
         <Typography component="div">
           Тут будут участники
         </Typography>
-        {OneEvent.statusId === 6
-              && (
-                <>
-                  <Button variant="text">
-                    Оставить комментарий
-                  </Button>
-                  <Button variant="text">
-                    Добавить фотографии в альбом
-                  </Button>
-                </>
-              )}
+        {OneEvent.userId === user.id
+          && (
+            <Box>
+              <AddPointMap />
+            </Box>
+          )}
+        {OneEvent.statusId === 2
+          && (
+            <>
+              <Button variant="text">
+                Оставить комментарий
+              </Button>
+              <Button variant="text">
+                Добавить фотографии в альбом
+              </Button>
+            </>
+          )}
       </Container>
     </>
   );

@@ -1,0 +1,1 @@
+{"cookie":{"originalMaxAge":43200000,"expires":"2023-01-11T01:01:23.419Z","httpOnly":true,"path":"/"},"user":{"id":1,"name":"Bob","email":"bob@mail.ru","about":null,"image":null,"isadmin":null,"createdAt":"2023-01-10T12:11:53.904Z","updatedAt":"2023-01-10T12:11:53.904Z"},"__lastAccess":1673355683419}
