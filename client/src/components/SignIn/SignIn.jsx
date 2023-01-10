@@ -3,15 +3,16 @@ import {
   Box, Button, FormControl, TextField, Typography,
 } from '@mui/material';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { signinUser } from '../../redux/EugeneSlices/userSlice';
 
 export default function SignIn() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(signinUser(Object.fromEntries(new FormData(e.target))));
-    window.location = '/';
+    navigate('/');
   };
   return (
     <Box

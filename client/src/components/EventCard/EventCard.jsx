@@ -70,14 +70,14 @@ export default function EventCard({ oneEventCard }) {
               </Typography>
             )}
             {oneEventCard.statusId === 5 && (
-            <Typography variant="body2" sx={{ color: 'silver' }}>
-              Идет событие
-            </Typography>
+              <Typography variant="body2" sx={{ color: 'silver' }}>
+                Идет событие
+              </Typography>
             )}
             {oneEventCard.statusId === 6 && (
-            <Typography variant="body2" sx={{ color: 'silver' }}>
-              Событие завершено
-            </Typography>
+              <Typography variant="body2" sx={{ color: 'silver' }}>
+                Событие завершено
+              </Typography>
             )}
             <Container>
               {oneEventCard.statusId === 4 && oneEventCard.userId === user.id && (
@@ -87,11 +87,11 @@ export default function EventCard({ oneEventCard }) {
               )}
 
               {oneEventCard.statusId === 5 && oneEventCard.userId === user.id
-              && (
-              <Button variant="text" onClick={() => changeStatus(oneEventCard)}>
-                Завершить событие
-              </Button>
-              )}
+                && (
+                  <Button variant="text" onClick={() => changeStatus(oneEventCard)}>
+                    Завершить событие
+                  </Button>
+                )}
 
               {/* {oneEventCard.userId === user.id ? (
                 <Button variant="text" onClick={() => deleteOneEvent(oneEventCard.id)}>

@@ -14,7 +14,8 @@ import CreateEvent from './components/CreateEvent/CreateEvent';
 import EventPage from './components/EventPage/EventPage';
 import Ankets from './components/Ankets/Ankets';
 import Page404 from './components/404/Page404';
-import './index.css'; // для удаления margin в body добавляю этот файл стилей, в котором устанавливаю margin: 0 для body
+import AboutUs from './components/AboutUs/AboutUs';
+import './index.css';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/signIn" element={<SignIn />} />
+        <Route path="/aboutUs" element={<AboutUs />} />
         <Route path="/allEvents" element={<AllEvents />} />
         <Route path="/archiveEvents" element={<ArchivePage />} />
         <Route path="/lk" element={<LKabinet />} />
