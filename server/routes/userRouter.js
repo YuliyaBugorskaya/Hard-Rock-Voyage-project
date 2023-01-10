@@ -46,7 +46,9 @@ router.post('/signin', async (req, res) => {
   }
   return res.sendStatus(500);
 });
+
 router.post('/check', (req, res) => {
+  console.log(req.session.user);
   if (req.session.user) {
     return res.json(req.session.user);
   }
@@ -56,4 +58,5 @@ router.get('/logout', (req, res) => {
   req.session.destroy();
   res.clearCookie('sid').sendStatus(200);
 });
+
 module.exports = router;

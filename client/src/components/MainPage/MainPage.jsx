@@ -35,7 +35,9 @@ export default function MainPage() {
           <Grid xs={6} sx={{ padding: '5px', cursor: 'pointer' }}>
             <Item>
               <CardForMainPage key={el.id} oneEventCard={el} />
+
             </Item>
+
           </Grid>
         ))}
       </Grid>
