@@ -32,8 +32,8 @@ export default function NavBar() {
 
   return (
     <Box>
-      <AppBar position="static">
-        <Toolbar style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <AppBar position="static" sx={{ backgroundColor: '#222c3c' }}>
+        <Toolbar style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} sx={{ fontFamily: 'Geometria' }}>
           <div>
             <Link href="/" underline="none">
               <Button variant="text" sx={{ color: 'white' }}>Главная страница</Button>

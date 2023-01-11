@@ -44,7 +44,7 @@ export default function EventCard({ oneEventCard }) {
             component="img"
             alt="green iguana"
             height="140"
-            image={oneEventCard.image}
+            image={`http://localhost:3001/${oneEventCard.image}`}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
