@@ -36,10 +36,17 @@ function createWebSocketConnection() {
   return new WebSocket(process.env.REACT_APP_WSURL);
 }
 
+function* sendPush(socket) {
+  while (true) {
+    const message = yield take('SEND_PUSH');
+    socket.send(JSON.stringify(message));
+  }
+}
+
 function* wsWorker(action) {
   const socket = yield call(createWebSocketConnection);
   const socketChannel = yield call(createSocketChannel, socket, action);
-  //   yield fork(enterRoom, socket);
+  yield fork(sendPush, socket);
   //   yield fork(codeUpdate, socket);
   while (true) {
     try {

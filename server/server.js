@@ -69,11 +69,11 @@ wss.on('connection', (ws, request) => {
 
   app.locals.ws.set(id, { ws, user: request.session.user, room: false });
 
-  // for (const [, wsClient] of app.locals.ws) {
-  //   wsClient.ws.send(JSON.stringify(
-  //     { type: 'ONLINE_USERS', payload: Array.from(app.locals.ws.values()).map((el) => el.user) },
-  //   ));
-  // }
+  for (const [, wsClient] of app.locals.ws) {
+    wsClient.ws.send(JSON.stringify(
+      { type: 'ONLINE_USERS', payload: Array.from(app.locals.ws.values()).map((el) => el.user) },
+    ));
+  }
 
   ws.on('message', (message) => {
     console.log('message from frontend', JSON.parse(message), id);
@@ -100,11 +100,11 @@ wss.on('connection', (ws, request) => {
   });
   ws.on('close', () => {
     app.locals.ws.delete(id);
-    // for (const [, wsClient] of app.locals.ws) {
-    //   wsClient.ws.send(JSON.stringify(
-    //     { type: 'ONLINE_USERS', payload: Array.from(app.locals.ws.values()).map((el) => el.user) },
-    //   ));
-    // }
+    for (const [, wsClient] of app.locals.ws) {
+      wsClient.ws.send(JSON.stringify(
+        { type: 'ONLINE_USERS', payload: Array.from(app.locals.ws.values()).map((el) => el.user) },
+      ));
+    }
   });
 });
 
