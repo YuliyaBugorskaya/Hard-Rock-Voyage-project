@@ -15,9 +15,11 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
 import AddPointMap from '../Map/AddPointMap';
+import PointForm from '../Map/PointForm';
 // import { getUserPage } from '../../redux/YanaSlices/userPageSlice';
 
 export default function EventPage() {
+  const [switcher, setSwitcher] = useState(true);
   const [input, setInput] = useState('');
 
   const inputHandler = (e) => {
@@ -148,7 +150,13 @@ export default function EventPage() {
         {OneEvent.userId === user.id
           && (
             <Box>
-              <AddPointMap />
+              {switcher
+                ? (
+                  <AddPointMap setSwitcher={setSwitcher} switcher={switcher} />
+                )
+                : (
+                  <PointForm setSwitcher={setSwitcher} switcher={switcher} />
+                )}
             </Box>
           )}
         {OneEvent.statusId === 2

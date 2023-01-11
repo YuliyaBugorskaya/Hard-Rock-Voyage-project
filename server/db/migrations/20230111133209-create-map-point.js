@@ -30,11 +30,8 @@ module.exports = {
           key: 'id',
         },
       },
-      latitude: {
-        type: Sequelize.STRING,
-      },
-      longitude: {
-        type: Sequelize.STRING,
+      coordinates: {
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,

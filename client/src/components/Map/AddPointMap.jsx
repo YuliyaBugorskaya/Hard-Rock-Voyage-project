@@ -1,9 +1,15 @@
 /* eslint-disable no-undef */
 import React from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getAllCoords, newCoords } from '../../redux/MaratSlices/coordSlice';
 // import axios from 'axios';
 
-export default function AddPointMap() {
-  const [pointArr, setPointArr] = React.useState([]);
+export default function AddPointMap({ setSwitcher, switcher }) {
+  const [coordinates, setCoordinates] = React.useState([]);
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
   React.useEffect(() => {
     // eslint-disable-next-line no-use-before-define
     ymaps.ready(init);
@@ -71,7 +77,7 @@ export default function AddPointMap() {
             iconContentLayout: ymaps.templateLayoutFactory.createClass('{{ properties.request|raw }}'),
           });
         });
-        setPointArr(arrPoints);
+        setCoordinates(arrPoints);
       });
 
       // А вот так можно отключить режим редактирования.
@@ -82,23 +88,20 @@ export default function AddPointMap() {
       // myMap.geoObjects.add(myCollection);
     }
   }, []);
-  // const submitHandler = async (e) => {
-  //   e.preventDefault();
-  //   const response = await axios.post('/points', pointArr);
-  //   if (response.ok) {
-  //     console.log('horosho');
-  //   } else {
-  //     alert('Ne horosho!');
-  //   }
-  // };
-  const clickHandler = () => (console.log(pointArr));
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(newCoords(coordinates, id));
+    dispatch(getAllCoords(id));
+    setSwitcher(!switcher);
+  };
+
   return (
     // eslint-disable-next-line react/style-prop-object
     // <form onSubmit={submitHandler}>
-    <>
+    <form onSubmit={submitHandler}>
       <div id="map" style={{ width: '900px', height: '800px' }} />
-      <button type="button" onClick={clickHandler}>Нажми</button>
-    </>
+      <button type="submit">Нажми</button>
+    </form>
     // {/* </form> */}
   );
 }
