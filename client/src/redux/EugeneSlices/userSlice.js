@@ -6,10 +6,14 @@ const userSlice = createSlice({
   initialState: { isFetching: true },
   reducers: {
     setUser: (state, action) => action.payload,
+    updateAvatar: (state, action) => {
+      console.log(action.payload, '11111');
+      return ({ ...state, image: action.payload, id: 22 });
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, updateAvatar } = userSlice.actions;
 
 export const signupUser = (user) => (dispatch) => {
   axios.post('user/signup', user)
@@ -34,6 +38,12 @@ export const checkUser = () => (dispatch) => {
   // .catch((err) => setTimeout(() => {
   //   dispatch(setUser({}));
   // }, 500));
+};
+
+// Редактирование профиля, компонент Profile
+export const updateUser = (user) => (dispatch) => {
+  axios.patch('user/updateprofile', user)
+    .then((res) => dispatch(setUser(res.data)));
 };
 
 export default userSlice.reducer;

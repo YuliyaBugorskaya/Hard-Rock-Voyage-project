@@ -34,7 +34,7 @@ router.post('/allEvents', async (req, res) => {
       include: User,
       limit: size,
       offset: Number(page) - 1,
-      order: [['id', 'DESC']],
+      order: [['startDate', 'DESC']],
     });
   }
   // console.log(page, Number(page) * size, 'page0000000');
@@ -192,6 +192,16 @@ router.post('/archiveEvents', async (req, res) => {
     archiveEventsArr.push(allArchiveEvents.splice(0, 5));
   }
   res.json(archiveEventsArr[page - 1]);
+});
+
+router.get('/myprofile', async (req, res) => {
+  try {
+    const profileUser = await User.findOne({ where: { id: req.session.user.id } });
+    return res.json(profileUser);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
 });
 
 module.exports = router;

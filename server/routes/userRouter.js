@@ -62,4 +62,19 @@ router.get('/logout', (req, res) => {
   res.clearCookie('sid').sendStatus(200);
 });
 
+router.patch('/updateprofile/', async (req, res) => {
+  try {
+    await User.update(
+      { name: req.body.name, email: req.body.email, password: req.body.password },
+      { where: { id: req.session.user.id } },
+    );
+    const one = await User.findOne({ where: { id: req.session.user.id } });
+
+    return res.json(one);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
+});
+
 module.exports = router;
