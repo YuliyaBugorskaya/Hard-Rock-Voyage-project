@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   Box, Button, FormControl, TextField, Typography,
 } from '@mui/material';
@@ -11,10 +12,11 @@ export default function SignUp() {
     setInput(e.target.value);
   };
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(signupUser(Object.fromEntries(new FormData(e.target))));
-    window.location = '/';
+    navigate('/');
   };
 
   return (

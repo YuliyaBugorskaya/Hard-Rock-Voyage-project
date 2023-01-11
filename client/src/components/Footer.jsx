@@ -19,7 +19,7 @@ export default function NavBar() {
               <Button variant="text" sx={{ color: 'white' }}>Главная страница</Button>
             </Link>
           </Typography>
-          <Link href="/" underline="none">
+          <Link href="/aboutUs" underline="none">
             <Button variant="text" sx={{ color: 'white' }}>О нас</Button>
           </Link>
           <Link href="/" underline="none">

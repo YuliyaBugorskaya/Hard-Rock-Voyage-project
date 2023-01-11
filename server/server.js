@@ -5,11 +5,19 @@ const morgan = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
+const path = require('path');
 const userRouter = require('./routes/userRouter');
 const apiRouter = require('./routes/apiRouter');
+const uploadRouter = require('./routes/uploadRouter');
+
+const commentRouter = require('./routes/commentRouter');
 require('dotenv').config();
 
 const app = express();
+app.use(express.json({ extended: true })); // все запросы между клиентом и сервером в формате json
+// путь к статике для получения фото
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 const PORT = process.env.PORT || 3001;
 app.use(cors({
   credentials: true,
@@ -37,6 +45,7 @@ const sessionParser = session({
 app.use(sessionParser);
 app.use('/user', userRouter);
 app.use('/api', apiRouter);
+app.use('/comment', commentRouter);
 
 const server = http.createServer(app);
 

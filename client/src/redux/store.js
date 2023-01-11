@@ -4,6 +4,7 @@ import allEventsSlice from './YanaSlices/allEventsSlice';
 import oneEventSlice from './YanaSlices/oneEventSlice';
 import userPageSlice from './YanaSlices/userPageSlice';
 import userSlice from './EugeneSlices/userSlice';
+import archiveEventsSlice from './YuliyaSlices/archiveEventsSlice';
 import LKSlice from './YanaSlices/LKSlice';
 import statusSlice from './YanaSlices/statusSlice';
 import rootSaga from '../sagas/rootSaga';
@@ -15,9 +16,10 @@ const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
   reducer: {
     allEvents: allEventsSlice,
-    oneEvent: oneEventSlice,
     userPage: userPageSlice,
     user: userSlice,
+    oneEvent: oneEventSlice,
+    archiveEvents: archiveEventsSlice,
     LK: LKSlice,
     status: statusSlice,
     onLineUsers: onlineUsersSlice,
