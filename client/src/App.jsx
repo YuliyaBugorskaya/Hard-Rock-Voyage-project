@@ -1,6 +1,6 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import Footer from './components/Footer';
 import MainPage from './components/MainPage/MainPage';
 import NavBar from './components/NavBar';
@@ -16,7 +16,17 @@ import Ankets from './components/Ankets/Ankets';
 import Page404 from './components/404/Page404';
 import './index.css'; // для удаления margin в body добавляю этот файл стилей, в котором устанавливаю margin: 0 для body
 
+// const socket = new WebSocket('ws://localhost:3001');
 function App() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  // console.log(socket);
+
+  useEffect(() => {
+    if (user.id) {
+      dispatch({ type: 'SOCKET_INIT' });
+    }
+  }, [user]);
   return (
     <>
       <NavBar />
