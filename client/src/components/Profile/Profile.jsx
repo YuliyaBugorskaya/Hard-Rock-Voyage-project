@@ -6,7 +6,7 @@ import {
   Box, Button, FormControl, TextField, Typography,
 } from '@mui/material';
 import {
-  Row, Col, Form, Container,
+  Row, Col, Container,
 } from 'reactstrap';
 import { updateAvatar, updateUser } from '../../redux/EugeneSlices/userSlice';
 

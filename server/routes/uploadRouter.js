@@ -10,6 +10,8 @@ router.post('/avatar', fileMiddleware.single('avatar'), async (req, res) => {
       { image: req.file?.path },
       { where: { id: req.session.user.id } },
     );
+    // обновляем фото у юзера в сессии, чтобы обновлять фото в навбаре после
+    // замены ее в профиле без перезагрузки
     req.session.user = { ...req.session.user, image: req.file?.path };
     res.json({ path: `${req.file.path}` });
     if (req.file) {
@@ -19,5 +21,7 @@ router.post('/avatar', fileMiddleware.single('avatar'), async (req, res) => {
     console.log('error');
   }
 });
+
+
 
 module.exports = router;

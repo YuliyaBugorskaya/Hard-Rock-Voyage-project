@@ -8,7 +8,7 @@ const userSlice = createSlice({
     setUser: (state, action) => action.payload,
     updateAvatar: (state, action) => {
       console.log(action.payload, '11111');
-      return ({ ...state, image: action.payload, id: 22 });
+      return ({ ...state, image: action.payload });
     },
   },
 });
