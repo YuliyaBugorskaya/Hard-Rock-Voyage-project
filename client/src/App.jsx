@@ -16,12 +16,19 @@ import Ankets from './components/Ankets/Ankets';
 import Page404 from './components/404/Page404';
 import AboutUs from './components/AboutUs/AboutUs';
 import './index.css';
+import Notification from './components/NotificationComponent/Notification';
 
 // const socket = new WebSocket('ws://localhost:3001');
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  // console.log(socket);
+  const notification = useSelector((state) => state.notification);
+
+  useEffect(() => {
+    if (notification.message) {
+      console.log('hi');
+    }
+  }, [notification]);
 
   useEffect(() => {
     if (user.id) {
@@ -31,6 +38,7 @@ function App() {
   return (
     <>
       <NavBar />
+      {notification?.message ? (<Notification />) : (null)}
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/signUp" element={<SignUp />} />

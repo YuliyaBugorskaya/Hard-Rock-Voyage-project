@@ -34,15 +34,14 @@ export default function EventPage() {
   };
   const { id } = useParams();
 
+  const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
     const textData = Object.fromEntries(new FormData(e.target));
-    console.log(textData);
-    axios.post(`comment/addComment/${id}`, textData);
-    console.log(input);
-    console.log(e.target.value);
+    axios.post(`comment/addComment/${id}`, textData)
+      .then(() => dispatch({ type: 'SEND_PUSH', payload: { message: textData, id } }));
   };
-  const dispatch = useDispatch();
+
   // const navigate = useNavigate();
 
   // const UserInfo = useSelector((state) => state.userPage);
@@ -61,7 +60,6 @@ export default function EventPage() {
   useEffect(() => {
     dispatch(getOneEvent(id));
   }, [id]);
-  console.log(OneEvent);
 
   return (
     <>

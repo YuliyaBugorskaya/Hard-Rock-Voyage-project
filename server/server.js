@@ -86,22 +86,22 @@ wss.on('connection', (ws, request) => {
 
   ws.on('message', (message) => {
     console.log('message from frontend', JSON.parse(message), id);
-    // const fromFront = JSON.parse(message);
+    const fromFront = JSON.parse(message);
 
-    // switch (fromFront.type) {
-    //   case 'CODE_UPDATE':
-    //     for (const [, wsClient] of app.locals.ws) {
-    //       if (wsClient.user.id != id) {
-    //         wsClient.ws.send(JSON.stringify(
-    //           { type: 'CODE_SEND', payload: fromFront.payload },
-    //         ));
-    //       }
-    //     }
-    //     break;
+    switch (fromFront.type) {
+      case 'SEND_PUSH':
+        for (const [, wsClient] of app.locals.ws) {
+          if (wsClient.user.id != id) {
+            wsClient.ws.send(JSON.stringify(
+              { type: 'PUSH_SEND', payload: { message: fromFront.payload.message.message, user_id: fromFront.payload.id } },
+            ));
+          }
+        }
+        break;
 
-    //   default:
-    //     break;
-    // }
+      default:
+        break;
+    }
 
     //
     // Here we can now use session parameters.

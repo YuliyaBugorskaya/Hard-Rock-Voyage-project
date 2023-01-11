@@ -1,9 +1,10 @@
 import {
-  take, put, call, fork, takeLatest, takeEvery,
+  take, put, call, fork, takeEvery,
 } from 'redux-saga/effects';
 import { eventChannel, END } from 'redux-saga';
 import { setOnLine } from '../redux/YanaSlices/onlineSlice';
 import { setOnLineUsers } from '../redux/YanaSlices/onlineUsersSlice';
+import { setNotification } from '../redux/YanaSlices/NotificationSlice';
 
 function createSocketChannel(socket, action) {
   return eventChannel((emit) => {
@@ -18,10 +19,11 @@ function createSocketChannel(socket, action) {
     };
 
     socket.onmessage = function (event) {
+      console.log('EVENT', event);
       emit(JSON.parse(event.data));
     };
 
-    socket.onclose = function (event) {
+    socket.onclose = function () {
       emit({ type: 'SOCKET_DISCONNECT' });
     };
 
@@ -62,8 +64,9 @@ function* wsWorker(action) {
         case 'ONLINE_USERS':
           yield put(setOnLineUsers(backAction.payload));
           break;
-        case 'CODE_SEND':
-          yield put(setCode(backAction.payload));
+        case 'PUSH_SEND':
+          console.log('here');
+          yield put(setNotification(backAction.payload));
           break;
         default:
           break;

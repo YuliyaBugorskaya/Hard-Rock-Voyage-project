@@ -25,8 +25,10 @@ export default function MainPage() {
   console.log(allEvents, 'allEvents---');
 
   useEffect(() => {
-    dispatch(getAllEvents());
+    dispatch(getAllEvents({ page: 1 }));
   }, []);
+
+  if (!allEvents || !allEvents.events) return null;
 
   return (
     <Box sx={{ width: '100%' }}>

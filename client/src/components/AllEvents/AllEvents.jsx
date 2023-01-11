@@ -36,6 +36,8 @@ export default function AllEvents() {
     dispatch(setFilterData(event.target.value));
   };
 
+  if (!allEvents || !allEvents.events) return null;
+
   return (
     <Box
       className="allEvents"
@@ -77,7 +79,7 @@ export default function AllEvents() {
               Создать событие
             </Button>
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-              {allEvents.events
+              {allEvents?.events
                 // ?.filter((el) => isFilter || el.startDate === input)
                 .map((el) => (
                   <EventCard key={el.id} oneEventCard={el} />

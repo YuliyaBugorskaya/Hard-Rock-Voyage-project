@@ -21,6 +21,7 @@ export const {
 } = allEventsSlice.actions;
 
 export const getAllEvents = (body) => (dispatch) => {
+  console.log('bbbbbbody', body);
   axios.post('/api/allEvents', body)
     // .then((res) => console.log('res.dsta.content', res.data));
     .then((res) => dispatch(setAllEvents({ events: res.data.content, dates: res.data.allDates, countPage: res.data.totalPages })));

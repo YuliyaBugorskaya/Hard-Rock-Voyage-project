@@ -6,7 +6,7 @@ import { Typography } from '@mui/material';
 import Container from '@mui/material/Container';
 import List from '@mui/material/List';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import EventCard from '../EventCard/EventCard';
 import { getUserLK } from '../../redux/YanaSlices/LKSlice';
 
@@ -15,12 +15,17 @@ export default function LKabinet() {
   const UserInfo = useSelector((state) => state.user);
   const userLK = useSelector((state) => state.LK);
 
+  const location = useLocation();
+  const { setOpen } = location.state || 1; // it's  kostyl :)
+
   useEffect(() => {
+    if (setOpen) {
+      setOpen(false);
+    }
     dispatch(getUserLK());
   }, []);
 
   const navigate = useNavigate();
-
   const seeApplies = () => {
     // dispatch(getUserPage(OneEvent.userId));
     navigate('/adminAnkets');

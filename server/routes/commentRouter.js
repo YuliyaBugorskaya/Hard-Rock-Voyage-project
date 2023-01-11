@@ -9,6 +9,7 @@ router.post('/addComment/:id', async (req, res) => {
   console.log('req.session.user', req.session.user);
   console.log('req.params', req.params);
   console.log(message);
+
   const comment = await Anket.create({
     message, actionId: req.params.id, userId: req.session.user.id, statusId: 1,
   });

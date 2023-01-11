@@ -28,7 +28,9 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.Action, {
         foreignKey: 'userId',
       });
-
+      this.hasMany(models.actionAdmin, {
+        foreignKey: 'userId',
+      });
       // define association here
     }
   }

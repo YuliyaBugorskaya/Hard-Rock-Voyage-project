@@ -2,7 +2,7 @@ const express = require('express');
 const fileMiddleware = require('../middleware/file');
 
 const {
-  Action, User, Members,
+  Action, User, Members, Anket, Notification,
 } = require('../db/models');
 
 const router = express.Router();
@@ -16,7 +16,7 @@ router.post('/allEvents', async (req, res) => {
   const allDates = await Action.findAll({
     attributes: ['startDate'],
   });
-  console.log(req.body, 'req.body++++++1111');
+  console.log('========>', req.body, 'req.body++++++2222');
   // console.log(await Action.findAll({ where: { startDate: input } }), 'blabla');
   if (input) {
     console.log('input - ', input);
@@ -30,6 +30,7 @@ router.post('/allEvents', async (req, res) => {
     console.log('res-', JSON.parse(JSON.stringify(allEvents)));
   } else {
     console.log('ya tut', page);
+
     allEvents = await Action.findAndCountAll({
       include: User,
       limit: size,
@@ -170,7 +171,7 @@ router.post('/addEvent', fileMiddleware.single('fotoFromVoyage'), async (req, re
     startPoint,
     finishPoint,
     image: req.file?.path,
-    statusId: 1,
+    statusId: 4,
     userId: req.session.user?.id || 1,
     // userId: req.session.user.id,
   });
@@ -192,6 +193,43 @@ router.post('/archiveEvents', async (req, res) => {
     archiveEventsArr.push(allArchiveEvents.splice(0, 5));
   }
   res.json(archiveEventsArr[page - 1]);
+});
+
+router.get('/allankets', async (req, res) => {
+  try {
+    const allAnkets = await Anket.findAll({ order: [['id', 'DESC']], include: Action });
+    console.log(allAnkets);
+    return res.json(allAnkets);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
+});
+
+router.patch('/anket/yes', async (req, res) => {
+  try {
+    const { statusId } = req.body;
+    const { id } = req.body;
+    await Anket.update({ statusId: statusId + 2 }, { where: { id } });
+    const updatedYes = await Anket.findOne({ where: { id } });
+    return res.json(updatedYes);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
+});
+
+router.patch('/anket/no', async (req, res) => {
+  try {
+    const { statusId } = req.body;
+    const { id } = req.body;
+    await Anket.update({ statusId: statusId + 1 }, { where: { id } });
+    const updatedNo = await Anket.findOne({ where: { id } });
+    return res.json(updatedNo);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
 });
 
 module.exports = router;
