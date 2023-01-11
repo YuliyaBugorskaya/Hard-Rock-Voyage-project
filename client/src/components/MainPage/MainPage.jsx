@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import { getAllEvents } from '../../redux/YuliyaSlices/allEventsSlice';
+import { getAllEvents } from '../../redux/YanaSlices/allEventsSlice';
 import CardForMainPage from '../EventCard/CardForMainPage';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -20,26 +20,36 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function MainPage() {
   const dispatch = useDispatch();
-  const allEvents = useSelector((state) => state.allEvents);
-
-  console.log(allEvents, 'allEvents---');
+  const allEvents = useSelector((state) => state.allEventsYana);
 
   useEffect(() => {
     dispatch(getAllEvents());
   }, []);
 
+  console.log(allEvents, 'allEvents---');
   return (
-    <Box sx={{ width: '100%' }}>
-      <Grid container rowSpacing={1} columnSpacing={2} sx={{ margin: '5px', width: '98%' }}>
-        {allEvents.events?.map((el) => (
-          <Grid xs={6} sx={{ padding: '5px', cursor: 'pointer' }}>
-            <Item>
-              <CardForMainPage key={el.id} oneEventCard={el} />
-            </Item>
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
+    <>
+      <Box
+        sx={{
+          m: 1,
+          fontSize: '0.875rem',
+          fontWeight: '700',
+        }}
+      >
+        У нас свой парк мотоциклов HONDA XR250, на которых можно заехать в такие места, куда и пешком не всегда зайдешь, а тем более не заедешь на более тяжелой технике или автомобиле. Вы можете участвовать в наших турах на своем мотоцикле, подходящим для внедорожных путешествий. Маршруты проходят в основном по второстепенным дорогам из асфальта, камней, песка и грязи.
+      </Box>
+      <Box sx={{ width: '100%' }}>
+        <Grid container rowSpacing={1} columnSpacing={2} sx={{ margin: '5px', width: '98%' }}>
+          {allEvents?.map((el) => (
+            <Grid xs={6} sx={{ padding: '5px', cursor: 'pointer' }}>
+              <Item>
+                <CardForMainPage key={el.id} oneEventCard={el} />
+              </Item>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </>
   );
 }
 
