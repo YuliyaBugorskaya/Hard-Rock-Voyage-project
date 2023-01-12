@@ -30,6 +30,17 @@ export default function EventPage() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const [comment, setComment] = useState(false);
+
+  const handleClickOpenComment = () => {
+    setComment(true);
+  };
+
+  const handleCloseComment = () => {
+    setComment(false);
+  };
+
   const { id } = useParams();
 
   const submitHandler = (e) => {
@@ -174,7 +185,7 @@ export default function EventPage() {
               <AddPointMap />
             </Box>
           )}
-        {OneEvent.statusId === 6
+        {/* {OneEvent.statusId === 1
           && (
             <>
               <Button onClick={handleClickOpenComment} variant="text">

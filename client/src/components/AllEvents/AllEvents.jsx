@@ -44,6 +44,7 @@ export default function AllEvents() {
         '& .MuiTextField-root': { m: 0.4, width: '55ch' },
         backgroundImage: `url(${'../css/images/_7Fr1kwBRRM.jpeg'})`,
         backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
       }}
       display="flex"
       noValidate
@@ -73,10 +74,14 @@ export default function AllEvents() {
                 </Select>
               </FormControl>
             </Box>
-            <Button sx={{ width: '100%', maxWidth: 360, marginTop: '10px' }} onClick={changeHandler} variant="contained" color="secondary">
+            <Button sx={{ width: '100%', maxWidth: 360, my: '10px' }} onClick={changeHandler} variant="contained" color="secondary">
               Создать событие
             </Button>
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            <List sx={{
+              width: '100%', maxWidth: 360, bgcolor: 'background.paper', padding: '0',
+              // borderStartStartRadius: '20px', borderEndStartRadius: '20px',
+            }}
+            >
               {allEvents.events
                 // ?.filter((el) => isFilter || el.startDate === input)
                 .map((el) => (
@@ -90,6 +95,10 @@ export default function AllEvents() {
                 page={Number(page)}
                 count={allEvents.countPage}
                 onChange={(_, num) => setPage(num)}
+                sx={{
+                  display: 'flex', justifyContent: 'center', marginBottom: '10px', backgroundColor: 'white', paddingY: '10px',
+                  // borderEndEndRadius: '20px',
+                }}
                 renderItem={(item) => (
                   <PaginationItem
                     component={NavLink}

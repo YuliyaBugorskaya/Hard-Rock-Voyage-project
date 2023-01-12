@@ -17,6 +17,12 @@ export const {
   setAllEvents, setFilterData, addEvent, deleteEvent,
 } = allEventsSlice.actions;
 
+export const getAllEventsForMain = () => (dispatch) => {
+  axios.get('/api/allevents')
+    .then((res) => dispatch(setAllEvents(res.data)));
+  // .then((res) => dispatch(console.log(res.data)));
+};
+
 export const getAllEvents = (body) => (dispatch) => {
   axios.post('/api/allEvents', body)
     .then((res) => dispatch(setAllEvents({ events: res.data.content, dates: res.data.allDates, countPage: res.data.totalPages })));

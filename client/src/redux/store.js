@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import allEventsSlice from './YuliyaSlices/allEventsSlice';
+import allEventsSliceYana from './YanaSlices/allEventsSlice';
 import oneEventSlice from './YanaSlices/oneEventSlice';
 import userPageSlice from './YanaSlices/userPageSlice';
 import userSlice from './EugeneSlices/userSlice';
@@ -10,6 +11,7 @@ import commentSlice from './EugeneSlices/commentSlice';
 
 export default configureStore({
   reducer: {
+    allEventsYana: allEventsSliceYana,
     allEvents: allEventsSlice,
     userPage: userPageSlice,
     user: userSlice,

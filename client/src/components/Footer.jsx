@@ -12,7 +12,7 @@ export default function NavBar() {
         marginTop: 'auto',
       }}
     >
-      <AppBar position="static" sx={{ flexGrow: 1, backgroundColor: 'blue' }}>
+      <AppBar position="static" sx={{ flexGrow: 1, backgroundColor: '#222c3c' }}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link href="/">
