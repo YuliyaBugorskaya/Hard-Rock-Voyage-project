@@ -7,10 +7,11 @@ import {
   Button, FormControl, TextField, Typography,
 } from '@mui/material';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 export default function PointForm({ OneEvent }) {
   const [switcher, setSwitcher] = useState(false);
-  const [coordinates, setCoordinates] = useState([]);
+  // const [coordinates, setCoordinates] = useState([]);
   const [img, setImg] = useState(null);
   const [input, setInput] = useState({
     titlePoint: '',
@@ -25,14 +26,14 @@ export default function PointForm({ OneEvent }) {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const coordinatesJSON = JSON.stringify(coordinates);
+    // const coordinatesJSON = JSON.stringify(coordinates);
     const data = new FormData();
-    data.append('coordinates', coordinatesJSON);
+    // data.append('coordinates', coordinatesJSON);
     data.append('image', img);
     data.append('titlePoint', input.titlePoint);
     data.append('description', input.description);
     data.append('actionId', id);
-    await axios.post('/map/addEvent', data, {
+    await axios.post('/map/addPoint', data, {
       headers: {
         'content-type': 'multipart/form-data',
       },
@@ -56,6 +57,7 @@ export default function PointForm({ OneEvent }) {
 
       const balloonLayout = ymaps.templateLayoutFactory.createClass("<div class='my-balloon'>"
         + `
+        <a href='#' class='close'>X</a>
         <button id="button" type="button">${switcher}</button>
       `, {
 
@@ -73,7 +75,8 @@ export default function PointForm({ OneEvent }) {
         },
 
         onCounterClick() {
-          setSwitcher(!switcher);
+          setSwitcher(true);
+          console.log(switcher);
         },
       });
 

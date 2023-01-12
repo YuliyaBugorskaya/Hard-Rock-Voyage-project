@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
 import PointForm from '../Map/PointForm';
+import GetAllPoints from '../Map/GetAllPoints';
 // import { getUserPage } from '../../redux/YanaSlices/userPageSlice';
 
 export default function EventPage() {
@@ -148,9 +149,14 @@ export default function EventPage() {
           Тут будут участники
         </Typography>
         {OneEvent.userId === user.id
-          && (
+          ? (
             <Box>
               <PointForm setSwitcher={setSwitcher} switcher={switcher} OneEvent={OneEvent} />
+            </Box>
+          )
+          : (
+            <Box>
+              <GetAllPoints setSwitcher={setSwitcher} switcher={switcher} OneEvent={OneEvent} />
             </Box>
           )}
         {OneEvent.statusId === 6

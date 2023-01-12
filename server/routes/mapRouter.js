@@ -37,36 +37,27 @@ router.post('/add/:id', async (req, res) => {
   }
 });
 
-router.post('/addPoint/:id', fileMiddleware.single('fotoFromVoyage'), async (req, res) => {
+router.post('/addPoint', fileMiddleware.single('fotoFromVoyage'), async (req, res) => {
   const {
-    title,
+    titlePoint,
     description,
-    fulldescription,
-    startDate,
-    finishDate,
-    startPoint,
-    finishPoint,
+    img,
+    id,
     coordinates,
   } = req.body;
   // const coordinatesJSON = JSON.stringify(coordinates)
   // console.log(req, '00000000');
   console.log(req.body, 'req.body-----------------------');
-  const newEvent = await Action.create({
-    title,
+  const newEvent = await MapPoint.create({
+    titlePoint,
     description,
-    fulldescription,
-    startDate,
-    finishDate,
-    startPoint,
-    finishPoint,
     image: req.file?.path,
     coordinates,
-    statusId: 1,
-    userId: req.session.user?.id || 1,
+    actionId: id,
     // userId: req.session.user.id,
   });
   console.log(JSON.parse(JSON.stringify(newEvent)), 'newEvent======>');
-  res.json(newEvent);
+  res.sendStatus(200);
 });
 
 module.exports = router;
