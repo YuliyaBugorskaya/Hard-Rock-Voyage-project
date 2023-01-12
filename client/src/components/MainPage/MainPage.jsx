@@ -26,8 +26,6 @@ export default function MainPage() {
     dispatch(getAllEvents());
   }, []);
 
-  // if (!allEvents || !allEvents.events) return null;
-
   console.log(allEvents, 'allEvents---');
   return (
     <>
@@ -36,19 +34,19 @@ export default function MainPage() {
           m: 1,
           fontSize: '6rem',
           fontWeight: '600',
-          // backgroundColor: '#222c3c',
+
           textAlign: 'center',
           color: '#222c3c',
         }}
       >
-        Мотопутешествия
+        Hard Rock Voyage
       </Box>
       <Box
         sx={{
           m: 1,
           fontSize: '2rem',
           fontWeight: '700',
-          // backgroundColor: '#222c3c',
+
           textAlign: 'center',
           color: '#222c3c',
           marginBottom: '30px',

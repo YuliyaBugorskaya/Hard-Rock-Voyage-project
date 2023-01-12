@@ -15,8 +15,8 @@ const mapRouter = require('./routes/mapRouter');
 require('dotenv').config();
 
 const app = express();
-app.use(express.json({ extended: true })); // все запросы между клиентом и сервером в формате json
-// путь к статике для получения фото
+app.use(express.json({ extended: true }));
+
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const PORT = process.env.PORT || 3001;
@@ -50,79 +50,9 @@ app.use('/comment', commentRouter);
 app.use('/map', mapRouter);
 app.use('/upload', uploadRouter);
 
-// userId: {
-//   type: Sequelize.INTEGER,
-//   allowNull: false,
-//   references: {
-//     model: {
-//       tableName: 'Users',
-//     },
-//     key: 'id',
-//   },
-// },
-// statusId: {
-//   type: Sequelize.INTEGER,
-//   allowNull: false,
-//   references: {
-//     model: {
-//       tableName: 'Statuses',
-//     },
-//     key: 'id',
-//   },
-// },
-
-// static associate(models) {
-//   this.hasMany(models.Member, {
-//     foreignKey: 'actionId',
-//   });
-//   this.hasMany(models.Anket, {
-//     foreignKey: 'actionId',
-//   });
-//   this.hasMany(models.Notification, {
-//     foreignKey: 'actionId',
-//   });
-//   this.hasMany(models.Comment, {
-//     foreignKey: 'actionId',
-//   });
-//   this.hasMany(models.MapPoint, {
-//     foreignKey: 'actionId',
-//   });
-//   this.hasMany(models.Rating, {
-//     foreignKey: 'actionId',
-//   });
-//   this.belongsTo(models.User, {
-//     foreignKey: 'userId',
-//   });
-
-//   this.belongsTo(models.Status, {
-//     foreignKey: 'statusId',
-//   });
-//   // define association here
-// }
-
-// actionId: {
-//   type: Sequelize.INTEGER,
-//   allowNull: false,
-//   references: {
-//     model: {
-//       tableName: 'Actions',
-//     },
-//     key: 'id',
-//   },
-// },
-
-// static associate(models) {
-//   this.belongsTo(models.Action, {
-//     foreignKey: 'actionId',
-//   });
-//   // define association here
-// }
-
 const server = http.createServer(app);
 
 const wss = new WebSocketServer({ clientTracking: false, noServer: true });
-
-// part1
 
 server.on('upgrade', (request, socket, head) => {
   console.log('Parsing session from request...');
@@ -141,8 +71,6 @@ server.on('upgrade', (request, socket, head) => {
     });
   });
 });
-
-// part2
 
 wss.on('connection', (ws, request) => {
   const { id, name } = request.session.user;
@@ -169,31 +97,9 @@ wss.on('connection', (ws, request) => {
           }
         }
         break;
-      // case 'SEND_YES':
-      //   for (const [, wsClient] of app.locals.ws) {
-      //     if (wsClient.user.id != id) {
-      //       wsClient.ws.send(JSON.stringify(
-      //         { type: 'PUSH_SEND', payload: { user_id: fromFront.payload } },
-      //       ));
-      //     }
-      //   }
-      //   break;
-      // case 'SEND_NO':
-      //   for (const [, wsClient] of app.locals.ws) {
-      //     if (wsClient.user.id != id) {
-      //       wsClient.ws.send(JSON.stringify(
-      //         { type: 'PUSH_SEND', payload: { user_id: fromFront.payload } },
-      //       ));
-      //     }
-      //   }
-        // break;
       default:
         break;
     }
-
-    //
-    // Here we can now use session parameters.
-    //
   });
   ws.on('close', () => {
     app.locals.ws.delete(id);

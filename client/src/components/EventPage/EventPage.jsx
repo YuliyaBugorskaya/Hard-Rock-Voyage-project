@@ -9,14 +9,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
 } from '@mui/material';
-// import { useNavigate } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
 import PointForm from '../Map/PointForm';
 import GetAllPoints from '../Map/GetAllPoints';
-// import { getUserPage } from '../../redux/YanaSlices/userPageSlice';
 
 export default function EventPage() {
   const [input, setInput] = useState('');
@@ -33,10 +32,6 @@ export default function EventPage() {
   };
 
   const [comment, setComment] = useState(false);
-
-  // const handleClickOpenComment = () => {
-  //   setComment(true);
-  // };
 
   const handleCloseComment = () => {
     setComment(false);
@@ -78,9 +73,8 @@ export default function EventPage() {
       .then((res) => {
         setFoto((res.data.path));
         console.log(res.data);
-      //   setOpen(false);
       })
-      // .then(() => setInput({ text: '' }))
+
       .then(() => setOpen(false));
   };
 
@@ -88,21 +82,10 @@ export default function EventPage() {
     dispatch(getOneEvent(id));
   }, [id]);
   console.log(OneEvent);
-  // const [comment, setComment] = useState(false);
 
   const handleClickOpenComment = () => {
     setComment(true);
   };
-
-  // const handleCloseComment = () => {
-  //   setComment(false);
-  // };
-
-  // const [comment, setComment] = useState(false);
-
-  // const handleCloseComment = () => {
-  //   setComment(false);
-  // };
 
   return (
     <>
@@ -120,11 +103,6 @@ export default function EventPage() {
         </Typography>
         <Typography component="div">
           Организатор:
-          {' '}
-          {/* <Button variant="text" onClick={() => seeUser()}>
-            {' '}
-            {OneEvent?.User?.name}
-          </Button> */}
 
         </Typography>
         <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>

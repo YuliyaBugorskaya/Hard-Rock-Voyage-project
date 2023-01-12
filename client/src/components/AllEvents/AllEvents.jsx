@@ -69,9 +69,9 @@ export default function AllEvents() {
                   value={input}
                   label="дата"
                 >
-                  {allEvents.dates?.map((el) => (<MenuItem key={el.id} value={el.startDate}>{el.startDate}</MenuItem>
-                  ))}
-                  {/* allEvents.events[i].id */}
+                  {allEvents.dates?.map((el) => el.startDate).filter((el, ind) => ind === allEvents.dates.map((element) => element.startDate).indexOf(el))
+                    .map((el) => (<MenuItem key={el.id} value={el}>{el}</MenuItem>
+                    ))}
                   <MenuItem value="All">All</MenuItem>
                 </Select>
               </FormControl>
@@ -96,7 +96,6 @@ export default function AllEvents() {
             }}
             >
               {allEvents.events
-                // ?.filter((el) => isFilter || el.startDate === input)
                 .map((el) => (
                   <EventCard key={el.id} oneEventCard={el} />
                 ))}

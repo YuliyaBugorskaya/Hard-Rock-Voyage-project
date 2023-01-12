@@ -5,11 +5,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { changeAnketStatusNo, changeAnketStatusYes } from '../../redux/YanaSlices/anketsSlice';
-// import { getMembers } from '../../redux/YanaSlices/membersSlice';
 
 export default function OneAnket({ oneAnket }) {
   const dispatch = useDispatch();
-  //   const user = useSelector((state) => state.user);
 
   const { id } = useParams;
   const changeStatusTrue = (event) => {

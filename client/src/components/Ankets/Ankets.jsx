@@ -8,10 +8,9 @@ import { getAllAnkets } from '../../redux/YanaSlices/anketsSlice';
 
 export default function Ankets() {
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.user);
+
   const allAnkets = useSelector((state) => state.allAnkets);
 
-  // const myAnkets = allAnkets?.filter((el) => el.actionId.userId === user.id);
   console.log(allAnkets);
 
   useEffect(() => {

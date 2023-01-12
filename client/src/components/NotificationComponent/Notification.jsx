@@ -10,7 +10,6 @@ const Alert = React.forwardRef((props, ref) => <MuiAlert elevation={6} ref={ref}
 export default function Notification() {
   const [open, setOpen] = React.useState(false);
   console.log(open, 'OPENOPEN');
-  //   const navigate = useNavigate();
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {

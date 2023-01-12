@@ -10,7 +10,6 @@ import axios from 'axios';
 import AddPointMap from '../Map/AddPointMap';
 
 export default function CreateEvent() {
-  // стейт для текущего события и стейт для картинки, которую загружаем из инпута
   const [coordinates, setCoordinates] = useState([]);
   const [img, setImg] = useState(null);
   const [input, setInput] = useState({
@@ -139,15 +138,6 @@ export default function CreateEvent() {
                 value={input.finishPoint || ''}
                 onChange={inputHandler}
               />
-              {/* <TextField
-                  required
-                  name="image"
-                  id="outlined-input"
-                  label="image"
-                  type="text"
-                  value={input.image || ''}
-                  onChange={inputHandler}
-                /> */}
               <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
                 Добавь фото к событию
               </Typography>

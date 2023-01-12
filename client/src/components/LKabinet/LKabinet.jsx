@@ -27,7 +27,6 @@ export default function LKabinet() {
 
   const navigate = useNavigate();
   const seeApplies = () => {
-    // dispatch(getUserPage(OneEvent.userId));
     navigate('/adminAnkets');
   };
 
