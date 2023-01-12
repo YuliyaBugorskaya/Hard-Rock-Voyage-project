@@ -32,17 +32,33 @@ export default function MainPage() {
       <Box
         sx={{
           m: 1,
-          fontSize: '0.875rem',
-          fontWeight: '700',
+          fontSize: '6rem',
+          fontWeight: '600',
+          // backgroundColor: '#222c3c',
+          textAlign: 'center',
+          color: '#222c3c',
         }}
       >
-        У нас свой парк мотоциклов HONDA XR250, на которых можно заехать в такие места, куда и пешком не всегда зайдешь, а тем более не заедешь на более тяжелой технике или автомобиле. Вы можете участвовать в наших турах на своем мотоцикле, подходящим для внедорожных путешествий. Маршруты проходят в основном по второстепенным дорогам из асфальта, камней, песка и грязи.
+        Мотопутешествия
+      </Box>
+      <Box
+        sx={{
+          m: 1,
+          fontSize: '2rem',
+          fontWeight: '700',
+          // backgroundColor: '#222c3c',
+          textAlign: 'center',
+          color: '#222c3c',
+          marginBottom: '30px',
+        }}
+      >
+        Совмещаем отдых и приключения
       </Box>
       <Box sx={{ width: '100%' }}>
         <Grid container rowSpacing={1} columnSpacing={2} sx={{ margin: '5px', width: '98%' }}>
           {allEvents?.map((el) => (
             <Grid xs={6} sx={{ padding: '5px', cursor: 'pointer' }}>
-              <Item>
+              <Item sx={{ backgroundColor: 'white', opacity: '0.9' }}>
                 <CardForMainPage key={el.id} oneEventCard={el} />
               </Item>
             </Grid>
