@@ -32,7 +32,7 @@ export default function LKabinet() {
   };
 
   const changeProfile = () => {
-    // поменЯем инфо
+    navigate('/myprofile');
   };
 
   return (

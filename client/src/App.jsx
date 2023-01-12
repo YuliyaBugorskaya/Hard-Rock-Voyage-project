@@ -19,6 +19,7 @@ import './index.css';
 import Notification from './components/NotificationComponent/Notification';
 import NotificationAnswer from './components/NotificationComponent/NotificationAnswer';
 import NotificationNo from './components/NotificationComponent/NotificationNo';
+import Profile from './components/Profile/Profile';
 
 // const socket = new WebSocket('ws://localhost:3001');
 function App() {
@@ -57,6 +58,7 @@ function App() {
         <Route path="/event/:id" element={<EventPage />} />
         <Route path="/adminAnkets" element={<Ankets />} />
         <Route path="*" element={<Page404 />} />
+        <Route path="/myprofile" element={<Profile />} />
 
       </Routes>
       <Footer />

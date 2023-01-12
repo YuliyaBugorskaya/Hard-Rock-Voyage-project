@@ -14,12 +14,14 @@ import NotificationSlice from './YanaSlices/NotificationSlice';
 import anketsSlice from './YanaSlices/anketsSlice';
 import membersSlice from './YanaSlices/membersSlice';
 import notificationNoSlice from './YanaSlices/notificationNoSlice';
+import coordSlice from './MaratSlices/coordSlice';
 import NotificationYesSlice from './YanaSlices/NotificationYesSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: {
+    allEventsYana: allEventsSliceYana,
     allEvents: allEventsSlice,
     userPage: userPageSlice,
     user: userSlice,
@@ -34,6 +36,7 @@ const store = configureStore({
     members: membersSlice,
     notificationYes: NotificationYesSlice,
     notificationNo: notificationNoSlice,
+    coords: coordSlice,
   },
   middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), sagaMiddleware],
 });

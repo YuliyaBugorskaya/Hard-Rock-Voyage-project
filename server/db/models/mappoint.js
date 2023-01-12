@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+
     static associate(models) {
       this.belongsTo(models.Action, {
         foreignKey: 'actionId',
@@ -22,8 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     image: DataTypes.TEXT,
     start: DataTypes.BOOLEAN,
     actionId: DataTypes.INTEGER,
-    latitude: DataTypes.STRING,
-    longitude: DataTypes.STRING,
+    coordinates: DataTypes.TEXT,
   }, {
     sequelize,
     modelName: 'MapPoint',

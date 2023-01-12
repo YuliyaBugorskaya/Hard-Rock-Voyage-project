@@ -48,9 +48,8 @@ module.exports = (sequelize, DataTypes) => {
     finishDate: DataTypes.STRING,
     startPoint: DataTypes.STRING,
     finishPoint: DataTypes.STRING,
-    mapStart: DataTypes.STRING,
-    mapFinish: DataTypes.STRING,
     image: DataTypes.TEXT,
+    coordinates: DataTypes.TEXT,
     userId: DataTypes.INTEGER,
     statusId: DataTypes.INTEGER,
   }, {
