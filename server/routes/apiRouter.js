@@ -2,7 +2,7 @@ const express = require('express');
 const fileMiddleware = require('../middleware/file');
 
 const {
-  Action, User, Comment, Anket, Notification,
+  Action, User, Comment, Anket, Notification, Status,
 } = require('../db/models');
 
 const router = express.Router();
@@ -245,8 +245,8 @@ router.post('/addComments', fileMiddleware.single('fotoComment'), async (req, re
   res.json({ path: req.file.path });
 });
 
-router.get('/allevents', async (req, res) => {
-  const allEvents = await Action.findAll({ include: User, order: [['startDate', 'ASC']] });
+router.get('/alleventsmainpage', async (req, res) => {
+  const allEvents = await Action.findAll({ include: User, Status, order: [['startDate', 'ASC']] });
   const removed = allEvents.splice(0, 4);
   console.log(allEvents);
   res.json(removed);

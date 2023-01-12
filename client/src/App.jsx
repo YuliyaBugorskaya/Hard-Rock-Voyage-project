@@ -29,7 +29,7 @@ function App() {
   const notificationYes = useSelector((state) => state.notificationYes);
   const notificationNo = useSelector((state) => state.notificationNo);
   useEffect(() => {
-    if (notification.message) {
+    if (notification?.message) {
       console.log('hi');
     }
   }, [notification]);

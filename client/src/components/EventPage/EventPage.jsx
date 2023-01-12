@@ -19,7 +19,7 @@ import GetAllPoints from '../Map/GetAllPoints';
 // import { getUserPage } from '../../redux/YanaSlices/userPageSlice';
 
 export default function EventPage() {
-  const [input, setInput] = useState({ text: '' });
+  const [input, setInput] = useState('');
   const [img, setImg] = useState(null);
   const [foto, setFoto] = useState(null);
   const [open, setOpen] = useState(false);
@@ -52,13 +52,16 @@ export default function EventPage() {
       .then(() => dispatch({ type: 'SEND_PUSH', payload: { message: textData, id } }));
   };
 
-
   const OneEvent = useSelector((state) => state.oneEvent);
 
   const user = useSelector((state) => state.user);
 
   const inputHandler = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const changeHandler = (e) => {
+    setInput(e.target.value);
   };
 
   const submitHandlerComments = (e) => {
@@ -96,10 +99,6 @@ export default function EventPage() {
   // };
 
   // const [comment, setComment] = useState(false);
-
-  const handleClickOpenComment = () => {
-    setComment(true);
-  };
 
   // const handleCloseComment = () => {
   //   setComment(false);
@@ -171,7 +170,7 @@ export default function EventPage() {
                     minRows={3}
                     placeholder="Minimum 3 rows"
                     value={input}
-                    onChange={inputHandler}
+                    onChange={changeHandler}
                     style={{ width: '-webkit-fill-available', marginTop: '10px' }}
                   />
                 </DialogContent>

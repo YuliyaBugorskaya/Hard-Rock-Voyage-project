@@ -4,8 +4,8 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import { getAllEvents } from '../../redux/YanaSlices/allEventsSlice';
 import CardForMainPage from '../EventCard/CardForMainPage';
+import { getAllEvents } from '../../redux/YanaSlices/allEventsSlice';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -23,11 +23,12 @@ export default function MainPage() {
   const allEvents = useSelector((state) => state.allEventsYana);
 
   useEffect(() => {
-    dispatch(getAllEvents({ page: 1 }));
+    dispatch(getAllEvents());
   }, []);
 
-  if (!allEvents || !allEvents.events) return null;
+  // if (!allEvents || !allEvents.events) return null;
 
+  console.log(allEvents, 'allEvents---');
   return (
     <>
       <Box

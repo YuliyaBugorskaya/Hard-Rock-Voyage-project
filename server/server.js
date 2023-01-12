@@ -48,6 +48,7 @@ app.use('/user', userRouter);
 app.use('/api', apiRouter);
 app.use('/comment', commentRouter);
 app.use('/map', mapRouter);
+app.use('/upload', uploadRouter);
 
 // userId: {
 //   type: Sequelize.INTEGER,
@@ -98,10 +99,6 @@ app.use('/map', mapRouter);
 //   });
 //   // define association here
 // }
-
-
-
-
 
 // actionId: {
 //   type: Sequelize.INTEGER,
@@ -189,7 +186,7 @@ wss.on('connection', (ws, request) => {
       //       ));
       //     }
       //   }
-        break;
+        // break;
       default:
         break;
     }

@@ -11,7 +11,7 @@ import Container from '@mui/material/Container';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
-import { deleteEvent, changeStatus5 } from '../../redux/YanaSlices/allEventsSlice';
+import { deleteEvent, changeStatus5 } from '../../redux/YuliyaSlices/allEventsSlice';
 
 export default function EventCard({ oneEventCard }) {
   const dispatch = useDispatch();
