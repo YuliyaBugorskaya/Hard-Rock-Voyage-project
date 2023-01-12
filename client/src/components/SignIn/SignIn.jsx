@@ -18,7 +18,7 @@ export default function SignIn() {
     <Box
       component="form"
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
+        '& .MuiTextField-root': { m: 1, width: '25ch', marginX: '0' },
       }}
       autoComplete="off"
       display="flex"
@@ -28,9 +28,12 @@ export default function SignIn() {
       minHeight="80vh"
       onSubmit={submitHandler}
     >
-      <FormControl>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Login
+      <FormControl sx={{
+        backgroundColor: 'white', borderRadius: '10px', padding: '20px',
+      }}
+      >
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center', marginBottom: '10px' }}>
+          Авторизация
         </Typography>
         <TextField
           name="email"
@@ -41,15 +44,17 @@ export default function SignIn() {
         />
         <TextField
           name="password"
+          required
           id="outlined-password-input"
-          label="Password"
+          label="Пароль"
           type="password"
         />
         <Button
           variant="contained"
           type="submit"
+          sx={{ backgroundColor: '#222c3c', marginTop: '10px' }}
         >
-          Sign In
+          Авторизоваться
 
         </Button>
       </FormControl>
