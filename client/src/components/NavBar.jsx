@@ -4,6 +4,8 @@ import {
 } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
+import { purple } from '@mui/material/colors';
 import { logoutUser, checkUser } from '../redux/EugeneSlices/userSlice';
 
 export default function NavBar() {
@@ -30,16 +32,27 @@ export default function NavBar() {
     setAnchorEl(null);
   };
 
+  const ColorButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(purple[500]),
+    '&:hover': {
+      backgroundColor: '#384d6e',
+      borderBottom: '2px solid white',
+      borderTop: '2px solid white',
+    },
+    height: '84px',
+    borderRadius: '0',
+  }));
+
   return (
     <Box>
       <AppBar position="static" sx={{ backgroundColor: '#222c3c' }}>
         <Toolbar style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} sx={{ fontFamily: 'Geometria' }}>
           <div>
             <Link href="/" underline="none">
-              <Button variant="text" sx={{ color: 'white' }}>Главная страница</Button>
+              <ColorButton variant="text" sx={{ color: 'white' }}>Главная страница</ColorButton>
             </Link>
             <Link href="/allEvents" underline="none">
-              <Button variant="text" sx={{ color: 'white' }}>События</Button>
+              <ColorButton variant="text" sx={{ color: 'white' }}>События</ColorButton>
             </Link>
           </div>
           <div>
@@ -55,7 +68,7 @@ export default function NavBar() {
             }}
           >
             <Link href="/archiveEvents" underline="none">
-              <Button variant="text" sx={{ color: 'white' }}>Завершенные события</Button>
+              <ColorButton variant="text" sx={{ color: 'white' }}>Завершенные события</ColorButton>
             </Link>
 
             <div>
@@ -65,6 +78,11 @@ export default function NavBar() {
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"
+                sx={{
+                  '&:hover': {
+                    backgroundColor: '#384d6e',
+                  },
+                }}
               >
                 {
                   user?.image
@@ -106,7 +124,7 @@ export default function NavBar() {
                         </Link>
                         <Link href="/" underline="none">
                           <MenuItem onClick={handleClose}>
-                            <Button onClick={logoutHandler} variant="text" sx={{ color: 'blue' }}>Выйти</Button>
+                            <Button onClick={logoutHandler} variant="text" sx={{ color: 'blue', width: '100%', justifyContent: 'flex-start' }}>Выйти</Button>
                           </MenuItem>
                         </Link>
                       </>

@@ -14,6 +14,7 @@ body {
   background-image: url('../public/css/images/_7Fr1kwBRRM.jpeg');
   background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
 }
 
 #root {
