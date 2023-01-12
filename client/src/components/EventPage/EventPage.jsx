@@ -33,9 +33,9 @@ export default function EventPage() {
 
   const [comment, setComment] = useState(false);
 
-  const handleClickOpenComment = () => {
-    setComment(true);
-  };
+  // const handleClickOpenComment = () => {
+  //   setComment(true);
+  // };
 
   const handleCloseComment = () => {
     setComment(false);
@@ -86,20 +86,21 @@ export default function EventPage() {
   }, [id]);
   console.log(OneEvent);
 
-  const [comment, setComment] = useState(false);
+  // const [comment, setComment] = useState(false);
 
   const handleClickOpenComment = () => {
     setComment(true);
   };
 
-  const handleCloseComment = () => {
-    setComment(false);
-  };
+  // const handleCloseComment = () => {
+  //   setComment(false);
+  // };
 
   return (
     <>
       <CssBaseline />
       <Container fixed>
+
         <CardMedia
           component="img"
           alt="green iguana"
@@ -185,15 +186,15 @@ export default function EventPage() {
               <AddPointMap />
             </Box>
           )}
-        {/* {OneEvent.statusId === 1
+        {OneEvent.statusId === 6
           && (
             <>
               <Button onClick={handleClickOpenComment} variant="text">
                 Оставить комментарий
               </Button>
-              {/* <Button variant="text">
+              <Button variant="text">
                 Добавить фотографии в альбом
-              </Button> */}
+              </Button>
 
               <Dialog open={comment} onClose={handleCloseComment}>
                 <DialogTitle>Поделись впечатлениями</DialogTitle>
@@ -216,7 +217,7 @@ export default function EventPage() {
                     />
                     {
     foto
-      ? (
+      && (
         <img
           className="logo"
           src={`http://localhost:3001/${foto}`}
@@ -226,17 +227,6 @@ export default function EventPage() {
             height: 'auto',
           }}
         />
-      )
-      : (<div />
-    // <img
-    //   className="logo"
-    //   src="/css/images/e6032679a39049fef749cd97d2ef7d4f.jpeg"
-    //   alt="avatar"
-    //   style={{
-    //     width: '100%',
-    //     height: 'auto',
-    //   }}
-    // />
       )
   }
                     <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
