@@ -46,6 +46,7 @@ app.use(sessionParser);
 app.use('/user', userRouter);
 app.use('/api', apiRouter);
 app.use('/comment', commentRouter);
+app.use('/upload', uploadRouter);
 
 // const server = http.createServer(app);
 
