@@ -28,6 +28,7 @@ module.exports = {
     'no-param-reassign': 0,
     'react/jsx-props-no-spreading': 0,
     'max-len': 0,
+    'no-console': 0,
 
   },
 };
