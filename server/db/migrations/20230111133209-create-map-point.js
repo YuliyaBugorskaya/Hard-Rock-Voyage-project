@@ -1,62 +1,37 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Actions', {
+    await queryInterface.createTable('MapPoints', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      title: {
+      titlePoint: {
         type: Sequelize.STRING,
       },
       description: {
-        type: Sequelize.STRING,
-      },
-      fulldescription: {
         type: Sequelize.TEXT,
-      },
-      startDate: {
-        type: Sequelize.STRING,
-      },
-      finishDate: {
-        type: Sequelize.STRING,
-      },
-      startPoint: {
-        type: Sequelize.STRING,
-      },
-      finishPoint: {
-        type: Sequelize.STRING,
-      },
-      mapStart: {
-        type: Sequelize.STRING,
-      },
-      mapFinish: {
-        type: Sequelize.STRING,
       },
       image: {
         type: Sequelize.TEXT,
       },
-      userId: {
+      start: {
+        type: Sequelize.BOOLEAN,
+      },
+      actionId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: {
-            tableName: 'Users',
+            tableName: 'Actions',
           },
           key: 'id',
         },
       },
-      statusId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: {
-            tableName: 'Statuses',
-          },
-          key: 'id',
-        },
+      coordinates: {
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
@@ -69,6 +44,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Actions');
+    await queryInterface.dropTable('MapPoints');
   },
 };

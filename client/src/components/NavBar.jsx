@@ -16,7 +16,7 @@ export default function NavBar() {
     dispatch(logoutUser());
     navigate('/');
   };
-
+  console.log(user, 'user---++');
   useEffect(() => {
     dispatch(checkUser());
   }, []);
@@ -84,7 +84,14 @@ export default function NavBar() {
                   },
                 }}
               >
-                <img src="https://uploads.scratch.mit.edu/get_image/user/35278713_60x60.png" alt="avatar" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
+                {
+                  user?.image
+                    ? (
+                      <img src={`http://localhost:3001/${user.image}`} alt="avatar" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
+                    )
+                    : (<img src="/css/images/avatar-scaled.jpeg" alt="avatar" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
+                    )
+                    }
               </IconButton>
               <Menu
                 id="menu-appbar"

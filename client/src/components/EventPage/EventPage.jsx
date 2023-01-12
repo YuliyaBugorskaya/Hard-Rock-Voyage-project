@@ -14,15 +14,14 @@ import Box from '@mui/material/Box';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
-import AddPointMap from '../Map/AddPointMap';
+import PointForm from '../Map/PointForm';
+import GetAllPoints from '../Map/GetAllPoints';
 // import { getUserPage } from '../../redux/YanaSlices/userPageSlice';
 
 export default function EventPage() {
-  const [input, setInput] = useState('');
-
-  const inputHandler = (e) => {
-    setInput(e.target.value);
-  };
+  const [input, setInput] = useState({ text: '' });
+  const [img, setImg] = useState(null);
+  const [foto, setFoto] = useState(null);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -35,9 +34,9 @@ export default function EventPage() {
 
   const [comment, setComment] = useState(false);
 
-  const handleClickOpenComment = () => {
-    setComment(true);
-  };
+  // const handleClickOpenComment = () => {
+  //   setComment(true);
+  // };
 
   const handleCloseComment = () => {
     setComment(false);
@@ -54,30 +53,55 @@ export default function EventPage() {
     console.log(e.target.value);
   };
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
-
-  // const UserInfo = useSelector((state) => state.userPage);
 
   const OneEvent = useSelector((state) => state.oneEvent);
-  // const seeUser = () => {
-  //   dispatch(getUserPage(OneEvent.userId));
-  //   navigate(`/user/${OneEvent.userId}`);
-  // };
+
   const user = useSelector((state) => state.user);
 
-  // const regOnJourney = () => {
-  //   // тут модалка на регистрацию на событие
-  // };
+  const inputHandler = (e) => {
+    setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const submitHandlerComments = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append('fotoComment', img);
+    data.append('actionId', id);
+    data.append('text', input.text);
+    axios.post('/api/addComments', data, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    })
+      .then((res) => {
+        setFoto((res.data.path));
+        console.log(res.data);
+      //   setOpen(false);
+      })
+      // .then(() => setInput({ text: '' }))
+      .then(() => setOpen(false));
+  };
 
   useEffect(() => {
     dispatch(getOneEvent(id));
   }, [id]);
   console.log(OneEvent);
 
+  // const [comment, setComment] = useState(false);
+
+  const handleClickOpenComment = () => {
+    setComment(true);
+  };
+
+  // const handleCloseComment = () => {
+  //   setComment(false);
+  // };
+
   return (
     <>
       <CssBaseline />
       <Container fixed>
+
         <CardMedia
           component="img"
           alt="green iguana"
@@ -100,7 +124,7 @@ export default function EventPage() {
           <CardMedia
             component="img"
             sx={{ width: 151 }}
-            image={OneEvent?.User?.image}
+            image={`http://localhost:3001/${OneEvent?.User?.image}`}
             alt="Live from space album cover"
           />
 
@@ -158,46 +182,79 @@ export default function EventPage() {
           Тут будут участники
         </Typography>
         {OneEvent.userId === user.id
-          && (
+          ? (
             <Box>
-              <AddPointMap />
+              <PointForm OneEvent={OneEvent} />
+            </Box>
+          )
+          : (
+            <Box>
+              <GetAllPoints OneEvent={OneEvent} />
             </Box>
           )}
-        {/* {OneEvent.statusId === 1
+        {OneEvent.statusId === 6
           && (
-          )} */}
-        <Button variant="text" onClick={handleClickOpenComment}>
-          Оставить комментарий
-        </Button>
-        <Dialog open={comment} onClose={handleCloseComment}>
-          <DialogTitle>Комментарий</DialogTitle>
-          <form onSubmit={submitHandler}>
-            <DialogContent>
-              <DialogContentText>
-                Оставьте комментарий
-              </DialogContentText>
-              <TextareaAutosize
-                name="fghj"
-                type="text"
-                variant="standard"
-                autoFocus
-                aria-label="minimum height"
-                minRows={3}
-                placeholder="Minimum 3 rows"
-                value={input}
-                onChange={inputHandler}
-                style={{ width: '-webkit-fill-available', marginTop: '10px' }}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleCloseComment}>Отмена</Button>
-              <Button type="submit" onClick={handleCloseComment}>Отправить</Button>
-            </DialogActions>
-          </form>
-        </Dialog>
-        <Button variant="text">
-          Добавить фотографии в альбом
-        </Button>
+            <>
+              <Button onClick={handleClickOpenComment} variant="text">
+                Оставить комментарий
+              </Button>
+              <Button variant="text">
+                Добавить фотографии в альбом
+              </Button>
+
+              <Dialog open={comment} onClose={handleCloseComment}>
+                <DialogTitle>Поделись впечатлениями</DialogTitle>
+                <form onSubmit={submitHandlerComments}>
+                  <DialogContent>
+                    <DialogContentText>
+                      Оставьте комментарий и фото
+                    </DialogContentText>
+                    <TextareaAutosize
+                      name="text"
+                      type="text"
+                      variant="standard"
+                      autoFocus
+                      aria-label="minimum height"
+                      minRows={3}
+                      placeholder="Minimum 3 rows"
+                      value={input.text}
+                      onChange={inputHandler}
+                      style={{ width: '-webkit-fill-available', marginTop: '10px' }}
+                    />
+                    {
+    foto
+      && (
+        <img
+          className="logo"
+          src={`http://localhost:3001/${foto}`}
+          alt="avatar"
+          style={{
+            width: '100%',
+            height: 'auto',
+          }}
+        />
+      )
+  }
+                    <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
+                      Добавь фото к событию
+                    </Typography>
+                    <input
+                      name="fotoFromVoyage"
+                      type="file"
+                      onChange={(e) => {
+                        setImg(e.target.files[0]);
+                        console.log(e.target.files[0], 'e.target.files[0]--------->');
+                      }}
+                    />
+                    <Button type="submit" variant="contained">Отправить</Button>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleCloseComment}>Выйти</Button>
+                  </DialogActions>
+                </form>
+              </Dialog>
+            </>
+          )}
       </Container>
     </>
   );

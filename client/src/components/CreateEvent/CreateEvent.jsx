@@ -7,9 +7,11 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AddPointMap from '../Map/AddPointMap';
 
 export default function CreateEvent() {
   // стейт для текущего события и стейт для картинки, которую загружаем из инпута
+  const [coordinates, setCoordinates] = useState([]);
   const [img, setImg] = useState(null);
   const [input, setInput] = useState({
     title: '',
@@ -29,7 +31,9 @@ export default function CreateEvent() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    const coordinatesJSON = JSON.stringify(coordinates);
     const data = new FormData();
+    data.append('coordinates', coordinatesJSON);
     data.append('fotoFromVoyage', img);
     data.append('title', input.title);
     data.append('description', input.description);
@@ -47,6 +51,8 @@ export default function CreateEvent() {
     setInput({});
     navigate('/lk');
   };
+  React.useEffect(() => { console.log(coordinates); }, [coordinates]);
+
   return (
     <Container style={{
       display: 'flex',
@@ -142,7 +148,7 @@ export default function CreateEvent() {
                   value={input.image || ''}
                   onChange={inputHandler}
                 /> */}
-              <Typography variant="h10" component="h5" sx={{ flexGrow: 1, marginY: '10px' }}>
+              <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
                 Добавь фото к событию
               </Typography>
               <input
@@ -153,9 +159,11 @@ export default function CreateEvent() {
                   console.log(e.target.files[0], 'e.target.files[0]--------->');
                 }}
               />
-              <Button type="submit" variant="contained" sx={{ marginY: '10px', backgroundColor: '#222c3c' }}>
-                Создать событие
-              </Button>
+              <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
+                Постройте ваш маршрут
+              </Typography>
+              <AddPointMap setCoordinates={setCoordinates} />
+              <Button type="submit" variant="contained" style={{ marginBottom: '10px' }}>Создать событие</Button>
             </FormControl>
           </Form>
         </Col>
