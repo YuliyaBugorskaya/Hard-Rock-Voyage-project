@@ -2,9 +2,10 @@
 /* eslint-disable react/no-this-in-sfc */
 /* eslint-disable no-undef */
 import React, { useState } from 'react';
-import { Form, Col, Row } from 'reactstrap';
+// import { Form, Col, Row } from 'reactstrap';
 import {
-  Button, FormControl, TextField, Typography,
+  // eslint-disable-next-line no-unused-vars
+  Button, DialogActions, FormControl, TextareaAutosize, TextField, Typography,
 } from '@mui/material';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -17,30 +18,56 @@ export default function PointForm({ OneEvent }) {
     titlePoint: '',
     description: '',
   });
+  const [foto, setFoto] = useState(null);
+
+  const { id } = useParams();
+
+  const submitHandlerComments = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append('fotoPoint', img);
+    data.append('actionId', id);
+    data.append('titlePoint', input.titlePoint);
+    data.append('description', input.description);
+    axios.post('/map/addPoint', data, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    })
+      .then((res) => {
+        setFoto((res.data.path));
+        console.log(res.data);
+        //   setOpen(false);
+      })
+      // .then(() => setInput({ text: '' }))
+      .then(() => setOpen(false));
+  };
+
+  const handleCloseComment = () => {
+    setComment(false);
+  };
 
   const inputHandler = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const { id } = useParams();
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    // const coordinatesJSON = JSON.stringify(coordinates);
-    const data = new FormData();
-    // data.append('coordinates', coordinatesJSON);
-    data.append('image', img);
-    data.append('titlePoint', input.titlePoint);
-    data.append('description', input.description);
-    data.append('actionId', id);
-    await axios.post('/map/addPoint', data, {
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    })
-      .then((res) => (res.data));
-    setInput({});
-  };
+  // const submitHandler = async (e) => {
+  //   e.preventDefault();
+  //   // const coordinatesJSON = JSON.stringify(coordinates);
+  //   const data = new FormData();
+  //   // data.append('coordinates', coordinatesJSON);
+  //   data.append('image', img);
+  //   data.append('titlePoint', input.titlePoint);
+  //   data.append('description', input.description);
+  //   data.append('actionId', id);
+  //   await axios.post('/map/addPoint', data, {
+  //     headers: {
+  //       'content-type': 'multipart/form-data',
+  //     },
+  //   })
+  //     .then((res) => (res.data));
+  //   setInput({});
+  // };
   // const [coordinates, setCoordinates] = useState([]);
   React.useEffect(() => {
     // eslint-disable-next-line no-use-before-define
@@ -124,66 +151,116 @@ export default function PointForm({ OneEvent }) {
         }}
       />
       <div>
-        <Row className="formRow">
-          <Col className="formCol">
-            <Form onSubmit={submitHandler}>
-              <FormControl
-                sx={{
-                  '& .MuiTextField-root': { m: 0.4, width: '55ch' },
+        <form onSubmit={submitHandlerComments}>
+          Оставьте комментарий и фото
+          <TextareaAutosize
+            name="titlePoint"
+            type="text"
+            variant="standard"
+            autoFocus
+            aria-label="minimum height"
+            minRows={3}
+            placeholder="Minimum 3 rows"
+            value={input.titlePoint}
+            onChange={inputHandler}
+            style={{ width: '-webkit-fill-available', marginTop: '10px' }}
+          />
+          <TextareaAutosize
+            name="description"
+            type="text"
+            variant="standard"
+            autoFocus
+            aria-label="minimum height"
+            minRows={3}
+            placeholder="Minimum 3 rows"
+            value={input.description}
+            onChange={inputHandler}
+            style={{ width: '-webkit-fill-available', marginTop: '10px' }}
+          />
+          {
+            foto
+            && (
+              <img
+                className="logo"
+                src={`http://localhost:3001/${foto}`}
+                alt="avatar"
+                style={{
+                  width: '100%',
+                  height: 'auto',
                 }}
-              >
-                <Typography variant="h6" component="h2" sx={{ flexGrow: 1 }}>
-                  Название остановки
-                </Typography>
-                <TextField
-                  name="titlePoint"
-                  required
-                  id="outlined-required"
-                  label="Title"
-                  type="text"
-                  value={input.title || ''}
-                  onChange={inputHandler}
-                />
-                <Typography variant="h6" component="h2" sx={{ flexGrow: 1 }}>
-                  Опишите свою остановку
-                </Typography>
-                <TextField
-                  name="description"
-                  required
-                  id="outlined-required"
-                  label="Title"
-                  type="text"
-                  value={input.title || ''}
-                  onChange={inputHandler}
-                />
-                {/* <TextField
-                  required
-                  name="image"
-                  id="outlined-input"
-                  label="image"
-                  type="text"
-                  value={input.image || ''}
-                  onChange={inputHandler}
-                /> */}
-                <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
-                  Добавь фото остановки своей поездки
-                </Typography>
-                <input
-                  name="fotoFromVoyage"
-                  type="file"
-                  onChange={(e) => {
-                    setImg(e.target.files[0]);
-                    console.log(e.target.files[0], 'e.target.files[0]--------->');
-                  }}
-                />
-                <Button type="submit" variant="contained" style={{ marginBottom: '10px' }}>Описать остановку</Button>
-              </FormControl>
-            </Form>
-          </Col>
-        </Row>
+              />
+            )
+          }
+          <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
+            Добавь фото к событию
+          </Typography>
+          <input
+            name="fotoFromVoyage"
+            type="file"
+            onChange={(e) => {
+              setImg(e.target.files[0]);
+              console.log(e.target.files[0], 'e.target.files[0]--------->');
+            }}
+          />
+          <Button type="submit" variant="contained">Отправить</Button>
+          <Button onClick={handleCloseComment}>Выйти</Button>
+        </form>
       </div>
     </div>
   );
 }
 
+// <Row className="formRow">
+//   <Col className="formCol">
+//     <Form onSubmit={submitHandler}>
+//       <FormControl
+//         sx={{
+//           '& .MuiTextField-root': { m: 0.4, width: '55ch' },
+//         }}
+//       >
+//         <Typography variant="h6" component="h2" sx={{ flexGrow: 1 }}>
+//           Название остановки
+//         </Typography>
+//         <TextField
+//           name="titlePoint"
+//           requiredconst [input, setInput] = useState({ text: '' });
+//           onChange={inputHandler}
+//         />
+//         <Typography variant="h6" component="h2" sx={{ flexGrow: 1 }}>
+//           Опишите свою остановку
+//         </Typography>
+//         <TextField
+//           name="description"
+//           required
+//           id="outlined-required"
+//           label="Title"
+//           type="text"
+//           value={input.title || ''}
+//           onChange={inputHandler}
+//         />
+//         {/* <TextField
+//           required
+//           name="image"
+//           id="outlined-input"
+//           label="image"
+//           type="text"
+//           value={input.image || ''}
+//           onChange={inputHandler}
+//         /> */}
+//         <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
+//           Добавь фото остановки своей поездки
+//         </Typography>
+//         <input
+//           name="fotoFromVoyage"
+//           type="file"
+//           onChange={(e) => {
+//             setImg(e.target.files[0]);
+//             console.log(e.target.files[0], 'e.target.files[0]--------->');
+//           }}
+//         />
+//         <Button type="submit" variant="contained" style={{ marginBottom: '10px' }}>Описать остановку</Button>
+//       </FormControl>
+//     </Form>
+//   </Col>
+// </Row>
 // 'searchControl', 'typeSelector'

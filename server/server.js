@@ -48,6 +48,7 @@ app.use('/user', userRouter);
 app.use('/api', apiRouter);
 app.use('/comment', commentRouter);
 app.use('/map', mapRouter);
+app.use('/upload', uploadRouter);
 
 // userId: {
 //   type: Sequelize.INTEGER,
