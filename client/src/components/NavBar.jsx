@@ -44,7 +44,7 @@ export default function NavBar() {
           </div>
           <div>
             <Link href="/" underline="none">
-              <img src="../css/images/motorcycle-clipart-biker.png" alt="biker" style={{ width: '80px', height: '80px' }} />
+              <img src="../css/images/IMG_0362.PNG" alt="biker" style={{ width: '100px', height: '80px' }} />
             </Link>
           </div>
 
