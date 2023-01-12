@@ -5,6 +5,8 @@ import { eventChannel, END } from 'redux-saga';
 import { setOnLine } from '../redux/YanaSlices/onlineSlice';
 import { setOnLineUsers } from '../redux/YanaSlices/onlineUsersSlice';
 import { setNotification } from '../redux/YanaSlices/NotificationSlice';
+import { setYes } from '../redux/YanaSlices/NotificationYesSlice';
+import { setNo } from '../redux/YanaSlices/notificationNoSlice';
 
 function createSocketChannel(socket, action) {
   return eventChannel((emit) => {
@@ -45,10 +47,26 @@ function* sendPush(socket) {
   }
 }
 
+function* sendYes(socket) {
+  while (true) {
+    const message = yield take('SEND_YES');
+    socket.send(JSON.stringify(message));
+  }
+}
+
+function* sendNo(socket) {
+  while (true) {
+    const message = yield take('SEND_NO');
+    socket.send(JSON.stringify(message));
+  }
+}
+
 function* wsWorker(action) {
   const socket = yield call(createWebSocketConnection);
   const socketChannel = yield call(createSocketChannel, socket, action);
   yield fork(sendPush, socket);
+  yield fork(sendYes, socket);
+  yield fork(sendNo, socket);
   //   yield fork(codeUpdate, socket);
   while (true) {
     try {
@@ -68,6 +86,22 @@ function* wsWorker(action) {
           console.log('here');
           yield put(setNotification(backAction.payload));
           break;
+        case 'PUSH_SEND_YES':
+          console.log('yes');
+          yield put(setYes(backAction.payload));
+          break;
+        case 'PUSH_SEND_NO':
+          console.log('no');
+          yield put(setNo(backAction.payload));
+          break;
+        // case 'SEND_YES':
+        //   console.log('yes');
+        //   yield put(setNotification(backAction.payload));
+        //   break;
+        // case 'SEND_NO':
+        //   console.log('no');
+        //   yield put(setNotification(backAction.payload));
+        //   break;
         default:
           break;
       }

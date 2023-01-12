@@ -98,7 +98,24 @@ wss.on('connection', (ws, request) => {
           }
         }
         break;
-
+      // case 'SEND_YES':
+      //   for (const [, wsClient] of app.locals.ws) {
+      //     if (wsClient.user.id != id) {
+      //       wsClient.ws.send(JSON.stringify(
+      //         { type: 'PUSH_SEND', payload: { user_id: fromFront.payload } },
+      //       ));
+      //     }
+      //   }
+      //   break;
+      // case 'SEND_NO':
+      //   for (const [, wsClient] of app.locals.ws) {
+      //     if (wsClient.user.id != id) {
+      //       wsClient.ws.send(JSON.stringify(
+      //         { type: 'PUSH_SEND', payload: { user_id: fromFront.payload } },
+      //       ));
+      //     }
+      //   }
+        break;
       default:
         break;
     }

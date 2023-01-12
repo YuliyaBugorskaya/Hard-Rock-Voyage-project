@@ -17,13 +17,16 @@ import Page404 from './components/404/Page404';
 import AboutUs from './components/AboutUs/AboutUs';
 import './index.css';
 import Notification from './components/NotificationComponent/Notification';
+import NotificationAnswer from './components/NotificationComponent/NotificationAnswer';
+import NotificationNo from './components/NotificationComponent/NotificationNo';
 
 // const socket = new WebSocket('ws://localhost:3001');
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const notification = useSelector((state) => state.notification);
-
+  const notificationYes = useSelector((state) => state.notificationYes);
+  const notificationNo = useSelector((state) => state.notificationNo);
   useEffect(() => {
     if (notification.message) {
       console.log('hi');
@@ -38,7 +41,9 @@ function App() {
   return (
     <>
       <NavBar />
-      {notification?.message ? (<Notification />) : (null)}
+      {notification ? (<Notification />) : (null)}
+      {notificationYes ? (<NotificationAnswer />) : (null)}
+      {notificationNo ? (<NotificationNo />) : (null)}
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/signUp" element={<SignUp />} />

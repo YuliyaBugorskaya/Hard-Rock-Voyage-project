@@ -12,6 +12,9 @@ import onlineSlice from './YanaSlices/onlineSlice';
 import onlineUsersSlice from './YanaSlices/onlineUsersSlice';
 import NotificationSlice from './YanaSlices/NotificationSlice';
 import anketsSlice from './YanaSlices/anketsSlice';
+import membersSlice from './YanaSlices/membersSlice';
+import notificationNoSlice from './YanaSlices/notificationNoSlice';
+import NotificationYesSlice from './YanaSlices/NotificationYesSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -28,6 +31,9 @@ const store = configureStore({
     online: onlineSlice,
     notification: NotificationSlice,
     allAnkets: anketsSlice,
+    members: membersSlice,
+    notificationYes: NotificationYesSlice,
+    notificationNo: notificationNoSlice,
   },
   middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), sagaMiddleware],
 });

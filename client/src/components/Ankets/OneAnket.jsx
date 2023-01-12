@@ -3,18 +3,23 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { changeAnketStatusNo, changeAnketStatusYes } from '../../redux/YanaSlices/anketsSlice';
+// import { getMembers } from '../../redux/YanaSlices/membersSlice';
 
 export default function OneAnket({ oneAnket }) {
   const dispatch = useDispatch();
   //   const user = useSelector((state) => state.user);
 
+  const { id } = useParams;
   const changeStatusTrue = (event) => {
     dispatch(changeAnketStatusYes(event));
+    dispatch({ type: 'SEND_YES', payload: id });
   };
 
   const changeStatusFalse = (event) => {
     dispatch(changeAnketStatusNo(event));
+    dispatch({ type: 'SEND_NO', payload: id });
   };
 
   return (

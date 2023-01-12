@@ -197,7 +197,7 @@ router.post('/archiveEvents', async (req, res) => {
 
 router.get('/allankets', async (req, res) => {
   try {
-    const allAnkets = await Anket.findAll({ order: [['id', 'DESC']], include: Action });
+    const allAnkets = await Anket.findAll({ order: [['id', 'DESC']], include: User });
     console.log(allAnkets);
     return res.json(allAnkets);
   } catch (error) {
@@ -209,9 +209,19 @@ router.get('/allankets', async (req, res) => {
 router.patch('/anket/yes', async (req, res) => {
   try {
     const { statusId } = req.body;
+    // const { actionId } = req.body;
+    const { userId } = req.body;
     const { id } = req.body;
     await Anket.update({ statusId: statusId + 2 }, { where: { id } });
+    for (const [, wsClient] of res.app.locals.ws) {
+      if (wsClient.user.id === userId) {
+        wsClient.ws.send(JSON.stringify(
+          { type: 'PUSH_SEND_YES', payload: { userId } },
+        ));
+      }
+    }
     const updatedYes = await Anket.findOne({ where: { id } });
+
     return res.json(updatedYes);
   } catch (error) {
     console.log(error);
@@ -219,12 +229,32 @@ router.patch('/anket/yes', async (req, res) => {
   }
 });
 
+// router.post('/members', async (req, res) => {
+//   try {
+//     const { actionId } = req.body;
+//     const { userId } = req.body;
+//     const newMember = await Members.create({ userId, actionId });
+//     return res.json(newMember);
+//   } catch (error) {
+//     return console.log(error);
+//     // return res.sendStatus(500);
+//   }
+// });
+
 router.patch('/anket/no', async (req, res) => {
   try {
     const { statusId } = req.body;
     const { id } = req.body;
+    const { userId } = req.body;
     await Anket.update({ statusId: statusId + 1 }, { where: { id } });
     const updatedNo = await Anket.findOne({ where: { id } });
+    for (const [, wsClient] of res.app.locals.ws) {
+      if (wsClient.user.id === userId) {
+        wsClient.ws.send(JSON.stringify(
+          { type: 'PUSH_SEND_NO', payload: { userId } },
+        ));
+      }
+    }
     return res.json(updatedNo);
   } catch (error) {
     console.log(error);
