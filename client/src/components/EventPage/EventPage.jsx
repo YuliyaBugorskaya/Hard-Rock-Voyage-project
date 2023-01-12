@@ -87,16 +87,6 @@ export default function EventPage() {
 
   return (
     <>
-      {/* <img
-        className="logo"
-        src="http://localhost:3001/images/2023-01-11T15:55:04.175Z-maxresdefault.jpeg"
-          // src={`${foto}`}
-        alt="avatar"
-        style={{
-          width: '100%',
-          height: 'auto',
-        }}
-      /> */}
       <CssBaseline />
       <Container fixed>
         <CardMedia
@@ -226,17 +216,16 @@ export default function EventPage() {
           }}
         />
       )
-      : (
-        <img
-          className="logo"
-          src="/css/images/e6032679a39049fef749cd97d2ef7d4f.jpeg"
-        //   src="/css/images/avatar-scaled.jpeg"
-          alt="avatar"
-          style={{
-            width: '100%',
-            height: 'auto',
-          }}
-        />
+      : (<div />
+    // <img
+    //   className="logo"
+    //   src="/css/images/e6032679a39049fef749cd97d2ef7d4f.jpeg"
+    //   alt="avatar"
+    //   style={{
+    //     width: '100%',
+    //     height: 'auto',
+    //   }}
+    // />
       )
   }
                     <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
@@ -254,7 +243,6 @@ export default function EventPage() {
                   </DialogContent>
                   <DialogActions>
                     <Button onClick={handleCloseComment}>Выйти</Button>
-                    {/* <Button type="submit" onClick={handleCloseComment}>Отправить</Button> */}
                   </DialogActions>
                 </form>
               </Dialog>

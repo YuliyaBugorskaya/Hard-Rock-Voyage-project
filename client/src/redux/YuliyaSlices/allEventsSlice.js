@@ -7,9 +7,6 @@ const allEventsSlice = createSlice({
   reducers: {
     setAllEvents: (state, action) => action.payload,
     setFilterData: (state, action) => action.startDate,
-    // setFilterData: (state, action) => {
-    //   state.filter((el) => el.startDate === action.payload);
-    // },
     addEvent: (state, action) => [...state, action.payload],
     deleteEvent: (state, action) => state.filter((el) => el.id !== action.payload),
   },
@@ -22,7 +19,6 @@ export const {
 
 export const getAllEvents = (body) => (dispatch) => {
   axios.post('/api/allEvents', body)
-    // .then((res) => console.log('res.dsta.content', res.data));
     .then((res) => dispatch(setAllEvents({ events: res.data.content, dates: res.data.allDates, countPage: res.data.totalPages })));
 };
 
