@@ -23,7 +23,7 @@ export default function SignUp() {
     <Box
       component="form"
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
+        '& .MuiTextField-root': { m: 1, width: '25ch', marginX: '0' },
       }}
       display="flex"
       autoComplete="off"
@@ -32,15 +32,18 @@ export default function SignUp() {
       minHeight="80vh"
       onSubmit={submitHandler}
     >
-      <FormControl>
-        <Typography variant="h6" component="h2" sx={{ flexGrow: 1 }}>
-          Registration
+      <FormControl sx={{
+        backgroundColor: 'white', borderRadius: '10px', padding: '20px',
+      }}
+      >
+        <Typography variant="h6" component="h2" sx={{ flexGrow: 1, textAlign: 'center', marginBottom: '10px' }}>
+          Регистрация
         </Typography>
         <TextField
           name="name"
           required
           id="outlined-required-name"
-          label="Name"
+          label="Имя"
           type="text"
           value={input.name}
           onChange={inputHandler}
@@ -58,16 +61,18 @@ export default function SignUp() {
           required
           name="password"
           id="outlined-password-input"
-          label="Password"
+          label="Пароль"
           type="password"
           value={input.password}
           onChange={inputHandler}
+          sx={{ width: '100%' }}
         />
         <Button
           variant="contained"
           type="submit"
+          sx={{ backgroundColor: '#222c3c', marginTop: '10px' }}
         >
-          Sign Up
+          Зарегистрироваться
 
         </Button>
       </FormControl>

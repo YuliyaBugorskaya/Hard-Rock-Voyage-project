@@ -38,8 +38,9 @@ export default function EventCard({ oneEventCard }) {
   return (
     <ListItem
       alignItems="flex-start"
+      sx={{ padding: '20px' }}
     >
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345, boxShadow: '0' }}>
         <CardMedia
           component="img"
           alt="green iguana"

@@ -51,6 +51,9 @@ export default function CreateEvent() {
     <Container style={{
       display: 'flex',
       justifyContent: 'center',
+      backgroundImage: `url(${'../css/images/_7Fr1kwBRRM.jpeg'})`,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
     }}
     >
       <Row className="formRow">
@@ -58,7 +61,7 @@ export default function CreateEvent() {
           <Form onSubmit={submitHandler}>
             <FormControl
               sx={{
-                '& .MuiTextField-root': { m: 0.4, width: '55ch' },
+                m: 0.4, width: '55ch', backgroundColor: 'white', padding: '20px', borderRadius: '20px', marginY: '40px', gap: '10px',
               }}
             >
               <Typography variant="h6" component="h2" sx={{ flexGrow: 1, marginY: '10px', textAlign: 'center' }}>
