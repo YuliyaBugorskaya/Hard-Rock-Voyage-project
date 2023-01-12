@@ -184,12 +184,12 @@ export default function EventPage() {
         {OneEvent.userId === user.id
           ? (
             <Box>
-              <PointForm setSwitcher={setSwitcher} switcher={switcher} OneEvent={OneEvent} />
+              <PointForm OneEvent={OneEvent} />
             </Box>
           )
           : (
             <Box>
-              <GetAllPoints setSwitcher={setSwitcher} switcher={switcher} OneEvent={OneEvent} />
+              <GetAllPoints OneEvent={OneEvent} />
             </Box>
           )}
         {OneEvent.statusId === 6

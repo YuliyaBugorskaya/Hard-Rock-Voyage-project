@@ -145,27 +145,26 @@ export default function CreateEvent() {
                   value={input.image || ''}
                   onChange={inputHandler}
                 /> */}
-                <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
-                  Добавь фото к событию
-                </Typography>
-                <input
-                  name="fotoFromVoyage"
-                  type="file"
-                  onChange={(e) => {
-                    setImg(e.target.files[0]);
-                    console.log(e.target.files[0], 'e.target.files[0]--------->');
-                  }}
-                />
-                <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
-                  Постройте ваш маршрут
-                </Typography>
-                <AddPointMap setCoordinates={setCoordinates} />
-                <Button type="submit" variant="contained" style={{ marginBottom: '10px' }}>Создать событие</Button>
-              </FormControl>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+              <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
+                Добавь фото к событию
+              </Typography>
+              <input
+                name="fotoFromVoyage"
+                type="file"
+                onChange={(e) => {
+                  setImg(e.target.files[0]);
+                  console.log(e.target.files[0], 'e.target.files[0]--------->');
+                }}
+              />
+              <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
+                Постройте ваш маршрут
+              </Typography>
+              <AddPointMap setCoordinates={setCoordinates} />
+              <Button type="submit" variant="contained" style={{ marginBottom: '10px' }}>Создать событие</Button>
+            </FormControl>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
