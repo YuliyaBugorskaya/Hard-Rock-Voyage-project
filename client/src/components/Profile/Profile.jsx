@@ -49,7 +49,7 @@ export default function Profile() {
           setAvatar(res.data.path);
           dispatch(updateAvatar((res.data.path)));
         });
-    } catch (error) {}
+    } catch (error) { console.log(error); }
   }, [img]);
   return (
 
@@ -129,7 +129,7 @@ export default function Profile() {
 
                 <TextField
                   name="name"
-        //   required
+                  //   required
                   id="outlined-required-name"
                   type="text"
                   value={input.name}
@@ -137,17 +137,17 @@ export default function Profile() {
                 />
                 <TextField
                   name="email"
-        //   required
+                  //   required
                   id="outlined-required-email"
                   type="email"
                   value={input.email}
                   onChange={inputHandler}
                 />
                 <TextField
-        //   required
+                  //   required
                   name="password"
                   id="outlined-password-input"
-        //   label="Password"
+                  //   label="Password"
                   type="password"
                   value={input.password}
                   onChange={inputHandler}
