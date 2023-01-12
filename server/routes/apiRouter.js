@@ -2,7 +2,7 @@ const express = require('express');
 const fileMiddleware = require('../middleware/file');
 
 const {
-  Action, User, Members,
+  Action, User, Comment,
 } = require('../db/models');
 
 const router = express.Router();
@@ -34,7 +34,7 @@ router.post('/allEvents', async (req, res) => {
       include: User,
       limit: size,
       offset: Number(page) - 1,
-      order: [['id', 'DESC']],
+      order: [['startDate', 'DESC']],
     });
   }
   // console.log(page, Number(page) * size, 'page0000000');
@@ -134,27 +134,6 @@ router.get('/lk', async (req, res) => {
   }
 });
 
-// router.post('/addEvent', async (req, res) => {
-//   const {
-//     title, description, fullDescription, startDate, finishDate, startPoint, finishPoint, image,
-//   } = req.body;
-//   const newEvent = await Action.create({
-//     title,
-//     description,
-//     fullDescription,
-//     startDate,
-//     finishDate,
-//     startPoint,
-//     finishPoint,
-//     image,
-//     statusId: 1,
-//     userId: req.session.user?.id || 1,
-//     // userId: req.session.user.id,
-//   });
-//   console.log(newEvent, 'newEvent======>');
-//   res.json(newEvent);
-// });
-
 router.post('/addEvent', fileMiddleware.single('fotoFromVoyage'), async (req, res) => {
   const {
     title,
@@ -193,14 +172,76 @@ router.delete('/deleteEvent/:id', async (req, res) => {
 });
 
 router.post('/archiveEvents', async (req, res) => {
-  const { page } = req.body;
-  const archiveEventsArr = [];
-  const allArchiveEvents = await Action.findAll({ where: { statusId: '2' } });
-  const allArchiveEventsLength = allArchiveEvents.length;
-  for (let i = 0; i < allArchiveEventsLength; i += 1) {
-    archiveEventsArr.push(allArchiveEvents.splice(0, 5));
+  const size = 2;
+  const { page, input } = req.body;
+  let archiveEventsArr;
+  const allArchiveDates = await Action.findAll({
+    where: { statusId: '6' },
+    attributes: ['startDate'],
+  });
+  console.log(req.body, 'req.body++++++1111');
+  if (input) {
+    console.log('input - ', input);
+    archiveEventsArr = await Action.findAndCountAll({
+      where: { startDate: input },
+      limit: size,
+      offset: null,
+
+    });
+    console.log('res-', JSON.parse(JSON.stringify(archiveEventsArr)));
+  } else {
+    archiveEventsArr = await Action.findAndCountAll({
+      where: { statusId: '6' },
+      include: User,
+      limit: size,
+      offset: Number(page) - 1,
+      order: [['startDate', 'DESC']],
+    });
   }
-  res.json(archiveEventsArr[page - 1]);
+  console.log(JSON.parse(JSON.stringify(allArchiveDates)), '=======>>>');
+  res.json({
+    content: archiveEventsArr.rows,
+    allArchiveDates,
+    totalPages: Math.round(archiveEventsArr.count / size),
+  });
+
+  // console.log(JSON.parse(JSON.stringify(allDates)), '<----------888>');
+});
+
+// router.post('/archiveEvents', async (req, res) => {
+//   const { page } = req.body;
+//   const archiveEventsArr = [];
+//   const allArchiveEvents = await Action.findAll({ where: { statusId: '2' } });
+//   const allArchiveEventsLength = allArchiveEvents.length;
+//   for (let i = 0; i < allArchiveEventsLength; i += 1) {
+//     archiveEventsArr.push(allArchiveEvents.splice(0, 5));
+//   }
+//   res.json(archiveEventsArr[page - 1]);
+// });
+
+router.get('/myprofile', async (req, res) => {
+  try {
+    const profileUser = await User.findOne({ where: { id: req.session.user.id } });
+    return res.json(profileUser);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
+});
+
+router.post('/addComments', fileMiddleware.single('fotoComment'), async (req, res) => {
+  const { text, actionId } = req.body;
+  console.log(req.body, req.file?.path, 'req.body//////');
+  const newComment = await Comment.create({
+    text,
+    actionId,
+    image: req.file?.path,
+    userId: req.session.user?.id || 1,
+    // titleCom
+    // userId: req.session.user.id,
+  });
+  // console.log(JSON.parse(JSON.stringify(newComment)), 'newEvent======>');
+  res.json({ path: req.file.path });
 });
 
 router.get('/allevents', async (req, res) => {

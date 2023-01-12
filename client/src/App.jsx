@@ -15,6 +15,7 @@ import Ankets from './components/Ankets/Ankets';
 import Page404 from './components/404/Page404';
 import AboutUs from './components/AboutUs/AboutUs';
 import './index.css';
+import Profile from './components/Profile/Profile';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/event/:id" element={<EventPage />} />
         <Route path="/adminAnkets" element={<Ankets />} />
         <Route path="*" element={<Page404 />} />
+        <Route path="/myprofile" element={<Profile />} />
 
       </Routes>
       <Footer />

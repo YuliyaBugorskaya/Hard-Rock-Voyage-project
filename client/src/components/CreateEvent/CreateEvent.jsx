@@ -54,91 +54,89 @@ export default function CreateEvent() {
   React.useEffect(() => { console.log(coordinates); }, [coordinates]);
 
   return (
-    <div>
-      <Container style={{
-        marginLeft: '400px',
-        display: 'flex',
-      }}
-      >
-        <Row className="formRow">
-          <Col className="formCol">
-            <Form onSubmit={submitHandler}>
-              <FormControl
-                sx={{
-                  '& .MuiTextField-root': { m: 0.4, width: '55ch' },
-                }}
-              >
-                <Typography variant="h6" component="h2" sx={{ flexGrow: 1 }}>
-                  Создай свое событие
-                </Typography>
-                <TextField
-                  name="title"
-                  required
-                  id="outlined-required"
-                  label="Title"
-                  type="text"
-                  value={input.title || ''}
-                  onChange={inputHandler}
-                />
-                <TextField
-                  name="description"
-                  required
-                  id="outlined-required"
-                  label="Short Description"
-                  type="text"
-                  value={input.description || ''}
-                  onChange={inputHandler}
-                />
-                <TextField
-                  required
-                  name="fulldescription"
-                  id="outlined-input"
-                  label="Full Description"
-                  type="text"
-                  value={input.fulldescription || ''}
-                  onChange={inputHandler}
-                />
-                <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
-                  Дата старта поездки
-                </Typography>
-                <TextField
-                  required
-                  name="startDate"
-                  id="outlined-input"
-                  type="date"
-                  value={input.startDate || ''}
-                  onChange={inputHandler}
-                />
-                <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
-                  Дата завершения поездки
-                </Typography>
-                <TextField
-                  required
-                  name="finishDate"
-                  id="outlined-input"
-                  type="date"
-                  value={input.finishDate || ''}
-                  onChange={inputHandler}
-                />
-                <TextField
-                  required
-                  name="startPoint"
-                  id="outlined-input"
-                  label="Start Point"
-                  type="text"
-                  value={input.startPoint || ''}
-                  onChange={inputHandler}
-                />
-                <TextField
-                  required
-                  name="finishPoint"
-                  id="outlined-input"
-                  label="Finish Point"
-                  type="text"
-                  value={input.finishPoint || ''}
-                  onChange={inputHandler}
-                />
-                {/* <TextField
+    <Container style={{
+      display: 'flex',
+      justifyContent: 'center',
+    }}
+    >
+      <Row className="formRow">
+        <Col className="formCol">
+          <Form onSubmit={submitHandler}>
+            <FormControl
+              sx={{
+                '& .MuiTextField-root': { m: 0.4, width: '55ch' },
+              }}
+            >
+              <Typography variant="h6" component="h2" sx={{ flexGrow: 1, marginY: '10px', textAlign: 'center' }}>
+                Создай свое событие
+              </Typography>
+              <TextField
+                name="title"
+                required
+                id="outlined-required"
+                label="Название события"
+                type="text"
+                value={input.title || ''}
+                onChange={inputHandler}
+              />
+              <TextField
+                name="description"
+                required
+                id="outlined-required"
+                label="Короткое описание"
+                type="text"
+                value={input.description || ''}
+                onChange={inputHandler}
+              />
+              <TextField
+                name="fulldescription"
+                id="outlined-input"
+                label="Полное описание"
+                type="text"
+                value={input.fulldescription || ''}
+                onChange={inputHandler}
+              />
+              <Typography variant="h10" component="h5" sx={{ flexGrow: 1, marginY: '10px' }}>
+                Дата старта поездки
+              </Typography>
+              <TextField
+                required
+                name="startDate"
+                id="outlined-input"
+                type="date"
+                value={input.startDate || ''}
+                onChange={inputHandler}
+              />
+              <Typography variant="h10" component="h5" sx={{ flexGrow: 1, marginY: '10px' }}>
+                Дата завершения поездки
+              </Typography>
+              <TextField
+                required
+                name="finishDate"
+                id="outlined-input"
+                type="date"
+                value={input.finishDate || ''}
+                onChange={inputHandler}
+              />
+              <TextField
+                required
+                name="startPoint"
+                id="outlined-input"
+                label="Точка старта"
+                type="text"
+                value={input.startPoint || ''}
+                onChange={inputHandler}
+              />
+              <TextField
+                required
+                name="finishPoint"
+                id="outlined-input"
+                label="Точка финиша"
+                type="text"
+                value={input.finishPoint || ''}
+                onChange={inputHandler}
+              />
+              {/* <TextField
                   required
                   name="image"
                   id="outlined-input"

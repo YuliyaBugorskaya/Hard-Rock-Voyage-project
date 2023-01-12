@@ -1,6 +1,5 @@
 import React from 'react';
 import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -37,63 +36,64 @@ export default function EventCard({ oneEventCard }) {
   };
 
   return (
-    <>
-      <ListItem alignItems="flex-start">
-        <Card sx={{ maxWidth: 345 }}>
-          <CardMedia
-            component="img"
-            alt="green iguana"
-            height="140"
-            image={`http://localhost:3001/${oneEventCard.image}`}
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              <Button variant="text" onClick={() => seeMore()}>
-                {' '}
-                {oneEventCard.title}
-              </Button>
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {oneEventCard.startDate}
-              -
-              {oneEventCard.finishDate}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {oneEventCard.description}
-            </Typography>
+    <ListItem
+      alignItems="flex-start"
+    >
+      <Card sx={{ maxWidth: 345 }}>
+        <CardMedia
+          component="img"
+          alt="green iguana"
+          height="140"
+          image={`http://localhost:3001/${oneEventCard.image}`}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            <Button variant="text" onClick={() => seeMore()}>
+              {' '}
+              {oneEventCard.title}
+            </Button>
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {oneEventCard.startDate}
+            -
+            {oneEventCard.finishDate}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {oneEventCard.description}
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'silver' }}>
+            {oneEventCard?.User?.name}
+          </Typography>
+          {oneEventCard.statusId === 4 && (
             <Typography variant="body2" sx={{ color: 'silver' }}>
-              {oneEventCard?.User?.name}
+              Идет регистрация
             </Typography>
-            {oneEventCard.statusId === 4 && (
-              <Typography variant="body2" sx={{ color: 'silver' }}>
-                Идет регистрация
-              </Typography>
+          )}
+          {oneEventCard.statusId === 5 && (
+            <Typography variant="body2" sx={{ color: 'silver' }}>
+              Идет событие
+            </Typography>
+          )}
+          {oneEventCard.statusId === 6 && (
+            <Typography variant="body2" sx={{ color: 'silver' }}>
+              Событие завершено
+            </Typography>
+          )}
+          <Container>
+            {oneEventCard.statusId === 4 && oneEventCard.userId === user.id && (
+              <Button variant="text" onClick={() => changeStatus(oneEventCard)}>
+                Завершить регистрацию
+              </Button>
             )}
-            {oneEventCard.statusId === 5 && (
-              <Typography variant="body2" sx={{ color: 'silver' }}>
-                Идет событие
-              </Typography>
-            )}
-            {oneEventCard.statusId === 6 && (
-              <Typography variant="body2" sx={{ color: 'silver' }}>
-                Событие завершено
-              </Typography>
-            )}
-            <Container>
-              {oneEventCard.statusId === 4 && oneEventCard.userId === user.id && (
+
+            {oneEventCard.statusId === 5 && oneEventCard.userId === user.id
+              && (
                 <Button variant="text" onClick={() => changeStatus(oneEventCard)}>
-                  Завершить регистрацию
+                  Завершить событие
                 </Button>
               )}
 
-              {oneEventCard.statusId === 5 && oneEventCard.userId === user.id
-                && (
-                  <Button variant="text" onClick={() => changeStatus(oneEventCard)}>
-                    Завершить событие
-                  </Button>
-                )}
-
-              {/* {oneEventCard.userId === user.id ? (
+            {/* {oneEventCard.userId === user.id ? (
                 <Button variant="text" onClick={() => deleteOneEvent(oneEventCard.id)}>
                   Удалить событие
                 </Button>
@@ -102,30 +102,28 @@ export default function EventCard({ oneEventCard }) {
                 </>
               )} */}
 
-            </Container>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography>...</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                {oneEventCard.userId === user.id ? (
-                  <Button variant="text" onClick={() => deleteOneEvent(oneEventCard.id)}>
-                    Удалить событие
-                  </Button>
-                ) : (
-                  <>
-                  </>
-                )}
-              </AccordionDetails>
-            </Accordion>
-          </CardContent>
-        </Card>
-      </ListItem>
-      <Divider variant="inset" component="li" />
-    </>
+          </Container>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>...</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {oneEventCard.userId === user.id ? (
+                <Button variant="text" onClick={() => deleteOneEvent(oneEventCard.id)}>
+                  Удалить событие
+                </Button>
+              ) : (
+                <>
+                </>
+              )}
+            </AccordionDetails>
+          </Accordion>
+        </CardContent>
+      </Card>
+    </ListItem>
   );
 }

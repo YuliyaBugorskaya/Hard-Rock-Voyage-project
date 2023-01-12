@@ -11,6 +11,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('../public/css/images/_7Fr1kwBRRM.jpeg');
+  background-position: center;
+  background-size: cover;
 }
 
 #root {
