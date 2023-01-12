@@ -29,13 +29,10 @@ module.exports = {
       finishPoint: {
         type: Sequelize.STRING,
       },
-      mapStart: {
-        type: Sequelize.STRING,
-      },
-      mapFinish: {
-        type: Sequelize.STRING,
-      },
       image: {
+        type: Sequelize.TEXT,
+      },
+      coordinates: {
         type: Sequelize.TEXT,
       },
       userId: {

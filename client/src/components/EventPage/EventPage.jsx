@@ -14,7 +14,6 @@ import Box from '@mui/material/Box';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
-import AddPointMap from '../Map/AddPointMap';
 import PointForm from '../Map/PointForm';
 // import { getUserPage } from '../../redux/YanaSlices/userPageSlice';
 
@@ -151,13 +150,7 @@ export default function EventPage() {
         {OneEvent.userId === user.id
           && (
             <Box>
-              {switcher
-                ? (
-                  <AddPointMap setSwitcher={setSwitcher} switcher={switcher} />
-                )
-                : (
-                  <PointForm setSwitcher={setSwitcher} switcher={switcher} />
-                )}
+              <PointForm setSwitcher={setSwitcher} switcher={switcher} OneEvent={OneEvent} />
             </Box>
           )}
         {OneEvent.statusId === 6

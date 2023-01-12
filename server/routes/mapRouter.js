@@ -1,5 +1,6 @@
 const express = require('express');
 const { MapPoint } = require('../db/models');
+const fileMiddleware = require('../middleware/file');
 
 const router = express.Router();
 
@@ -34,6 +35,38 @@ router.post('/add/:id', async (req, res) => {
   } else {
     console.log('net');
   }
+});
+
+router.post('/addPoint/:id', fileMiddleware.single('fotoFromVoyage'), async (req, res) => {
+  const {
+    title,
+    description,
+    fulldescription,
+    startDate,
+    finishDate,
+    startPoint,
+    finishPoint,
+    coordinates,
+  } = req.body;
+  // const coordinatesJSON = JSON.stringify(coordinates)
+  // console.log(req, '00000000');
+  console.log(req.body, 'req.body-----------------------');
+  const newEvent = await Action.create({
+    title,
+    description,
+    fulldescription,
+    startDate,
+    finishDate,
+    startPoint,
+    finishPoint,
+    image: req.file?.path,
+    coordinates,
+    statusId: 1,
+    userId: req.session.user?.id || 1,
+    // userId: req.session.user.id,
+  });
+  console.log(JSON.parse(JSON.stringify(newEvent)), 'newEvent======>');
+  res.json(newEvent);
 });
 
 module.exports = router;
