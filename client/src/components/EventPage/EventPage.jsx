@@ -14,7 +14,8 @@ import Box from '@mui/material/Box';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
-import AddPointMap from '../Map/AddPointMap';
+import PointForm from '../Map/PointForm';
+import GetAllPoints from '../Map/GetAllPoints';
 // import { getUserPage } from '../../redux/YanaSlices/userPageSlice';
 
 export default function EventPage() {
@@ -181,9 +182,14 @@ export default function EventPage() {
           Тут будут участники
         </Typography>
         {OneEvent.userId === user.id
-          && (
+          ? (
             <Box>
-              <AddPointMap />
+              <PointForm OneEvent={OneEvent} />
+            </Box>
+          )
+          : (
+            <Box>
+              <GetAllPoints OneEvent={OneEvent} />
             </Box>
           )}
         {OneEvent.statusId === 6

@@ -11,6 +11,7 @@ const apiRouter = require('./routes/apiRouter');
 const uploadRouter = require('./routes/uploadRouter');
 
 const commentRouter = require('./routes/commentRouter');
+const mapRouter = require('./routes/mapRouter');
 require('dotenv').config();
 
 const app = express();
@@ -46,7 +47,79 @@ app.use(sessionParser);
 app.use('/user', userRouter);
 app.use('/api', apiRouter);
 app.use('/comment', commentRouter);
-app.use('/upload', uploadRouter);
+app.use('/map', mapRouter);
+
+// userId: {
+//   type: Sequelize.INTEGER,
+//   allowNull: false,
+//   references: {
+//     model: {
+//       tableName: 'Users',
+//     },
+//     key: 'id',
+//   },
+// },
+// statusId: {
+//   type: Sequelize.INTEGER,
+//   allowNull: false,
+//   references: {
+//     model: {
+//       tableName: 'Statuses',
+//     },
+//     key: 'id',
+//   },
+// },
+
+// static associate(models) {
+//   this.hasMany(models.Member, {
+//     foreignKey: 'actionId',
+//   });
+//   this.hasMany(models.Anket, {
+//     foreignKey: 'actionId',
+//   });
+//   this.hasMany(models.Notification, {
+//     foreignKey: 'actionId',
+//   });
+//   this.hasMany(models.Comment, {
+//     foreignKey: 'actionId',
+//   });
+//   this.hasMany(models.MapPoint, {
+//     foreignKey: 'actionId',
+//   });
+//   this.hasMany(models.Rating, {
+//     foreignKey: 'actionId',
+//   });
+//   this.belongsTo(models.User, {
+//     foreignKey: 'userId',
+//   });
+
+//   this.belongsTo(models.Status, {
+//     foreignKey: 'statusId',
+//   });
+//   // define association here
+// }
+
+
+
+
+
+// actionId: {
+//   type: Sequelize.INTEGER,
+//   allowNull: false,
+//   references: {
+//     model: {
+//       tableName: 'Actions',
+//     },
+//     key: 'id',
+//   },
+// },
+
+// static associate(models) {
+//   this.belongsTo(models.Action, {
+//     foreignKey: 'actionId',
+//   });
+//   // define association here
+// }
 
 // const server = http.createServer(app);
 

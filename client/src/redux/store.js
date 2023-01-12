@@ -8,6 +8,7 @@ import archiveEventsSlice from './YuliyaSlices/archiveEventsSlice';
 import LKSlice from './YanaSlices/LKSlice';
 import statusSlice from './YanaSlices/statusSlice';
 import commentSlice from './EugeneSlices/commentSlice';
+import coordSlice from './MaratSlices/coordSlice';
 
 export default configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export default configureStore({
     LK: LKSlice,
     status: statusSlice,
     comment: commentSlice,
+    coords: coordSlice,
   },
 
 });

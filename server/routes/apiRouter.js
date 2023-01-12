@@ -136,10 +136,18 @@ router.get('/lk', async (req, res) => {
 
 router.post('/addEvent', fileMiddleware.single('fotoFromVoyage'), async (req, res) => {
   const {
-    title, description, fulldescription, startDate, finishDate, startPoint, finishPoint,
+    title,
+    description,
+    fulldescription,
+    startDate,
+    finishDate,
+    startPoint,
+    finishPoint,
+    coordinates,
   } = req.body;
+  // const coordinatesJSON = JSON.stringify(coordinates)
   // console.log(req, '00000000');
-  console.log(req.body, 'req.body--');
+  console.log(req.body, 'req.body-----------------------');
   const newEvent = await Action.create({
     title,
     description,
@@ -149,7 +157,8 @@ router.post('/addEvent', fileMiddleware.single('fotoFromVoyage'), async (req, re
     startPoint,
     finishPoint,
     image: req.file?.path,
-    statusId: 4,
+    coordinates,
+    statusId: 1,
     userId: req.session.user?.id || 1,
     // userId: req.session.user.id,
   });
