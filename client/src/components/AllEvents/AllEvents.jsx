@@ -36,6 +36,8 @@ export default function AllEvents() {
     dispatch(setFilterData(event.target.value));
   };
 
+  if (!allEvents || !allEvents.events) return null;
+
   return (
     <Box
       className="allEvents"
@@ -58,7 +60,7 @@ export default function AllEvents() {
         <Container maxWidth={false} disableGutters>
           <div>
             <Box sx={{ minWidth: 120 }}>
-              <FormControl fullWidth sx={{ marginTop: '10px' }}>
+              <FormControl fullWidth sx={{ marginY: '20px', backgroundColor: 'white' }}>
                 <InputLabel id="demo-simple-select-label">Дата</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -67,23 +69,33 @@ export default function AllEvents() {
                   value={input}
                   label="дата"
                 >
-                  {allEvents.dates?.map((el) => (<MenuItem key={el.id} value={el.startDate}>{el.startDate}</MenuItem>
-                  ))}
-                  {/* allEvents.events[i].id */}
+                  {allEvents.dates?.map((el) => el.startDate).filter((el, ind) => ind === allEvents.dates.map((element) => element.startDate).indexOf(el))
+                    .map((el) => (<MenuItem key={el.id} value={el}>{el}</MenuItem>
+                    ))}
                   <MenuItem value="All">All</MenuItem>
                 </Select>
               </FormControl>
             </Box>
-            <Button sx={{ width: '100%', maxWidth: 360, my: '10px' }} onClick={changeHandler} variant="contained" color="secondary">
+            <Button
+              sx={{
+                width: '100%', maxWidth: 360, my: '10px', backgroundColor: '#222c3c', marginBottom: '20px',
+              }}
+              onClick={changeHandler}
+              variant="contained"
+              color="secondary"
+            >
               Создать событие
             </Button>
             <List sx={{
-              width: '100%', maxWidth: 360, bgcolor: 'background.paper', padding: '0',
-              // borderStartStartRadius: '20px', borderEndStartRadius: '20px',
+              width: '100%',
+              maxWidth: 360,
+              bgcolor: 'background.paper',
+              padding: '0',
+              borderTopLeftRadius: '20px',
+              borderTopRightRadius: '20px',
             }}
             >
               {allEvents.events
-                // ?.filter((el) => isFilter || el.startDate === input)
                 .map((el) => (
                   <EventCard key={el.id} oneEventCard={el} />
                 ))}
@@ -96,8 +108,13 @@ export default function AllEvents() {
                 count={allEvents.countPage}
                 onChange={(_, num) => setPage(num)}
                 sx={{
-                  display: 'flex', justifyContent: 'center', marginBottom: '10px', backgroundColor: 'white', paddingY: '10px',
-                  // borderEndEndRadius: '20px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginBottom: '20px',
+                  backgroundColor: 'white',
+                  paddingY: '20px',
+                  borderEndEndRadius: '20px',
+                  borderEndStartRadius: '20px',
                 }}
                 renderItem={(item) => (
                   <PaginationItem

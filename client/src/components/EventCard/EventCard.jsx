@@ -11,7 +11,7 @@ import Container from '@mui/material/Container';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
-import { deleteEvent, changeStatus5 } from '../../redux/YanaSlices/allEventsSlice';
+import { deleteEvent, changeStatus5 } from '../../redux/YuliyaSlices/allEventsSlice';
 
 export default function EventCard({ oneEventCard }) {
   const dispatch = useDispatch();
@@ -27,10 +27,6 @@ export default function EventCard({ oneEventCard }) {
     dispatch(deleteEvent(id));
   };
 
-  // тут обработчки сос меной статуса
-  // завершить рагистрацию --  меняет статус и кнопку на завершить событие
-  // завершить событие -- меняет статус (в компоненте полной карточки появляются модалки)
-
   const changeStatus = (event) => {
     dispatch(changeStatus5(event));
   };
@@ -38,8 +34,9 @@ export default function EventCard({ oneEventCard }) {
   return (
     <ListItem
       alignItems="flex-start"
+      sx={{ padding: '20px' }}
     >
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345, boxShadow: '0' }}>
         <CardMedia
           component="img"
           alt="green iguana"
@@ -92,36 +89,28 @@ export default function EventCard({ oneEventCard }) {
                   Завершить событие
                 </Button>
               )}
-
-            {/* {oneEventCard.userId === user.id ? (
-                <Button variant="text" onClick={() => deleteOneEvent(oneEventCard.id)}>
-                  Удалить событие
-                </Button>
-              ) : (
-                <>
-                </>
-              )} */}
-
           </Container>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography>...</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              {oneEventCard.userId === user.id ? (
+          {oneEventCard.userId === user.id ? (
+            <Accordion sx={{ width: '50%' }}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>...</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+
                 <Button variant="text" onClick={() => deleteOneEvent(oneEventCard.id)}>
                   Удалить событие
                 </Button>
-              ) : (
-                <>
-                </>
-              )}
-            </AccordionDetails>
-          </Accordion>
+              </AccordionDetails>
+            </Accordion>
+          ) : (
+            <>
+            </>
+          )}
+
         </CardContent>
       </Card>
     </ListItem>

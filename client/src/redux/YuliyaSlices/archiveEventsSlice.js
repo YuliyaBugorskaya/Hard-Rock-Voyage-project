@@ -3,13 +3,11 @@ import axios from 'axios';
 
 const archiveEventsSlice = createSlice({
   name: 'archiveEvents',
-  initialState: [],
+  initialState: { events: [], dates: [], countPage: 1 },
   reducers: {
 
     setArchiveEvents: (state, action) => action.payload,
-    setFilterData: (state, action) => {
-      state.filter((el) => el.startDate === action.payload);
-    },
+    setFilterData: (state, action) => action.startDate,
   },
 
 });
@@ -21,6 +19,6 @@ export const {
 export const getArchiveEvents = (page) => (dispatch) => {
   axios.post('/api/archiveEvents', page)
     // .then((res) => console.log(res.data));
-    .then((res) => dispatch(setArchiveEvents(res.data)));
+    .then((res) => dispatch(setArchiveEvents({ events: res.data.content, dates: res.data.allArchiveDates, countPage: res.data.totalPages })));
 };
 export default archiveEventsSlice.reducer;

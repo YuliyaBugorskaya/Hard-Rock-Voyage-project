@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const allEventsSlice = createSlice({
-  name: 'allEvents',
+const allEventsSliceYana = createSlice({
+  name: 'allEventsYana',
   initialState: [],
   reducers: {
     setAllEvents: (state, action) => action.payload,
@@ -15,10 +15,10 @@ const allEventsSlice = createSlice({
   },
 });
 
-export const { setAllEvents, deleteOneEvent, changeoneEvent } = allEventsSlice.actions;
+export const { setAllEvents, deleteOneEvent, changeoneEvent } = allEventsSliceYana.actions;
 
 export const getAllEvents = () => (dispatch) => {
-  axios.get('/api/allevents')
+  axios.get('/api/alleventsmainpage')
     .then((res) => dispatch(setAllEvents(res.data)));
   // .then((res) => dispatch(console.log(res.data)));
 };
@@ -39,4 +39,4 @@ export const changeStatus5 = (id) => (dispatch) => {
     .then((res) => dispatch(changeoneEvent(res.data)));
 };
 
-export default allEventsSlice.reducer;
+export default allEventsSliceYana.reducer;

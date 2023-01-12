@@ -5,7 +5,6 @@ const router = express.Router();
 
 router.post('/signup', async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(req.body);
   if (name && email && password) {
     try {
       const [user, created] = await User.findOrCreate({
@@ -50,16 +49,38 @@ router.post('/signin', async (req, res) => {
 });
 
 router.post('/check', (req, res) => {
-  console.log(req.session.user);
-  if (req.session.user) {
-    return res.json(req.session.user);
+  try {
+    if (req.session.user) {
+      return res.json(req.session.user);
+    }
+    return res.sendStatus(401);
+  } catch (error) {
+    console.log(error);
   }
-  return res.sendStatus(401);
 });
 
 router.get('/logout', (req, res) => {
-  req.session.destroy();
-  res.clearCookie('sid').sendStatus(200);
+  try {
+    req.session.destroy();
+    res.clearCookie('sid').sendStatus(200);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.patch('/updateprofile/', async (req, res) => {
+  try {
+    await User.update(
+      { name: req.body.name, email: req.body.email, password: req.body.password },
+      { where: { id: req.session.user.id } },
+    );
+    const one = await User.findOne({ where: { id: req.session.user.id } });
+
+    return res.json(one);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
 });
 
 module.exports = router;

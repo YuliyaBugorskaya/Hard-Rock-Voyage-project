@@ -7,17 +7,19 @@ const allEventsSlice = createSlice({
   reducers: {
     setAllEvents: (state, action) => action.payload,
     setFilterData: (state, action) => action.startDate,
-    // setFilterData: (state, action) => {
-    //   state.filter((el) => el.startDate === action.payload);
-    // },
     addEvent: (state, action) => [...state, action.payload],
     deleteEvent: (state, action) => state.filter((el) => el.id !== action.payload),
+    changeoneEvent: (state, action) => state.map((el) => {
+      if (el.id === action.payload.id) {
+        return { ...el, statusId: action.payload.statusId };
+      } return el;
+    }),
   },
 
 });
 
 export const {
-  setAllEvents, setFilterData, addEvent, deleteEvent,
+  setAllEvents, setFilterData, addEvent, deleteEvent, changeoneEvent,
 } = allEventsSlice.actions;
 
 export const getAllEventsForMain = () => (dispatch) => {
@@ -27,8 +29,8 @@ export const getAllEventsForMain = () => (dispatch) => {
 };
 
 export const getAllEvents = (body) => (dispatch) => {
+  console.log('bbbbbbody', body);
   axios.post('/api/allEvents', body)
-    // .then((res) => console.log('res.dsta.content', res.data));
     .then((res) => dispatch(setAllEvents({ events: res.data.content, dates: res.data.allDates, countPage: res.data.totalPages })));
 };
 
@@ -40,6 +42,10 @@ export const submitEvent = (event) => (dispatch) => {
 export const deleteHandlerEvent = (id) => (dispatch) => {
   axios.delete(`/api/deleteEvent/${id}`)
     .then(() => dispatch(deleteEvent(id)));
+};
+export const changeStatus5 = (id) => (dispatch) => {
+  axios.patch('/api/status/', id)
+    .then((res) => dispatch(changeoneEvent(res.data)));
 };
 
 export default allEventsSlice.reducer;

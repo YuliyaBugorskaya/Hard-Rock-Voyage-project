@@ -35,7 +35,9 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Status, {
         foreignKey: 'statusId',
       });
-      // define association here
+      this.hasMany(models.actionAdmin, {
+        foreignKey: 'actionId',
+      });
     }
   }
   Action.init({
@@ -46,9 +48,8 @@ module.exports = (sequelize, DataTypes) => {
     finishDate: DataTypes.STRING,
     startPoint: DataTypes.STRING,
     finishPoint: DataTypes.STRING,
-    mapStart: DataTypes.STRING,
-    mapFinish: DataTypes.STRING,
     image: DataTypes.TEXT,
+    coordinates: DataTypes.TEXT,
     userId: DataTypes.INTEGER,
     statusId: DataTypes.INTEGER,
   }, {
