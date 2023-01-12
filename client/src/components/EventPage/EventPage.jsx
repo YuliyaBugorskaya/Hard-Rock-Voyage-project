@@ -32,6 +32,17 @@ export default function EventPage() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const [comment, setComment] = useState(false);
+
+  const handleClickOpenComment = () => {
+    setComment(true);
+  };
+
+  const handleCloseComment = () => {
+    setComment(false);
+  };
+
   const { id } = useParams();
 
   const submitHandler = (e) => {
@@ -152,17 +163,41 @@ export default function EventPage() {
               <AddPointMap />
             </Box>
           )}
-        {OneEvent.statusId === 6
+        {/* {OneEvent.statusId === 1
           && (
-            <>
-              <Button variant="text">
-                Оставить комментарий
-              </Button>
-              <Button variant="text">
-                Добавить фотографии в альбом
-              </Button>
-            </>
-          )}
+          )} */}
+        <Button variant="text" onClick={handleClickOpenComment}>
+          Оставить комментарий
+        </Button>
+        <Dialog open={comment} onClose={handleCloseComment}>
+          <DialogTitle>Комментарий</DialogTitle>
+          <form onSubmit={submitHandler}>
+            <DialogContent>
+              <DialogContentText>
+                Оставьте комментарий
+              </DialogContentText>
+              <TextareaAutosize
+                name="fghj"
+                type="text"
+                variant="standard"
+                autoFocus
+                aria-label="minimum height"
+                minRows={3}
+                placeholder="Minimum 3 rows"
+                value={input}
+                onChange={inputHandler}
+                style={{ width: '-webkit-fill-available', marginTop: '10px' }}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseComment}>Отмена</Button>
+              <Button type="submit" onClick={handleCloseComment}>Отправить</Button>
+            </DialogActions>
+          </form>
+        </Dialog>
+        <Button variant="text">
+          Добавить фотографии в альбом
+        </Button>
       </Container>
     </>
   );

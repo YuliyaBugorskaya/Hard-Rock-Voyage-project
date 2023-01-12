@@ -44,7 +44,7 @@ export default function NavBar() {
           </div>
           <div>
             <Link href="/" underline="none">
-              <img src="https://img.freepik.com/premium-vector/bikers-emblem-mascot-logo-inspiration_10051-855.jpg" alt="biker" style={{ width: '100px', height: '100px' }} />
+              <img src="../css/images/IMG_0362.PNG" alt="biker" style={{ width: '100px', height: '80px' }} />
             </Link>
           </div>
 
