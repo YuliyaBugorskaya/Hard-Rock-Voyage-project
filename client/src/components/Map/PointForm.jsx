@@ -11,8 +11,8 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 export default function PointForm({ OneEvent }) {
-  const [switcher, setSwitcher] = useState(false);
-  // const [coordinates, setCoordinates] = useState([]);
+  const [counter, setCounter] = useState(0);
+  const [coordinates, setCoordinates] = useState([]);
   const [img, setImg] = useState(null);
   const [input, setInput] = useState({
     titlePoint: '',
@@ -82,18 +82,22 @@ export default function PointForm({ OneEvent }) {
         minZoom: 1,
       });
 
+      let switcher = 0;
+
       const balloonLayout = ymaps.templateLayoutFactory.createClass("<div class='my-balloon'>"
         + `
         <a href='#' class='close'>X</a>
-        <button id="button" type="button">${switcher}</button>
+        '<i id="count"></i> '
+        <button id="button" type="button">Нажми на меня</button>
       `, {
 
         build() {
           balloonLayout.superclass.build.call(this);
           this._$element = $('.my-balloon', this.getParentElement());
-          $('#button').bind('click', this.onCounterClick);
           this._$element.find('.close')
             .on('click', $.proxy(this.onCloseClick, this));
+          $('#button').bind('click', this.onCounterClick);
+          $('#count').html(switcher);
         },
 
         onCloseClick(e) {
@@ -102,10 +106,16 @@ export default function PointForm({ OneEvent }) {
         },
 
         onCounterClick() {
-          setSwitcher(true);
-          console.log(switcher);
+          if (switcher === 0) {
+            $('#count').html(switcher += 1);
+            setCounter(switcher);
+          } else {
+            $('#count').html(switcher -= 1);
+            setCounter(switcher);
+          }
         },
       });
+      console.log(counter, 'sddddddddddddddddddddddd');
 
       const multiRoute = new ymaps.multiRouter.MultiRoute({
         // Точки маршрута. Точки могут быть заданы как координатами, так и адресом.
@@ -150,62 +160,65 @@ export default function PointForm({ OneEvent }) {
           width: '900px', height: '800px', margin: '10px 0 10px 0',
         }}
       />
-      <div>
-        <form onSubmit={submitHandlerComments}>
-          Оставьте комментарий и фото
-          <TextareaAutosize
-            name="titlePoint"
-            type="text"
-            variant="standard"
-            autoFocus
-            aria-label="minimum height"
-            minRows={3}
-            placeholder="Minimum 3 rows"
-            value={input.titlePoint}
-            onChange={inputHandler}
-            style={{ width: '-webkit-fill-available', marginTop: '10px' }}
-          />
-          <TextareaAutosize
-            name="description"
-            type="text"
-            variant="standard"
-            autoFocus
-            aria-label="minimum height"
-            minRows={3}
-            placeholder="Minimum 3 rows"
-            value={input.description}
-            onChange={inputHandler}
-            style={{ width: '-webkit-fill-available', marginTop: '10px' }}
-          />
-          {
-            foto
-            && (
-              <img
-                className="logo"
-                src={`http://localhost:3001/${foto}`}
-                alt="avatar"
-                style={{
-                  width: '100%',
-                  height: 'auto',
+      {counter === 1
+        && (
+          <div>
+            <form onSubmit={submitHandlerComments}>
+              Оставьте комментарий и фото
+              <TextareaAutosize
+                name="titlePoint"
+                type="text"
+                variant="standard"
+                autoFocus
+                aria-label="minimum height"
+                minRows={3}
+                placeholder="Minimum 3 rows"
+                value={input.titlePoint}
+                onChange={inputHandler}
+                style={{ width: '-webkit-fill-available', marginTop: '10px' }}
+              />
+              <TextareaAutosize
+                name="description"
+                type="text"
+                variant="standard"
+                autoFocus
+                aria-label="minimum height"
+                minRows={3}
+                placeholder="Minimum 3 rows"
+                value={input.description}
+                onChange={inputHandler}
+                style={{ width: '-webkit-fill-available', marginTop: '10px' }}
+              />
+              {
+                foto
+                && (
+                  <img
+                    className="logo"
+                    src={`http://localhost:3001/${foto}`}
+                    alt="avatar"
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                    }}
+                  />
+                )
+              }
+              <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
+                Добавь фото к событию
+              </Typography>
+              <input
+                name="fotoFromVoyage"
+                type="file"
+                onChange={(e) => {
+                  setImg(e.target.files[0]);
+                  console.log(e.target.files[0], 'e.target.files[0]--------->');
                 }}
               />
-            )
-          }
-          <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
-            Добавь фото к событию
-          </Typography>
-          <input
-            name="fotoFromVoyage"
-            type="file"
-            onChange={(e) => {
-              setImg(e.target.files[0]);
-              console.log(e.target.files[0], 'e.target.files[0]--------->');
-            }}
-          />
-          <Button type="submit" variant="contained">Отправить</Button>
-          <Button onClick={handleCloseComment}>Выйти</Button>
-        </form>
-      </div>
+              <Button type="submit" variant="contained">Отправить</Button>
+              <Button onClick={handleCloseComment}>Выйти</Button>
+            </form>
+          </div>
+        )}
     </div>
   );
 }
