@@ -32,6 +32,17 @@ export default function EventPage() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const [comment, setComment] = useState(false);
+
+  const handleClickOpenComment = () => {
+    setComment(true);
+  };
+
+  const handleCloseComment = () => {
+    setComment(false);
+  };
+
   const { id } = useParams();
 
   const submitHandler = (e) => {
@@ -61,6 +72,7 @@ export default function EventPage() {
   useEffect(() => {
     dispatch(getOneEvent(id));
   }, [id]);
+  console.log(OneEvent);
 
   return (
     <>
@@ -70,7 +82,7 @@ export default function EventPage() {
           component="img"
           alt="green iguana"
           height="140"
-          image={OneEvent.image}
+          image={`http://localhost:3001/${OneEvent?.image}`}
         />
         <Typography component="div">
           {OneEvent.description}
@@ -106,7 +118,7 @@ export default function EventPage() {
         <Typography component="div">
           {OneEvent.fulldescription}
         </Typography>
-        {OneEvent.userId !== user.id && OneEvent.statusId === 1 ? (
+        {OneEvent.userId !== user.id && OneEvent.statusId === 4 ? (
           <>
             <Button variant="text" onClick={handleClickOpen}>
               Подать заявку на поездку
@@ -151,17 +163,41 @@ export default function EventPage() {
               <AddPointMap />
             </Box>
           )}
-        {OneEvent.statusId === 2
+        {/* {OneEvent.statusId === 1
           && (
-            <>
-              <Button variant="text">
-                Оставить комментарий
-              </Button>
-              <Button variant="text">
-                Добавить фотографии в альбом
-              </Button>
-            </>
-          )}
+          )} */}
+        <Button variant="text" onClick={handleClickOpenComment}>
+          Оставить комментарий
+        </Button>
+        <Dialog open={comment} onClose={handleCloseComment}>
+          <DialogTitle>Комментарий</DialogTitle>
+          <form onSubmit={submitHandler}>
+            <DialogContent>
+              <DialogContentText>
+                Оставьте комментарий
+              </DialogContentText>
+              <TextareaAutosize
+                name="fghj"
+                type="text"
+                variant="standard"
+                autoFocus
+                aria-label="minimum height"
+                minRows={3}
+                placeholder="Minimum 3 rows"
+                value={input}
+                onChange={inputHandler}
+                style={{ width: '-webkit-fill-available', marginTop: '10px' }}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseComment}>Отмена</Button>
+              <Button type="submit" onClick={handleCloseComment}>Отправить</Button>
+            </DialogActions>
+          </form>
+        </Dialog>
+        <Button variant="text">
+          Добавить фотографии в альбом
+        </Button>
       </Container>
     </>
   );

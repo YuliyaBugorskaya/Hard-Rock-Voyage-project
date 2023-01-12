@@ -32,8 +32,8 @@ export default function NavBar() {
 
   return (
     <Box>
-      <AppBar position="static">
-        <Toolbar style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <AppBar position="static" sx={{ backgroundColor: '#222c3c' }}>
+        <Toolbar style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} sx={{ fontFamily: 'Geometria' }}>
           <div>
             <Link href="/" underline="none">
               <Button variant="text" sx={{ color: 'white' }}>Главная страница</Button>
@@ -44,7 +44,7 @@ export default function NavBar() {
           </div>
           <div>
             <Link href="/" underline="none">
-              <img src="https://img.freepik.com/premium-vector/bikers-emblem-mascot-logo-inspiration_10051-855.jpg" alt="biker" style={{ width: '100px', height: '100px' }} />
+              <img src="../css/images/IMG_0362.PNG" alt="biker" style={{ width: '100px', height: '80px' }} />
             </Link>
           </div>
 
