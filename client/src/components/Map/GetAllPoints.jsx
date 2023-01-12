@@ -27,7 +27,6 @@ export default function PointForm({ OneEvent }) {
         build() {
           balloonLayout.superclass.build.call(this);
           this._$element = $('.my-balloon', this.getParentElement());
-          $('#button').bind('click', this.onCounterClick);
           this._$element.find('.close')
             .on('click', $.proxy(this.onCloseClick, this));
         },
@@ -35,11 +34,6 @@ export default function PointForm({ OneEvent }) {
         onCloseClick(e) {
           e.preventDefault();
           this.events.fire('userclose');
-        },
-
-        onCounterClick() {
-          setSwitcher(true);
-          console.log(switcher);
         },
       });
 

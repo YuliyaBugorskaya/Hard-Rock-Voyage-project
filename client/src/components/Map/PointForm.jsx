@@ -12,7 +12,7 @@ import { useParams } from 'react-router-dom';
 
 export default function PointForm({ OneEvent }) {
   const [counter, setCounter] = useState(0);
-  const [coordinates, setCoordinates] = useState([]);
+  // const [coordinates, setCoordinates] = useState([]);
   const [img, setImg] = useState(null);
   const [input, setInput] = useState({
     titlePoint: '',
@@ -40,7 +40,8 @@ export default function PointForm({ OneEvent }) {
         //   setOpen(false);
       })
       // .then(() => setInput({ text: '' }))
-      .then(() => setOpen(false));
+      .then(() => setCounter(0))
+      .then(() => setImg(null));
   };
 
   const handleCloseComment = () => {
@@ -87,7 +88,7 @@ export default function PointForm({ OneEvent }) {
       const balloonLayout = ymaps.templateLayoutFactory.createClass("<div class='my-balloon'>"
         + `
         <a href='#' class='close'>X</a>
-        '<i id="count"></i> '
+        <p id="count" color:'white'></p> 
         <button id="button" type="button">Нажми на меня</button>
       `, {
 
