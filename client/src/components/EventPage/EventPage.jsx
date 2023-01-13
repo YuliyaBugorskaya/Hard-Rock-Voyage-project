@@ -19,6 +19,7 @@ import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
 import GetAllPoints from '../Map/GetAllPoints';
 import OneComment from './OneComment';
 import { getAllComments } from '../../redux/YanaSlices/CommentsSlice';
+// import PointForm from '../Map/GetAllPoints';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -87,7 +88,6 @@ export default function EventPage() {
       .then((res) => {
         setFoto((res.data.path));
         dispatch(getAllComments(id));
-        console.log(res.data, 'reeeeeeeeees.daaaaata');
       })
 
       .then(() => setOpen(false));
@@ -95,7 +95,7 @@ export default function EventPage() {
 
   useEffect(() => {
     dispatch(getOneEvent(id));
-  }, [id]);
+  }, []);
 
   useEffect(() => {
     dispatch(getAllComments(id));
@@ -310,7 +310,6 @@ export default function EventPage() {
                           type="file"
                           onChange={(e) => {
                             setImg(e.target.files[0]);
-                            console.log(e.target.files[0], 'e.target.files[0]--------->');
                           }}
                         />
                         <Button type="submit" variant="contained">Отправить</Button>
@@ -334,7 +333,7 @@ export default function EventPage() {
               }}
             >
               <Box>
-                <GetAllPoints OneEvent={OneEvent} />
+                {OneEvent.coordinates && <GetAllPoints OneEvent={OneEvent} />}
               </Box>
             </Grid>
           </Grid>
