@@ -176,7 +176,7 @@ router.post('/archiveEvents', async (req, res) => {
   const { page, input } = req.body;
   let archiveEventsArr;
   const allArchiveDates = await Action.findAll({
-    where: { statusId: '6' },
+    where: { statusId: '2' },
     attributes: ['startDate'],
   });
   console.log(req.body, 'req.body++++++1111');
@@ -191,7 +191,7 @@ router.post('/archiveEvents', async (req, res) => {
     console.log('res-', JSON.parse(JSON.stringify(archiveEventsArr)));
   } else {
     archiveEventsArr = await Action.findAndCountAll({
-      where: { statusId: '6' },
+      where: { statusId: '2' },
       include: User,
       limit: size,
       offset: Number(page) - 1,

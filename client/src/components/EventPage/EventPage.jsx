@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+  Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Divider,
 } from '@mui/material';
 // import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -76,7 +76,7 @@ export default function EventPage() {
       .then((res) => {
         setFoto((res.data.path));
         console.log(res.data);
-      //   setOpen(false);
+        //   setOpen(false);
       })
       // .then(() => setInput({ text: '' }))
       .then(() => setOpen(false));
@@ -98,164 +98,235 @@ export default function EventPage() {
   // };
 
   return (
-    <>
+    <Box sx={{
+      backgroundImage: `url(http://localhost:3001/${OneEvent?.image})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+    }}
+    >
       <CssBaseline />
       <Container fixed>
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container sx={{ margin: '5px', width: '98%' }}>
 
-        <CardMedia
-          component="img"
-          alt="green iguana"
-          height="140"
-          image={`http://localhost:3001/${OneEvent?.image}`}
-        />
-        <Typography component="div">
-          {OneEvent.description}
-        </Typography>
-        <Typography component="div">
-          Организатор:
-          {' '}
-          {/* <Button variant="text" onClick={() => seeUser()}>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                textAlign: 'center',
+              }}
+            >
+              <Typography component="div" sx={{ fontSize: '50px', marginBottom: '10px' }}>
+                {OneEvent.description}
+              </Typography>
+            </Grid>
+
+            <Grid
+              item
+              xs={4}
+              sx={{
+                backgroundColor: 'white', borderRadius: '20px', padding: '16px', opacity: '0.8',
+              }}
+            >
+              <Typography component="div">
+                Организатор:
+                {' '}
+                {/* <Button variant="text" onClick={() => seeUser()}>
             {' '}
             {OneEvent?.User?.name}
           </Button> */}
+                {OneEvent?.User?.name}
+              </Typography>
+              <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+                <CardMedia
+                  component="img"
+                  sx={{ width: 151 }}
+                  image={`http://localhost:3001/${OneEvent?.User?.image}`}
+                  alt="Live from space album cover"
+                />
+              </Stack>
+            </Grid>
 
-        </Typography>
-        <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-          <CardMedia
-            component="img"
-            sx={{ width: 151 }}
-            image={`http://localhost:3001/${OneEvent?.User?.image}`}
-            alt="Live from space album cover"
-          />
+            <Grid
+              container
+              xs={7}
 
-          <Typography>
-            {OneEvent?.User?.name}
-          </Typography>
-        </Stack>
-        <Container sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-          {OneEvent?.User?.about}
-        </Container>
+            >
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  backgroundColor: 'white', borderRadius: '20px', marginLeft: '40px', padding: '16px', height: '80%', opacity: '0.8',
+                }}
+              >
+                <Typography component="div">
+                  {OneEvent.title}
+                </Typography>
+                <Divider />
+                <Typography component="div">
+                  {OneEvent.fulldescription}
+                </Typography>
+              </Grid>
 
-        <Typography component="div">
-          {OneEvent.title}
-        </Typography>
-        <Typography component="div">
-          {OneEvent.fulldescription}
-        </Typography>
-        {OneEvent.userId !== user.id && OneEvent.statusId === 4 ? (
-          <>
-            <Button variant="text" onClick={handleClickOpen}>
-              Подать заявку на поездку
-            </Button>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Регистрация на событие</DialogTitle>
-              <form onSubmit={submitHandler}>
-                <DialogContent>
-                  <DialogContentText>
-                    Напишите, почему вы хотите зарегистрироваться на это событие.
-                  </DialogContentText>
-                  <TextareaAutosize
-                    name="message"
-                    type="text"
-                    variant="standard"
-                    autoFocus
-                    aria-label="minimum height"
-                    minRows={3}
-                    placeholder="Minimum 3 rows"
-                    value={input}
-                    onChange={inputHandler}
-                    style={{ width: '-webkit-fill-available', marginTop: '10px' }}
-                  />
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose}>Отмена</Button>
-                  <Button type="submit" onClick={handleClose}>Отправить</Button>
-                </DialogActions>
-              </form>
-            </Dialog>
-          </>
-        ) : (
-          <>
-          </>
-        )}
-        <Typography component="div">
-          Тут будут участники
-        </Typography>
-        {OneEvent.userId === user.id
-          ? (
-            <Box>
-              <PointForm OneEvent={OneEvent} />
-            </Box>
-          )
-          : (
-            <Box>
-              <GetAllPoints OneEvent={OneEvent} />
-            </Box>
-          )}
-        {OneEvent.statusId === 6
-          && (
-            <>
-              <Button onClick={handleClickOpenComment} variant="text">
-                Оставить комментарий
-              </Button>
-              <Button variant="text">
-                Добавить фотографии в альбом
-              </Button>
+              {OneEvent.userId !== user.id && OneEvent.statusId === 1 ? (
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    marginLeft: '40px', textAlign: 'center',
+                  }}
+                >
+                  <Button
+                    variant="text"
+                    onClick={handleClickOpen}
+                    sx={{
+                      backgroundColor: '#81858a',
+                      borderRadius: '20px',
+                      padding: '8px',
+                      width: '100%',
+                      color: 'black',
+                      height: '100%',
+                    }}
+                  >
+                    Подать заявку на поездку
+                  </Button>
+                  <Dialog open={open} onClose={handleClose}>
+                    <DialogTitle>Регистрация на событие</DialogTitle>
+                    <form onSubmit={submitHandler}>
+                      <DialogContent>
+                        <DialogContentText>
+                          Напишите, почему вы хотите зарегистрироваться на это событие.
+                        </DialogContentText>
+                        <TextareaAutosize
+                          name="message"
+                          type="text"
+                          variant="standard"
+                          autoFocus
+                          aria-label="minimum height"
+                          minRows={3}
+                          placeholder="Minimum 3 rows"
+                          value={input}
+                          onChange={inputHandler}
+                          style={{ width: '-webkit-fill-available', marginTop: '10px' }}
+                        />
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleClose}>Отмена</Button>
+                        <Button type="submit" onClick={handleClose}>Отправить</Button>
+                      </DialogActions>
+                    </form>
+                  </Dialog>
+                </Grid>
+              ) : (
+                <>
+                </>
+              )}
 
-              <Dialog open={comment} onClose={handleCloseComment}>
-                <DialogTitle>Поделись впечатлениями</DialogTitle>
-                <form onSubmit={submitHandlerComments}>
-                  <DialogContent>
-                    <DialogContentText>
-                      Оставьте комментарий и фото
-                    </DialogContentText>
-                    <TextareaAutosize
-                      name="text"
-                      type="text"
-                      variant="standard"
-                      autoFocus
-                      aria-label="minimum height"
-                      minRows={3}
-                      placeholder="Minimum 3 rows"
-                      value={input.text}
-                      onChange={inputHandler}
-                      style={{ width: '-webkit-fill-available', marginTop: '10px' }}
-                    />
-                    {
-    foto
-      && (
-        <img
-          className="logo"
-          src={`http://localhost:3001/${foto}`}
-          alt="avatar"
-          style={{
-            width: '100%',
-            height: 'auto',
-          }}
-        />
-      )
-  }
-                    <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
-                      Добавь фото к событию
-                    </Typography>
-                    <input
-                      name="fotoFromVoyage"
-                      type="file"
-                      onChange={(e) => {
-                        setImg(e.target.files[0]);
-                        console.log(e.target.files[0], 'e.target.files[0]--------->');
+              {OneEvent.statusId === 1
+                && (
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{
+                      marginLeft: '40px', textAlign: 'center',
+                    }}
+                  >
+                    <Button
+                      onClick={handleClickOpenComment}
+                      variant="text"
+                      sx={{
+                        backgroundColor: 'white',
+                        opacity: '0.9',
+                        borderRadius: '20px',
+                        padding: '8px',
+                        width: '100%',
+                        color: 'black',
+                        height: '100%',
                       }}
-                    />
-                    <Button type="submit" variant="contained">Отправить</Button>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleCloseComment}>Выйти</Button>
-                  </DialogActions>
-                </form>
-              </Dialog>
-            </>
-          )}
+                    >
+                      Оставить комментарий
+                    </Button>
+
+                    <Dialog open={comment} onClose={handleCloseComment}>
+                      <DialogTitle>Поделись впечатлениями</DialogTitle>
+                      <form onSubmit={submitHandlerComments}>
+                        <DialogContent>
+                          <DialogContentText>
+                            Оставьте комментарий и фото
+                          </DialogContentText>
+                          <TextareaAutosize
+                            name="text"
+                            type="text"
+                            variant="standard"
+                            autoFocus
+                            aria-label="minimum height"
+                            minRows={3}
+                            placeholder="Minimum 3 rows"
+                            value={input.text}
+                            onChange={inputHandler}
+                            style={{ width: '-webkit-fill-available', marginTop: '10px' }}
+                          />
+                          {
+                            foto
+                            && (
+                              <img
+                                className="logo"
+                                src={`http://localhost:3001/${foto}`}
+                                alt="avatar"
+                                style={{
+                                  width: '100%',
+                                  height: 'auto',
+                                }}
+                              />
+                            )
+                          }
+                          <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
+                            Добавь фото к событию
+                          </Typography>
+                          <input
+                            name="fotoFromVoyage"
+                            type="file"
+                            onChange={(e) => {
+                              setImg(e.target.files[0]);
+                              console.log(e.target.files[0], 'e.target.files[0]--------->');
+                            }}
+                          />
+                          <Button type="submit" variant="contained">Отправить</Button>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button onClick={handleCloseComment}>Выйти</Button>
+                        </DialogActions>
+                      </form>
+                    </Dialog>
+                  </Grid>
+                )}
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                textAlign: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '20px',
+              }}
+            >
+              {OneEvent.userId === user.id
+                ? (
+                  <Box>
+                    <PointForm OneEvent={OneEvent} />
+                  </Box>
+                )
+                : (
+                  <Box>
+                    <GetAllPoints OneEvent={OneEvent} />
+                  </Box>
+                )}
+            </Grid>
+          </Grid>
+        </Box>
       </Container>
-    </>
+    </Box>
   );
 }

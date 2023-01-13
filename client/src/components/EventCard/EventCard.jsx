@@ -38,7 +38,7 @@ export default function EventCard({ oneEventCard }) {
   return (
     <ListItem
       alignItems="flex-start"
-      sx={{ padding: '20px' }}
+      sx={{ padding: '20px', justifyContent: 'center' }}
     >
       <Card sx={{ maxWidth: 345, boxShadow: '0' }}>
         <CardMedia
@@ -65,17 +65,17 @@ export default function EventCard({ oneEventCard }) {
           <Typography variant="body2" sx={{ color: 'silver' }}>
             {oneEventCard?.User?.name}
           </Typography>
-          {oneEventCard.statusId === 4 && (
+          {oneEventCard.statusId === 1 && (
             <Typography variant="body2" sx={{ color: 'silver' }}>
               Идет регистрация
             </Typography>
           )}
-          {oneEventCard.statusId === 5 && (
+          {oneEventCard.statusId === 1 && (
             <Typography variant="body2" sx={{ color: 'silver' }}>
               Идет событие
             </Typography>
           )}
-          {oneEventCard.statusId === 6 && (
+          {oneEventCard.statusId === 2 && (
             <Typography variant="body2" sx={{ color: 'silver' }}>
               Событие завершено
             </Typography>

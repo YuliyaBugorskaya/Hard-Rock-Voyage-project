@@ -4,13 +4,15 @@ const { User } = require('../db/models');
 const router = express.Router();
 
 router.post('/signup', async (req, res) => {
-  const { name, email, password } = req.body;
+  const {
+    name, email, password, about,
+  } = req.body;
   console.log(req.body);
-  if (name && email && password) {
+  if (name && email && password && about) {
     try {
       const [user, created] = await User.findOrCreate({
         where: { email },
-        defaults: { name, password },
+        defaults: { name, password, about },
       });
       if (created) {
         const sessionUser = JSON.parse(JSON.stringify(user));
