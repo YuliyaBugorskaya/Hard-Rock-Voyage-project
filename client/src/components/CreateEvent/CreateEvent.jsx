@@ -153,7 +153,7 @@ export default function CreateEvent() {
                 Постройте ваш маршрут
               </Typography>
               <AddPointMap setCoordinates={setCoordinates} />
-              <Button type="submit" variant="contained" style={{ marginBottom: '10px' }}>Создать событие</Button>
+              <Button type="submit" variant="contained" style={{ marginBottom: '10px', backgroundColor: '#222c3c' }}>Создать событие</Button>
             </FormControl>
           </Form>
         </Col>

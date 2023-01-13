@@ -1,14 +1,21 @@
 import React, { useEffect } from 'react';
 import CardMedia from '@mui/material/CardMedia';
 import { useSelector, useDispatch } from 'react-redux';
-import Stack from '@mui/material/Stack';
+// import Stack from '@mui/material/Stack';
 import { Typography } from '@mui/material';
 import Container from '@mui/material/Container';
-import List from '@mui/material/List';
+// import Container from '@mui/material/Container';
+// import List from '@mui/material/List';
 import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
-import EventCard from '../EventCard/EventCard';
+import { styled } from '@mui/material/styles';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
 import { getUserLK } from '../../redux/YanaSlices/LKSlice';
+// import EventCard from '../EventCard/EventCard';
+import CardForMainPage from '../EventCard/CardForMainPage';
 
 export default function LKabinet() {
   const dispatch = useDispatch();
@@ -34,36 +41,150 @@ export default function LKabinet() {
     navigate('/myprofile');
   };
 
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    color: theme.palette.text.secondary,
+    transition: 'transform 0.5s',
+    '&:hover': {
+      transform: 'scale(1.02)',
+    },
+  }));
+
   return (
-    <>
-      <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-        <CardMedia
-          component="img"
-          sx={{ width: 151 }}
-          image={UserInfo?.image}
-          alt="Live from space album cover"
-        />
-
-        <Typography>
-          {UserInfo?.name}
-        </Typography>
-      </Stack>
-      <Container sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-        {UserInfo?.about}
+    <Box sx={{ flexGrow: 1 }}>
+      <Container fixed>
+        <Grid container sx={{ margin: '5px', width: '98%', marginTop: '20px' }}>
+          {/* <Stack direction="row" spacing={2} sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}> */}
+          <Grid
+            item
+            xs={4}
+            sx={{
+              textAlign: 'right',
+              width: '20px',
+              paddingRight: '40px',
+              display: 'flex',
+              justifyContent: 'end',
+              height: '300px',
+            }}
+          >
+            <CardMedia
+              component="img"
+              sx={{ width: 151, borderRadius: '20px', border: '1px solid black' }}
+              image={UserInfo?.image}
+              alt="Live from space album cover"
+            />
+          </Grid>
+          <Grid
+            container
+            xs={8}
+            sx={{ justifyContent: 'flex-end' }}
+          >
+            <Grid
+              item
+              xs={12}
+              sx={{
+                backgroundColor: 'white',
+                borderRadius: '20px',
+                padding: '8px',
+                width: '30px',
+                height: '40px',
+                textAlign: 'center',
+                opacity: '0.9',
+              }}
+            >
+              <Typography>
+                {UserInfo?.name}
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sx={{
+                backgroundColor: 'white',
+                borderRadius: '20px',
+                padding: '16px',
+                width: '30px',
+                height: '60%',
+                opacity: '0.9',
+              }}
+            >
+              <Typography component="div">
+                Обо мне:
+              </Typography>
+              <Divider />
+              <Typography>
+                {UserInfo?.about}
+              </Typography>
+            </Grid>
+            {/* </Stack> */}
+            <Grid
+              container
+              xs={12}
+            >
+              <Grid
+                item
+                xs={6}
+                sx={{
+                  textAlign: 'center',
+                }}
+              >
+                <Button
+                  variant="text"
+                  onClick={() => changeProfile()}
+                  sx={{
+                    backgroundColor: 'white',
+                    borderRadius: '20px',
+                    padding: '8px',
+                    width: '90%',
+                    color: 'black',
+                    height: '60%',
+                    opacity: '0.9',
+                  }}
+                >
+                  Настроить профиль
+                </Button>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                sx={{
+                  textAlign: 'center',
+                }}
+              >
+                <Button
+                  variant="text"
+                  onClick={() => seeApplies()}
+                  sx={{
+                    backgroundColor: 'white',
+                    borderRadius: '20px',
+                    padding: '8px',
+                    width: '90%',
+                    color: 'black',
+                    height: '60%',
+                    opacity: '0.9',
+                  }}
+                >
+                  Посмотреть заявки
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
       </Container>
-      <Button variant="text" onClick={() => changeProfile()}>
-        Настроить профиль
-      </Button>
 
-      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        {userLK?.map((el) => (
-          <EventCard key={el.id} oneEventCard={el} />
-        ))}
-      </List>
-      <Button variant="text" onClick={() => seeApplies()}>
-        Посмотреть заявки
-      </Button>
-
-    </>
+      <Box sx={{ width: '100%' }}>
+        <Grid container rowSpacing={1} columnSpacing={2} sx={{ margin: '5px', width: '98%' }}>
+          {userLK?.map((el) => (
+            <Grid xs={6} sx={{ padding: '5px', cursor: 'pointer' }}>
+              <Item sx={{ backgroundColor: 'white', opacity: '0.9' }}>
+                <CardForMainPage key={el.id} oneEventCard={el} />
+              </Item>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </Box>
   );
 }

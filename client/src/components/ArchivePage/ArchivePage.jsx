@@ -40,6 +40,7 @@ export default function ArchivePage() {
         '& .MuiTextField-root': { m: 0.4, width: '55ch' },
         backgroundImage: `url(${'../css/images/_7Fr1kwBRRM.jpeg'})`,
         backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
       }}
       display="flex"
       noValidate
@@ -48,7 +49,7 @@ export default function ArchivePage() {
       justifyContent="center"
       minHeight="80vh"
     >
-      <div>
+      <Box sx={{ width: '310px' }}>
         <CssBaseline />
         <Container maxWidth={false} disableGutters>
           <div>
@@ -61,6 +62,7 @@ export default function ArchivePage() {
                   onChange={dateChange}
                   value={input}
                   label="дата"
+                  sx={{ marginBottom: '10px', backgroundColor: 'white' }}
                 >
                   {archiveEvents.dates?.map((el) => (<MenuItem key={el.id} value={el.startDate}>{el.startDate}</MenuItem>
                   ))}
@@ -71,7 +73,15 @@ export default function ArchivePage() {
             {/* <Button sx={{ width: '100%', maxWidth: 360, marginTop: '10px' }} onClick={changeHandler} variant="contained" color="secondary">
               Создать событие
             </Button> */}
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            <List sx={{
+              width: '100%',
+              maxWidth: 360,
+              bgcolor: 'background.paper',
+              padding: '0',
+              borderTopLeftRadius: '20px',
+              borderTopRightRadius: '20px',
+            }}
+            >
               {archiveEvents.events
                 .map((el) => (
                   <EventCard key={el.id} oneEventCard={el} />
@@ -81,6 +91,15 @@ export default function ArchivePage() {
           <div>
             <Stack spacing={2}>
               <Pagination
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginBottom: '20px',
+                  backgroundColor: 'white',
+                  paddingY: '20px',
+                  borderEndEndRadius: '20px',
+                  borderEndStartRadius: '20px',
+                }}
                 page={Number(page)}
                 count={archiveEvents.countPage}
                 onChange={(_, num) => setPage(num)}
@@ -95,7 +114,7 @@ export default function ArchivePage() {
             </Stack>
           </div>
         </Container>
-      </div>
+      </Box>
     </Box>
   );
 }
