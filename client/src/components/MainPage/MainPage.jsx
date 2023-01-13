@@ -4,8 +4,8 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import { getAllEvents } from '../../redux/YanaSlices/allEventsSlice';
 import CardForMainPage from '../EventCard/CardForMainPage';
+import { getAllEvents } from '../../redux/YanaSlices/allEventsSlice';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -34,19 +34,19 @@ export default function MainPage() {
           m: 1,
           fontSize: '6rem',
           fontWeight: '600',
-          // backgroundColor: '#222c3c',
+
           textAlign: 'center',
           color: '#222c3c',
         }}
       >
-        Мотопутешествия
+        Hard Rock Voyage
       </Box>
       <Box
         sx={{
           m: 1,
           fontSize: '2rem',
           fontWeight: '700',
-          // backgroundColor: '#222c3c',
+
           textAlign: 'center',
           color: '#222c3c',
           marginBottom: '30px',

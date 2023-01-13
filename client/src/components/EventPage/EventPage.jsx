@@ -9,17 +9,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Divider,
 } from '@mui/material';
-// import { useNavigate } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { getOneEvent } from '../../redux/YanaSlices/oneEventSlice';
 import PointForm from '../Map/PointForm';
 import GetAllPoints from '../Map/GetAllPoints';
-// import { getUserPage } from '../../redux/YanaSlices/userPageSlice';
 
 export default function EventPage() {
-  const [input, setInput] = useState({ text: '' });
+  const [input, setInput] = useState('');
   const [img, setImg] = useState(null);
   const [foto, setFoto] = useState(null);
   const [open, setOpen] = useState(false);
@@ -34,25 +33,19 @@ export default function EventPage() {
 
   const [comment, setComment] = useState(false);
 
-  // const handleClickOpenComment = () => {
-  //   setComment(true);
-  // };
-
   const handleCloseComment = () => {
     setComment(false);
   };
 
   const { id } = useParams();
 
+  const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
     const textData = Object.fromEntries(new FormData(e.target));
-    console.log(textData);
-    axios.post(`comment/addComment/${id}`, textData);
-    console.log(input);
-    console.log(e.target.value);
+    axios.post(`comment/addComment/${id}`, textData)
+      .then(() => dispatch({ type: 'SEND_PUSH', payload: { message: textData, id } }));
   };
-  const dispatch = useDispatch();
 
   const OneEvent = useSelector((state) => state.oneEvent);
 
@@ -60,6 +53,10 @@ export default function EventPage() {
 
   const inputHandler = (e) => {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const changeHandler = (e) => {
+    setInput(e.target.value);
   };
 
   const submitHandlerComments = (e) => {
@@ -76,9 +73,8 @@ export default function EventPage() {
       .then((res) => {
         setFoto((res.data.path));
         console.log(res.data);
-        //   setOpen(false);
       })
-      // .then(() => setInput({ text: '' }))
+
       .then(() => setOpen(false));
   };
 
@@ -87,15 +83,9 @@ export default function EventPage() {
   }, [id]);
   console.log(OneEvent);
 
-  // const [comment, setComment] = useState(false);
-
   const handleClickOpenComment = () => {
     setComment(true);
   };
-
-  // const handleCloseComment = () => {
-  //   setComment(false);
-  // };
 
   return (
     <Box sx={{

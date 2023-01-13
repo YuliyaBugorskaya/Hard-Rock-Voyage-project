@@ -11,7 +11,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 export default function PointForm({ OneEvent }) {
-  const [switcher, setSwitcher] = useState(false);
+  const [counter, setCounter] = useState(0);
   // const [coordinates, setCoordinates] = useState([]);
   const [img, setImg] = useState(null);
   const [input, setInput] = useState({
@@ -40,7 +40,8 @@ export default function PointForm({ OneEvent }) {
         //   setOpen(false);
       })
       // .then(() => setInput({ text: '' }))
-      .then(() => setOpen(false));
+      .then(() => setCounter(0))
+      .then(() => setImg(null));
   };
 
   const handleCloseComment = () => {
@@ -82,18 +83,22 @@ export default function PointForm({ OneEvent }) {
         minZoom: 1,
       });
 
+      let switcher = 0;
+
       const balloonLayout = ymaps.templateLayoutFactory.createClass("<div class='my-balloon'>"
         + `
         <a href='#' class='close'>X</a>
-        <button id="button" type="button">${switcher}</button>
-        `, {
+        <p id="count" color:'white'></p> 
+        <button id="button" type="button">Нажми на меня</button>
+      `, {
 
         build() {
           balloonLayout.superclass.build.call(this);
           this._$element = $('.my-balloon', this.getParentElement());
-          $('#button').bind('click', this.onCounterClick);
           this._$element.find('.close')
             .on('click', $.proxy(this.onCloseClick, this));
+          $('#button').bind('click', this.onCounterClick);
+          $('#count').html(switcher);
         },
 
         onCloseClick(e) {
@@ -102,10 +107,16 @@ export default function PointForm({ OneEvent }) {
         },
 
         onCounterClick() {
-          setSwitcher(true);
-          console.log(switcher);
+          if (switcher === 0) {
+            $('#count').html(switcher += 1);
+            setCounter(switcher);
+          } else {
+            $('#count').html(switcher -= 1);
+            setCounter(switcher);
+          }
         },
       });
+      console.log(counter, 'sddddddddddddddddddddddd');
 
       const multiRoute = new ymaps.multiRouter.MultiRoute({
         // Точки маршрута. Точки могут быть заданы как координатами, так и адресом.
