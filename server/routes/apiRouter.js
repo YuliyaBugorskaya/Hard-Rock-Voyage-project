@@ -183,6 +183,7 @@ router.get('/myprofile', async (req, res) => {
 
 router.post('/addComments', fileMiddleware.single('fotoComment'), async (req, res) => {
   const { text, actionId } = req.body;
+  console.log(text, 'from back');
   try {
     const newComment = await Comment.create({
       text,
