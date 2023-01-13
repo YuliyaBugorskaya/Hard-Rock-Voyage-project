@@ -50,7 +50,6 @@ export default function Profile() {
           dispatch(updateAvatar((res.data.path)));
         });
     } catch (error) { console.log(error); }
-    } catch (error) { console.log(error); }
   }, [img]);
   return (
 

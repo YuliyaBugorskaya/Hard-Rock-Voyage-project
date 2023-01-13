@@ -51,9 +51,9 @@ export default function EventPage() {
 
   const user = useSelector((state) => state.user);
 
-  const inputHandler = (e) => {
-    setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  // const inputHandler = (e) => {
+  //   setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  // };
 
   const changeHandler = (e) => {
     setInput(e.target.value);
@@ -159,7 +159,7 @@ export default function EventPage() {
                 </Typography>
               </Grid>
 
-              {OneEvent.userId !== user.id && OneEvent.statusId === 1 ? (
+              {OneEvent.userId !== user.id && OneEvent.statusId === 4 ? (
                 <Grid
                   item
                   xs={12}
@@ -197,7 +197,7 @@ export default function EventPage() {
                           minRows={3}
                           placeholder="Minimum 3 rows"
                           value={input}
-                          onChange={inputHandler}
+                          onChange={changeHandler}
                           style={{ width: '-webkit-fill-available', marginTop: '10px' }}
                         />
                       </DialogContent>
@@ -213,7 +213,7 @@ export default function EventPage() {
                 </>
               )}
 
-              {OneEvent.statusId === 1
+              {OneEvent.statusId === 6
                 && (
                   <Grid
                     item
@@ -254,7 +254,7 @@ export default function EventPage() {
                             minRows={3}
                             placeholder="Minimum 3 rows"
                             value={input.text}
-                            onChange={inputHandler}
+                            onChange={changeHandler}
                             style={{ width: '-webkit-fill-available', marginTop: '10px' }}
                           />
                           {

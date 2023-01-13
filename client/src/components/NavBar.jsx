@@ -52,7 +52,7 @@ export default function NavBar() {
               <ColorButton variant="text" sx={{ color: 'white' }}>Главная страница</ColorButton>
             </Link>
             <Link href="/allEvents" underline="none">
-              <ColorButton variant="text" sx={{ color: 'white' }}>События</ColorButton>
+              <ColorButton variant="text" sx={{ color: 'white' }}>Мототуры</ColorButton>
             </Link>
           </div>
           <div>
@@ -68,7 +68,7 @@ export default function NavBar() {
             }}
           >
             <Link href="/archiveEvents" underline="none">
-              <ColorButton variant="text" sx={{ color: 'white' }}>Завершенные события</ColorButton>
+              <ColorButton variant="text" sx={{ color: 'white' }}>Архив</ColorButton>
             </Link>
 
             <div>
