@@ -206,6 +206,18 @@ router.get('/alleventsmainpage', async (req, res) => {
   }
 });
 
+router.get('/comments/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const allComments = await Comment.findAll({
+      where: { actionId: id },
+    });
+    res.json(allComments);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 router.get('/allankets', async (req, res) => {
   try {
     const allAnkets = await Anket.findAll({ order: [['id', 'DESC']], include: User });
