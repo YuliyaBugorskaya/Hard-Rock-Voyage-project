@@ -73,6 +73,7 @@ export default function EventPage() {
       .then((res) => {
         setFoto((res.data.path));
         console.log(res.data);
+        dispatch(getOneEvent(id));
       })
 
       .then(() => setOpen(false));
@@ -80,6 +81,9 @@ export default function EventPage() {
 
   useEffect(() => {
     dispatch(getOneEvent(id));
+  }, [id]);
+  useEffect(() => {
+    dispatch((id));
   }, [id]);
   console.log(OneEvent);
 
