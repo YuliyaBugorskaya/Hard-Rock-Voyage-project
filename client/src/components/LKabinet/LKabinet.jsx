@@ -141,6 +141,9 @@ export default function LKabinet() {
                     color: 'black',
                     height: '60%',
                     opacity: '0.9',
+                    '&:hover': {
+                      backgroundColor: '#7590ba',
+                    },
                   }}
                 >
                   Настроить профиль
@@ -164,6 +167,9 @@ export default function LKabinet() {
                     color: 'black',
                     height: '60%',
                     opacity: '0.9',
+                    '&:hover': {
+                      backgroundColor: '#7590ba',
+                    },
                   }}
                 >
                   Посмотреть заявки
