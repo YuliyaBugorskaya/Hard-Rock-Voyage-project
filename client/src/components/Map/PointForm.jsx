@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 // import { Form, Col, Row } from 'reactstrap';
 import {
   // eslint-disable-next-line no-unused-vars
-  Button, DialogActions, FormControl, TextareaAutosize, TextField, Typography,
+  Button, DialogActions, FormControl, TextareaAutosize, TextField, Typography, Box, Grid,
 } from '@mui/material';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -154,73 +154,82 @@ export default function PointForm({ OneEvent }) {
     }
   }, []);
   return (
-    <div style={{ display: 'flex' }}>
-      <div
-        id="map"
-        style={{
-          width: '900px', height: '800px', margin: '10px 0 10px 0',
-        }}
-      />
-      {counter === 1
-        && (
-          <div>
-            <form onSubmit={submitHandlerComments}>
-              Оставьте комментарий и фото
-              <TextareaAutosize
-                name="titlePoint"
-                type="text"
-                variant="standard"
-                autoFocus
-                aria-label="minimum height"
-                minRows={3}
-                placeholder="Minimum 3 rows"
-                value={input.titlePoint}
-                onChange={inputHandler}
-                style={{ width: '-webkit-fill-available', marginTop: '10px' }}
-              />
-              <TextareaAutosize
-                name="description"
-                type="text"
-                variant="standard"
-                autoFocus
-                aria-label="minimum height"
-                minRows={3}
-                placeholder="Minimum 3 rows"
-                value={input.description}
-                onChange={inputHandler}
-                style={{ width: '-webkit-fill-available', marginTop: '10px' }}
-              />
-              {
-                foto
-                && (
-                  <img
-                    className="logo"
-                    src={`http://localhost:3001/${foto}`}
-                    alt="avatar"
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                    }}
-                  />
-                )
-              }
-              <Typography variant="h10" component="h5" sx={{ flexGrow: 1 }}>
-                Добавь фото к событию
-              </Typography>
-              <input
-                name="fotoFromVoyage"
-                type="file"
-                onChange={(e) => {
-                  setImg(e.target.files[0]);
-                  console.log(e.target.files[0], 'e.target.files[0]--------->');
-                }}
-              />
-              <Button type="submit" variant="contained">Отправить</Button>
-              <Button onClick={handleCloseComment}>Выйти</Button>
-            </form>
-          </div>
-        )}
-    </div>
+    <Box sx={{
+      flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center',
+    }}
+    >
+      <div>
+        <div
+          id="map"
+          style={{
+            width: '99%', height: '500px', margin: '10px 0 10px 0',
+          }}
+        />
+        <div>
+          <Box
+            component="form"
+            onSubmit={submitHandlerComments}
+            sx={{
+              backgroundColor: 'white',
+              padding: '20px',
+              borderRadius: '20px',
+              marginY: '20px',
+            }}
+          >
+            Оставьте комментарий и фото
+            <TextField
+              name="titlePoint"
+              type="text"
+              variant="standard"
+              aria-label="minimum height"
+              minRows={3}
+              placeholder="Minimum 3 rows"
+              value={input.titlePoint}
+              onChange={inputHandler}
+              style={{ width: '-webkit-fill-available', marginTop: '10px' }}
+            />
+            <TextField
+              name="description"
+              type="text"
+              variant="standard"
+              aria-label="minimum height"
+              minRows={3}
+              placeholder="Minimum 3 rows"
+              value={input.description}
+              onChange={inputHandler}
+              style={{ width: '-webkit-fill-available', marginTop: '10px' }}
+            />
+            {
+              foto
+              && (
+                <img
+                  className="logo"
+                  src={`http://localhost:3001/${foto}`}
+                  alt="avatar"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                  }}
+                />
+              )
+            }
+            <Typography variant="h10" component="h5" sx={{ flexGrow: 1, marginY: '10px' }}>
+              Добавь фото к событию
+            </Typography>
+            <input
+              name="fotoFromVoyage"
+              type="file"
+              onChange={(e) => {
+                setImg(e.target.files[0]);
+                console.log(e.target.files[0], 'e.target.files[0]--------->');
+              }}
+            />
+            <Button type="submit" variant="contained" sx={{ backgroundColor: '#222c3c' }}>Отправить</Button>
+            <Button onClick={handleCloseComment} sx={{ marginX: '10px' }}>Выйти</Button>
+          </Box>
+        </div>
+      </div>
+    </Box>
   );
 }
 

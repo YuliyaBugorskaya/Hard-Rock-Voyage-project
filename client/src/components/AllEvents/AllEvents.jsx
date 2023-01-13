@@ -57,9 +57,9 @@ export default function AllEvents() {
     >
       <div>
         <CssBaseline />
-        <Container maxWidth={false} disableGutters>
+        <Container maxWidth={false} disableGutters sx={{ width: '350px' }}>
           <div>
-            <Box sx={{ minWidth: 120 }}>
+            <Box sx={{ minWidth: 200 }}>
               <FormControl fullWidth sx={{ marginY: '20px', backgroundColor: 'white' }}>
                 <InputLabel id="demo-simple-select-label">Дата</InputLabel>
                 <Select

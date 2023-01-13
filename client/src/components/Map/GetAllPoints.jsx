@@ -76,7 +76,7 @@ export default function PointForm({ OneEvent }) {
     <div
       id="map"
       style={{
-        width: '900px', height: '800px', margin: '10px 0 10px 0',
+        width: '500px', height: '500px', margin: '10px 0 10px 0',
       }}
     />
   );

@@ -49,6 +49,14 @@ export default function SignUp() {
           onChange={inputHandler}
         />
         <TextField
+          name="about"
+          id="outlined-required-name"
+          label="Обо мне"
+          type="text"
+          value={input.about}
+          onChange={inputHandler}
+        />
+        <TextField
           name="email"
           required
           id="outlined-required-email"
