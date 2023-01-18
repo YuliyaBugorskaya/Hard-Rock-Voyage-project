@@ -21,13 +21,18 @@ export default function OneAnket({ oneAnket }) {
   };
 
   return (
-    <ListItem alignItems="flex-start">
-      <Card sx={{ maxWidth: 345 }}>
+    <ListItem alignItems="flex-start" sx={{ justifyContent: 'center', marginY: '20px' }}>
+      <Card sx={{
+        maxWidth: 345,
+        width: '100%',
+      }}
+      >
         <CardMedia
           component="img"
           alt="green iguana"
           height="140"
           image={`http://localhost:3001/${oneAnket?.User?.image}`}
+          sx={{ height: '400px' }}
         />
         <CardContent>
           <Typography variant="body2">
@@ -40,16 +45,16 @@ export default function OneAnket({ oneAnket }) {
           </Typography>
 
           {oneAnket.statusId === 2 && (
-          <Typography variant="body2" sx={{ color: 'silver' }}>
-            Заявка отклонена
-          </Typography>
+            <Typography variant="body2" sx={{ color: 'silver' }}>
+              Заявка отклонена
+            </Typography>
           )}
           {oneAnket.statusId === 3 && (
-          <Typography variant="body2" sx={{ color: 'silver' }}>
-            Заявка одобрена
-          </Typography>
+            <Typography variant="body2" sx={{ color: 'silver' }}>
+              Заявка одобрена
+            </Typography>
           )}
-          <Container>
+          <Container sx={{ textAlign: 'center' }}>
             {oneAnket.statusId === 1 && (
               <>
                 <Button variant="text" onClick={() => changeStatusTrue(oneAnket)}>

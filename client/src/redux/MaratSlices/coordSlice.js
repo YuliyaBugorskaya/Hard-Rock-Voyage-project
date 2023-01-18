@@ -22,4 +22,5 @@ export const newCoords = (arr, id) => (dispatch) => {
     .then((res) => dispatch(console.log(res.data)));
   // .then((res) => dispatch(console.log(res.data)));
 };
+
 export default coordSlice.reducer;

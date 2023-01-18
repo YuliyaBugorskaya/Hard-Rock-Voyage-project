@@ -15,6 +15,7 @@ import notificationNoSlice from './YanaSlices/notificationNoSlice';
 import NotificationSlice from './YanaSlices/NotificationSlice';
 import NotificationYesSlice from './YanaSlices/NotificationYesSlice';
 import onlineUsersSlice from './YanaSlices/onlineUsersSlice';
+import CommentsSlice from './YanaSlices/CommentsSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
@@ -33,6 +34,7 @@ const store = configureStore({
     notification: NotificationSlice,
     notificationYes: NotificationYesSlice,
     onlineUsers: onlineUsersSlice,
+    comments: CommentsSlice,
 
   },
   middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), sagaMiddleware],

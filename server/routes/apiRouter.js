@@ -183,6 +183,7 @@ router.get('/myprofile', async (req, res) => {
 
 router.post('/addComments', fileMiddleware.single('fotoComment'), async (req, res) => {
   const { text, actionId } = req.body;
+  console.log(text, 'from back');
   try {
     const newComment = await Comment.create({
       text,
@@ -201,6 +202,18 @@ router.get('/alleventsmainpage', async (req, res) => {
     const allEvents = await Action.findAll({ include: User, Status, order: [['startDate', 'ASC']] });
     const removed = allEvents.splice(0, 4);
     res.json(removed);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get('/comments/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const allComments = await Comment.findAll({
+      where: { actionId: id },
+    });
+    res.json(allComments);
   } catch (error) {
     console.log(error);
   }

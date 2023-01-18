@@ -49,15 +49,17 @@ export default function Profile() {
           setAvatar(res.data.path);
           dispatch(updateAvatar((res.data.path)));
         });
-    } catch (error) {}
+    } catch (error) { console.log(error); }
   }, [img]);
   return (
 
-    <div>
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <Container style={{
-        marginLeft: '400px',
         marginTop: '50px',
         display: 'flex',
+        backgroundColor: 'white',
+        borderRadius: '20px',
+        padding: '10px',
       }}
       >
         <Row className="formRow">
@@ -70,6 +72,7 @@ export default function Profile() {
                 borderRadius: '50%',
                 overflow: 'hidden',
                 border: '1px solid',
+                backgroundColor: 'black',
               }}
             >
               {
@@ -113,41 +116,53 @@ export default function Profile() {
             <Box
               component="form"
               sx={{
-                '& .MuiTextField-root': { m: 1, width: '25ch' },
+                m: 1,
+                width: '80%',
+                backgroundColor: 'white',
+                padding: '20px',
+                borderRadius: '20px',
+                marginY: '30px',
               }}
               display="flex"
               autoComplete="off"
               alignItems="center"
               justifyContent="center"
-              minHeight="80vh"
               onSubmit={submitHandler}
             >
-              <FormControl>
+              <FormControl sx={{ gap: '10px' }}>
                 <Typography variant="h6" component="h2" sx={{ flexGrow: 1 }}>
                   Редактирование профиля
                 </Typography>
 
                 <TextField
                   name="name"
-        //   required
+                  //   required
                   id="outlined-required-name"
                   type="text"
                   value={input.name}
                   onChange={inputHandler}
                 />
                 <TextField
+                  name="about"
+                  //   required
+                  id="outlined-required-name"
+                  type="text"
+                  value={input.about}
+                  onChange={inputHandler}
+                />
+                <TextField
                   name="email"
-        //   required
+                  //   required
                   id="outlined-required-email"
                   type="email"
                   value={input.email}
                   onChange={inputHandler}
                 />
                 <TextField
-        //   required
+                  //   required
                   name="password"
                   id="outlined-password-input"
-        //   label="Password"
+                  //   label="Password"
                   type="password"
                   value={input.password}
                   onChange={inputHandler}
@@ -155,6 +170,7 @@ export default function Profile() {
                 <Button
                   variant="contained"
                   type="submit"
+                  sx={{ backgroundColor: '#222c3c' }}
                 >
                   Готово
 
@@ -164,6 +180,6 @@ export default function Profile() {
           </Col>
         </Row>
       </Container>
-    </div>
+    </Box>
   );
 }
