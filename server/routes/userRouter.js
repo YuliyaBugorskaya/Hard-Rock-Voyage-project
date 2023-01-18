@@ -2,14 +2,17 @@ const express = require('express');
 const { User } = require('../db/models');
 
 const router = express.Router();
+
 router.post('/signup', async (req, res) => {
-  const { name, email, password } = req.body.inputs;
-  console.log({ name, email, password });
-  if (name && email && password) {
+  const {
+    name, email, password, about,
+  } = req.body;
+  console.log(req.body);
+  if (name && email && password && about) {
     try {
       const [user, created] = await User.findOrCreate({
         where: { email },
-        defaults: { name, password },
+        defaults: { name, password, about },
       });
       if (created) {
         const sessionUser = JSON.parse(JSON.stringify(user));
@@ -25,8 +28,9 @@ router.post('/signup', async (req, res) => {
   }
   return res.sendStatus(500);
 });
-router.post('/login', async (req, res) => {
-  const { email, password } = req.body.inputs;
+
+router.post('/signin', async (req, res) => {
+  const { email, password } = req.body;
   if (email && password) {
     try {
       const user = await User.findOne({
@@ -46,14 +50,45 @@ router.post('/login', async (req, res) => {
   }
   return res.sendStatus(500);
 });
+
 router.post('/check', (req, res) => {
-  if (req.session.user) {
-    return res.json(req.session.user);
+  try {
+    if (req.session.user) {
+      return res.json(req.session.user);
+    }
+    return res.sendStatus(401);
+  } catch (error) {
+    console.log(error);
   }
-  return res.sendStatus(401);
 });
+
 router.get('/logout', (req, res) => {
-  req.session.destroy();
-  res.clearCookie('sid').sendStatus(200);
+  try {
+    req.session.destroy();
+    res.clearCookie('sid').sendStatus(200);
+  } catch (error) {
+    console.log(error);
+  }
 });
+
+router.patch('/updateprofile/', async (req, res) => {
+  try {
+    await User.update(
+      {
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        about: req.body.about,
+      },
+      { where: { id: req.session.user.id } },
+    );
+    const one = await User.findOne({ where: { id: req.session.user.id } });
+
+    return res.json(one);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
+});
+
 module.exports = router;

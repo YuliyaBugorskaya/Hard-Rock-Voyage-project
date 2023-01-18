@@ -25,6 +25,11 @@ module.exports = {
     'react/jsx-filename-extension': 0,
     'default-param-last': 0,
     'import/prefer-default-export': 0,
+    'no-param-reassign': 0,
+    'react/jsx-props-no-spreading': 0,
+    'max-len': 0,
+    'no-console': 0,
+    'no-empty': 0,
 
   },
 };
